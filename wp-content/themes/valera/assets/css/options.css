@@ -1,0 +1,19 @@
+
+.colored {color: ;}
+.undercolored { border-bottom:1px solid  ;}
+.undercolored a:hover { color:; }
+::selection {background: ;}
+a { color: ;}
+a:hover { color: ;}
+.header_social .badge:hover, .comment .badge:hover { background-color: ;}
+.badge a {color: ;}
+.menu a:hover, .menu .hover > a, .menu .current-menu-item > a {background-color: ; }
+.menu ul li ul li a:hover > .menu ul li a {background-color: ; !important;}
+.menu a:hover, .menu .hover > a, .menu .current-menu-item > a, {background-color: ;}
+ul.menu li ul li:first-child > a:hover:after {border-bottom-color:;}
+ul.menu li ul li.current_page_item > a:after {border-bottom-color:;}
+h2 .label, h3 .label { background-color: ;}
+.footer_menu li a {border-bottom:1px solid ;}
+.footer_menu li a:hover { color:  !important; }
+.mybutton { background-color: ;}
+.mybutton:hover { background-color: ;}
