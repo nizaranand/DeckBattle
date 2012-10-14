@@ -1,4 +1,5 @@
 <?php
+ header('Content-Type: text/html; charset=utf-8'); 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Easy set variables
 	 */
@@ -181,9 +182,18 @@
 				/* General output */
 				$row[] = $aRow[ $aColumns[$i] ];
 			}
+						
 		}
+		
+		$row[2]= utf8_encode($row[2]);
+//		$row[2]= str_replace("\u0097","-",$row[2]);
+		//echo $row[2];
 		$output['aaData'][] = $row;
+	  
+		
 	}
 	
-	echo json_encode( $output );
+//	echo json_encode($output, JSON_UNESCAPED_UNICODE);
+	echo json_encode($output);
+
 ?>

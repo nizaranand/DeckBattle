@@ -68,6 +68,12 @@
 	display: none;
 }
 </style>
+<script>
+$(document).ready(function() {
+var oTable = $('#dyn2').dataTable();
+oTable.fnLengthChange( 100 );
+} );
+</script>
 		</head>
 
 		<body>

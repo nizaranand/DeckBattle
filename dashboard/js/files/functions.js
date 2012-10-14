@@ -767,11 +767,39 @@ $(function() {
         }
     });
 	
+	// Dialog
+    $('#formDialogPassRecovery').dialog({
+        autoOpen: false,
+        width: 300,
+      /*  buttons: {
+            "Request new password": function () {
+			
+                $(this).dialog("close");
+					$("passwordrecoveryform").submit();
+					
+					
+				
+					
+					
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }*/
+        //}
+    });
+	
     // Dialog Link
+    $('#formDialogPassRecovery_open').click(function () {
+        $('#formDialogPassRecovery').dialog('open');
+        return false;
+    });
+	
+	// Dialog Link
     $('#formDialog_open').click(function () {
         $('#formDialog').dialog('open');
         return false;
     });
+	
 	
 	// Dialog
     $('#customDialog').dialog({

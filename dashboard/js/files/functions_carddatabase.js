@@ -1,5 +1,4 @@
 $(function() {
-	
 	//===== File manager =====//	
 	
 	$().ready(function() {
@@ -514,12 +513,9 @@ $(function() {
 		"bServerSide": true,
 		"sAjaxSource": "/dashboard/getcarddata.php",
 		"fnCreatedRow": function( nRow, aData, iDataIndex ) {
-
 		
-
 		$('td:eq(0)', nRow).html('<a class="cardhover" title="/mtgcardscans/'+ aData[5] +'/' + aData[1] +'.full.jpg" href="?cardid='+ aData[0] + '">'+aData[1]+'</a></span>');	
-		
-		
+				
 		var str=aData[3];
 		var n=str.replace("{R}",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		var n=n.replace("{R}",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
@@ -704,71 +700,110 @@ $(function() {
 		var n=n.replace("{X}",'<img src="http://www.deckbattle.com/mtgicons/X.gif" />');
 		var n=n.replace("{0}",'<img src="http://www.deckbattle.com/mtgicons/0.gif" />');
 		var n=n.replace("{1}",'<img src="http://www.deckbattle.com/mtgicons/1.gif" />');
+		var n=n.replace("{1}",'<img src="http://www.deckbattle.com/mtgicons/1.gif" />');
+		var n=n.replace("{2}",'<img src="http://www.deckbattle.com/mtgicons/2.gif" />');
 		var n=n.replace("{2}",'<img src="http://www.deckbattle.com/mtgicons/2.gif" />');
 		var n=n.replace("{3}",'<img src="http://www.deckbattle.com/mtgicons/3.gif" />');
+		var n=n.replace("{3}",'<img src="http://www.deckbattle.com/mtgicons/3.gif" />');
+		var n=n.replace("{4}",'<img src="http://www.deckbattle.com/mtgicons/4.gif" />');
 		var n=n.replace("{4}",'<img src="http://www.deckbattle.com/mtgicons/4.gif" />');
 		var n=n.replace("{5}",'<img src="http://www.deckbattle.com/mtgicons/5.gif" />');
+		var n=n.replace("{5}",'<img src="http://www.deckbattle.com/mtgicons/5.gif" />');
+		var n=n.replace("{6}",'<img src="http://www.deckbattle.com/mtgicons/6.gif" />');
 		var n=n.replace("{6}",'<img src="http://www.deckbattle.com/mtgicons/6.gif" />');
 		var n=n.replace("{7}",'<img src="http://www.deckbattle.com/mtgicons/7.gif" />');
+		var n=n.replace("{7}",'<img src="http://www.deckbattle.com/mtgicons/7.gif" />');
+		var n=n.replace("{8}",'<img src="http://www.deckbattle.com/mtgicons/8.gif" />');
 		var n=n.replace("{8}",'<img src="http://www.deckbattle.com/mtgicons/8.gif" />');
 		var n=n.replace("{9}",'<img src="http://www.deckbattle.com/mtgicons/9.gif" />');
+		var n=n.replace("{9}",'<img src="http://www.deckbattle.com/mtgicons/9.gif" />');
+		var n=n.replace("{10}",'<img src="http://www.deckbattle.com/mtgicons/10.gif" />');
 		var n=n.replace("{10}",'<img src="http://www.deckbattle.com/mtgicons/10.gif" />');
 		var n=n.replace("{11}",'<img src="http://www.deckbattle.com/mtgicons/11.gif" />');
+		var n=n.replace("{11}",'<img src="http://www.deckbattle.com/mtgicons/11.gif" />');
+		var n=n.replace("{12}",'<img src="http://www.deckbattle.com/mtgicons/12.gif" />');
 		var n=n.replace("{12}",'<img src="http://www.deckbattle.com/mtgicons/12.gif" />');
 		var n=n.replace("{13}",'<img src="http://www.deckbattle.com/mtgicons/13.gif" />');
+		var n=n.replace("{13}",'<img src="http://www.deckbattle.com/mtgicons/13.gif" />');
+		var n=n.replace("{14}",'<img src="http://www.deckbattle.com/mtgicons/14.gif" />');
 		var n=n.replace("{14}",'<img src="http://www.deckbattle.com/mtgicons/14.gif" />');
 		var n=n.replace("{15}",'<img src="http://www.deckbattle.com/mtgicons/15.gif" />');
+		var n=n.replace("{15}",'<img src="http://www.deckbattle.com/mtgicons/15.gif" />');
+		var n=n.replace("{16}",'<img src="http://www.deckbattle.com/mtgicons/16.gif" />');
 		var n=n.replace("{16}",'<img src="http://www.deckbattle.com/mtgicons/16.gif" />');
 
 		$('td:eq(2)', nRow).html(n);	
-        
 		
 		var str=aData[4];
 		var n=str.replace("R",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
+		var n=n.replace("// R",'><img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		var n=n.replace("U",'<img src="http://www.deckbattle.com/mtgicons/U.gif" />');
+		var n=n.replace("// U",'<img src="http://www.deckbattle.com/mtgicons/U.gif" />');
+		var n=n.replace(">U",'><img src="http://www.deckbattle.com/mtgicons/U.gif" />');
+		var n=n.replace("U<",'<img src="http://www.deckbattle.com/mtgicons/U.gif" /><');
 		var n=n.replace("B",'<img src="http://www.deckbattle.com/mtgicons/B.gif" />');
+		var n=n.replace("// B",'<img src="http://www.deckbattle.com/mtgicons/B.gif" />');
+		var n=n.replace(">B",'><img src="http://www.deckbattle.com/mtgicons/B.gif" />');
+		var n=n.replace("B<",'<img src="http://www.deckbattle.com/mtgicons/B.gif" /><');
 		var n=n.replace("W",'<img src="http://www.deckbattle.com/mtgicons/W.gif" />');
+		var n=n.replace("// W",'<img src="http://www.deckbattle.com/mtgicons/W.gif" />');
+		var n=n.replace(">W",'><img src="http://www.deckbattle.com/mtgicons/W.gif" />');
+		var n=n.replace("W<",'<img src="http://www.deckbattle.com/mtgicons/W.gif" /><');
 		var n=n.replace("G",'<img src="http://www.deckbattle.com/mtgicons/G.gif" />');
+		var n=n.replace("//G",'<img src="http://www.deckbattle.com/mtgicons/G.gif" />');
+		var n=n.replace(">G",'><img src="http://www.deckbattle.com/mtgicons/G.gif" />');
+		var n=n.replace("G<",'<img src="http://www.deckbattle.com/mtgicons/G.gif" /><');
 		var n=n.replace("A",'<img src="http://www.deckbattle.com/mtgicons/A.gif" />');
+		var n=n.replace("//A",'<img src="http://www.deckbattle.com/mtgicons/A.gif" />');
+		var n=n.replace(">A",'><img src="http://www.deckbattle.com/mtgicons/A.gif" />');
+		var n=n.replace("A<",'<img src="http://www.deckbattle.com/mtgicons/A.gif" /><');
 		var n=n.replace("L",'<img src="http://www.deckbattle.com/mtgicons/L.gif" />');
+		var n=n.replace("// L",'<img src="http://www.deckbattle.com/mtgicons/L.gif" />');
+		var n=n.replace(">L",'><img src="http://www.deckbattle.com/mtgicons/L.gif" />');
+		var n=n.replace("L<",'<img src="http://www.deckbattle.com/mtgicons/L.gif" /><');
+		var n=n.replace(">R",'><img src="http://www.deckbattle.com/mtgicons/R.gif" />');
+		var n=n.replace("R<",'<img src="http://www.deckbattle.com/mtgicons/R.gif" /><');
 		
 		$('td:eq(3)', nRow).html(n);	
         
 		
-		$('td:eq(4)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Common.gif" />');
+		$('td:eq(4)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Common.gif" class="tipS" title="'+aData[6].replace(":","").replace("\"","")+'" />');
 
 		if (aData[7] == 'C')
-		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Common.gif" />');
+		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Common.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
 		if (aData[7] == 'U' || aData[7] == 'U // U')
-		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Uncommon.gif" />');
+		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Uncommon.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
 		if (aData[7] == 'R')
-		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Rare.gif" />');
+		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Rare.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
 		if (aData[7] == 'M')
-		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Mythic.gif" />');
+		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Mythic.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
 		if (aData[7] == 'T')
-		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Rare.gif" />');
+		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Rare.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
 		
 		
-		$('td:eq(7)', nRow).html( '<ul class="btn-group toolbar"><li><a href="#" class="tablectrl_small bDefault" data-toggle="dropdown"><span class="iconb" data-icon="&#xe1f7;"></span></a><ul class="dropdown-menu pull-right"><li><a href="#"><span class="icos-add"></span>Add to compare card</a></li><li><a href="#" class=""><span class="icos-heart"></span>Share card</a></li><li><a href="#" class=""><span class="icos-pencil"></span>Login for more options...</a></li></ul></li></ul>');
+		$('td:eq(7)', nRow).html( '<ul class="btn-group toolbar"><li><a href="#" class="tablectrl_small bDefault" data-toggle="dropdown"><span class="iconb" data-icon="&#xe1f7;"></span></a><ul class="dropdown-menu pull-right"><li><a href="#" style="padding-left:12px;"><span class="icos-add"></span>Add to compare card</a></li><li><a href="#" class="" style="padding-left:12px;"><span class="icos-heart"></span>Share card</a></li><li><a href="#" class="" style="padding-left:12px;"><span class="icos-pencil"></span>Login for more options...</a></li></ul></li></ul>');
+
     },
+	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+          $('td:eq(2),td:eq(3),td:eq(4),td:eq(5),td:eq(6),td:eq(7)', nRow).addClass( "centeredtd" );
+        },
 		"sDom": '<"H"fl>rt<"F"ip>',
 		"aoColumns": [ 
 			/* Ncardid */   { "bSearchable": false,
 			                 "bVisible":    false },
 			/* Ncardname */  null,
 			/* ntype */ null,
-			/* nmanacost */ null,
-			/* ncolor */    null,
+			/* nmanacost */ { "bSearchable": false},
+			/* ncolor */    { "bSearchable": false},
 			/* Nset */    { "bSearchable": false,
 			                 "bVisible":    false },
 			/* Nname */    null,
-			/* nrarity */    null,
+			/* nrarity */    { "bSearchable": false},
 			/* nnumber */    null,
-			/* Options */    null
+			/* Options */    { "bSearchable": false}
 		] 
 	});
-	
-	
+		
 
 	//===== Dynamic table toolbars =====//		
 	
@@ -845,13 +880,7 @@ $(function() {
 	
 	$('#breadcrumbs').xBreadcrumbs();
 	
-	
-		//===== Sparklines =====//
-	
-	$('.balBars').sparkline(
-	'html', {type: 'bar', barColor: '#db6464', height: '18px'}
-	 );
-	 
+ 
 
 	//===== User nav dropdown =====//		
 	
@@ -1187,8 +1216,6 @@ cardhovering = function(title){
 	$( "#maxRangeAmount" ).val( $( ".uMax" ).slider( "value" ) );	
 
 
-
-
 	//===== Add class on #content resize. Needed for responsive grid =====//
 	
 	$('#content').resize(function () {
@@ -1210,6 +1237,50 @@ cardhovering = function(title){
 	//===== Form elements styling =====//
 	
 	$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+
+
+ $(".tweet").tweet({
+        	count: 1,
+        	username: 'DeckBattle',
+        	loading_text: "loading twitter..."      
+		});
+	
+			jQuery('ul.menu').superfish();
+  if ($.browser.msie && $.browser.version.substr(0,1)<7)
+  {
+	$('li').has('ul').mouseover(function(){
+		$(this).children('ul').css('visibility','visible');
+		}).mouseout(function(){
+		$(this).children('ul').css('visibility','hidden');
+		})
+  }
+$('p:empty').remove()
+	   
+      // Create the dropdown base
+      $("<select />").appendTo("nav");
+      
+      // Create default option "Go to..."
+      $("<option />", {
+         "selected": "selected",
+         "value"   : "",
+         "text"    : "Please choose page"
+      }).appendTo("nav select");
+      
+      // Populate dropdown with menu items
+      $("nav a").each(function() {
+       var el = $(this);
+       $("<option />", {
+           "value"   : el.attr("href"),
+           "text"    : el.text()
+       }).appendTo("nav select");
+      });
+      
+	   // To make dropdown actually work
+	   // To make more unobtrusive: http://css-tricks.com/4064-unobtrusive-page-changer/
+      $("nav select").change(function() {
+        window.location = $(this).find("option:selected").val();
+      });
 
 	
 });
