@@ -46,11 +46,14 @@
 <![endif]-->
 
 <script type="text/javascript">
-        jQuery.noConflict()(function($){
+  jQuery.noConflict()(function($){
+	  if (funFancy)
+	  {
         $(".view").preloader();
         $(".flexslider").preloader();
-        });
-	
+	  }
+		});
+  
 	
 jQuery.noConflict()(function($){
 		$(window).load(function() {
@@ -204,22 +207,15 @@ $(document).ready(function() {
 });
 </script>
 
-
-<script type="text/javascript">
-jQuery.noConflict()(function($){		
-$(document).ready(function(){
-$(".flip").click(function(){
-$(".panel").slideToggle("normal");
-});
-});
-});
-
-</script>
-
 <script type="text/javascript">
 jQuery.noConflict()(function($){
 $(document).ready(function ()
-{ // after loading the DOM
+{ 
+
+$(".flip").click(function(){
+$(".panel").slideToggle("normal");
+
+// after loading the DOM
     $("#ajax-contact-form").submit(function ()
     {
         // this points to our form

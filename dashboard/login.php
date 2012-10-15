@@ -1,3 +1,39 @@
+<?php
+include 'db_connect.php';
+include 'login_functions.php';
+
+$success = "";
+$error = "";
+
+$email_get = $_GET['email'];
+$email = $_POST['email'];
+$password_post = $_POST['p']; 
+$passwordgenerated = $_POST['pgen']; 
+
+sec_session_start();
+
+if ($_COOKIE["DeckBattleRememberMe"] != "")
+{
+$email_get = $_COOKIE["DeckBattleRememberMe"];
+}
+
+
+if (isset($_GET['logout']))
+{
+	
+// Unset all session values
+$_SESSION = array();
+// get session parameters 
+$params = session_get_cookie_params();
+// Delete the actual cookie.
+setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+// Destroy session
+session_destroy();
+
+$success = "You are logged out from the DeckBattle Dashboard. See you next time!";
+	
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -75,22 +111,11 @@
 <body>
 
 <?php
-include 'db_connect.php';
-include 'login_functions.php';
 
-
-
-$email_get = $_GET['email'];
-$email = $_POST['email'];
-$password = $_POST['p']; 
-
-$success = "";
-$error = "";
-
+// ACTIVATION FUNCTION
 if (isset($_GET['activation']))
 {
-	
-$actid = $_GET['activation'];	
+	$actid = $_GET['activation'];	
 	if ($actid != "")
 	{
 	
@@ -100,17 +125,16 @@ $actid = $_GET['activation'];
 	}		
 	
 	$success = "Account activated, you can login now!";
-	
-	//todo add prefill
 	}
 }
 
 
+
+//SIGNUP FUNCTION
 if (isset($_POST['signup']))
 {
 	
-	if ($select = $mysqli->prepare("SELECT email FROM members WHERE email = '". $email ."';")) { //bad use.. need to refactor
-//		$select->bind_param('s', $email); 
+	if ($select = $mysqli->prepare("SELECT email FROM members WHERE email = '". $email ."';")) { //bad use.. need to refactor with bind param but the @ fails... todo
 		$select->execute();
 	    $select->store_result();
     	if ($select->num_rows > 0)
@@ -124,81 +148,100 @@ if (isset($_POST['signup']))
 	if ($error == "")
 	{
 		$random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-		$password = hash('sha512', $password.$random_salt);
-		$actid = hash('sha512', $password.$random_salt.$email);
+		$passwordhash = hash('sha512', $password_post.$random_salt);
+		$actid = hash('sha512', $passwordhash.$random_salt.$email);
 		
 		$username = ''; // not used now
 			
 		if ($insert_stmt = $mysqli->prepare("INSERT INTO members (username, email, password, salt, activationid) VALUES (?, ?, ?, ?, ?)")) {    
-		   $insert_stmt->bind_param('sssss', $username,$email, $password, $random_salt, $actid); 
+		   $insert_stmt->bind_param('sssss', $username,$email, $passwordhash, $random_salt, $actid); 
 		   $insert_stmt->execute();
 		   
 		   $success = "Your account is created using ". $email .". Check your email box quickly to find the activation link!";
 		   
 		   //send act mail
-$to  = $email;
-
-// subject
-$subject = 'DeckBattle Account Activation';
-
-// message
-$message = '
-<html>
-<head>
-  <title>DeckBattle Account Activation</title>
-</head>
-<body>
-  <p>Here is your activation link to activate your DeckBattle account:</p>
-  <p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?activation=' . $actid . '</a></p>
-  <p>Best regards, DeckBattle</p>
-</body>
-</html>
-';
-
-// To send HTML mail, the Content-type header must be set
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-// Additional headers
-//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-$headers .= 'From: DeckBattle <support@deckbattle.com>' . "\r\n";
-
-// Mail it
-mail($to, $subject, $message, $headers);
+			$to  = $email;
+			
+			// subject
+			$subject = 'DeckBattle Account Activation';
+			
+			// message
+			$message = '
+			<html>
+			<head>
+			  <title>DeckBattle Account Activation</title>
+			</head>
+			<body>
+			  <p>Here is your activation link to activate your DeckBattle account:</p>
+			  <p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?activation=' . $actid . '</a></p>
+			  <p>Best regards, DeckBattle</p>
+			</body>
+			</html>
+			';
+			
+			// To send HTML mail, the Content-type header must be set
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			
+			// Additional headers
+			//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
+			$headers .= 'From: DeckBattle <support@deckbattle.com>' . "\r\n";
+			
+			// Mail it
+			mail($to, $subject, $message, $headers);
 		   
 		}	
 	}
 }
 
-function generatePassword($length=6, $strength=0) {
-	$vowels = 'aeuy';
-	$consonants = 'bdghjmnpqrstvz';
-	if ($strength & 1) {
-		$consonants .= 'BDGHJLMNPQRSTVWXZ';
-	}
-	if ($strength & 2) {
-		$vowels .= "AEUY";
-	}
-	if ($strength & 4) {
-		$consonants .= '23456789';
-	}
-	if ($strength & 8) {
-		$consonants .= '@#$%';
-	}
+if (isset($_POST['passwordrecovery'])){
+	
+	 	$emailForRecovery = $_POST['passwordrecovery'];
+
+		$random_newsalt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+		$newpassword = hash('sha512', $password_post.$random_newsalt);
+
+	if ($update_stmt = $mysqli->prepare("UPDATE members SET passrecovery = ?, saltrecovery = ? WHERE email = ?;")) {    
+	   $update_stmt->bind_param('sss', $newpassword,$random_newsalt,$emailForRecovery); 
+	   $update_stmt->execute();
+	}		
+
+		   $success = "Your new password has been mailed to: ". $emailForRecovery .". Check your email box quickly to get your new password.";
+		   
+		   //send act mail
+			$to  = $emailForRecovery;
+			
+			// subject
+			$subject = 'DeckBattle Password Recovery';
+			
+			// message
+			$message = '
+			<html>
+			<head>
+			  <title>DeckBattle Password Recovery</title>
+			</head>
+			<body>
+			  <p>Here is your new password for your DeckBattle account:</p>
+			  <p>'. $passwordgenerated.'</p>
+			  <p>Best regards, DeckBattle - if password recovery was not initiated by you please contact us.</p>
+			</body>
+			</html>
+			';
+			
+			// To send HTML mail, the Content-type header must be set
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			
+			// Additional headers
+			//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
+			$headers .= 'From: DeckBattle <support@deckbattle.com>' . "\r\n";
+			
+			// Mail it
+			mail($to, $subject, $message, $headers);
  
-	$password = '';
-	$alt = time() % 2;
-	for ($i = 0; $i < $length; $i++) {
-		if ($alt == 1) {
-			$password .= $consonants[(rand() % strlen($consonants))];
-			$alt = 0;
-		} else {
-			$password .= $vowels[(rand() % strlen($vowels))];
-			$alt = 1;
-		}
-	}
-	return $password;
-}
+ }
+
+
 
 if(isset($_GET['error'])) { 
 
@@ -207,60 +250,10 @@ $temp = $_GET['error'];
 if ($temp == 'notloggedin')
    $error = 'You have to login to access the DeckBattle Dashboard. Please fill in your email and password, or <a href="?action=signup">sign up</a> for a free account.';
 if ($temp == 'notcorrect')
-   $error = 'Email and/or password are not correct, please try again. If you keep seeing this error message, please contact us for further support.';
+   $error = 'Email and/or password are not correct, please try again. If you just created your account please check your activation mail, or <a href="login.php?request='. $email . '" >request a new one</a>.';
 
 }
 ?>
-
-<?php if (isset($_POST['passwordrecovery'])){
- $emailrec = $_POST['passwordrecovery'];
- $temp = generatePassword();
- 
-$genpass = hash('sha512',$temp);
-
-		$random_newsalt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-		$newpassword = hash('sha512', $genpass.$random_salt);
-	
-//update members
-	if ($update_stmt = $mysqli->prepare("UPDATE members SET passrecovery = ?, saltrecovery = ? WHERE email = ?;")) {    
-	   $update_stmt->bind_param('sss', $newpassword,$random_newsalt,$emailrec); 
-	   $update_stmt->execute();
-	}		
-
-		   $success = "Your new password has been mailed to: ". $emailrec .". Check your email box quickly to get your new password.";
-		   
-		   //send act mail
-$to  = $emailrec;
-
-// subject
-$subject = 'DeckBattle Password Recovery';
-
-// message
-$message = '
-<html>
-<head>
-  <title>DeckBattle Password Recovery</title>
-</head>
-<body>
-  <p>Here is your new password for your DeckBattle account:</p>
-  <p>'. $temp.'</p>
-  <p>Best regards, DeckBattle - if password recovery was not initiated by you please contact us.</p>
-</body>
-</html>
-';
-
-// To send HTML mail, the Content-type header must be set
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-// Additional headers
-//$headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-$headers .= 'From: DeckBattle <support@deckbattle.com>' . "\r\n";
-
-// Mail it
-mail($to, $subject, $message, $headers);
- 
- }?>
 
 
 <!-- Top line begins -->
@@ -344,7 +337,7 @@ if (isset($_GET['action']))
         <input type="password" name="password" id="password" placeholder="Password" class="loginPassword" />
         
         <div class="logControl">
-            <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember1" /><label for="remember1">Remember me</label></div>
+            <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember1" name="remember1" value="rememberme" /><label for="remember1">Remember me</label></div>
             <input type="submit" name="submit" value="Login" class="buttonM bBlue" onclick="formhash(this.form, this.form.password);" />
           
              <div class="clear"></div>
@@ -372,7 +365,7 @@ else
         <input type="password" name="password" id="password" placeholder="Password" class="loginPassword" />
         
         <div class="logControl">
-            <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember1" /><label for="remember1">Remember me</label></div>
+            <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember1" name="remember1" value="rememberme" /><label for="remember1">Remember me</label></div>
             <input type="submit" name="submit" value="Login" class="buttonM bBlue" onclick="formhash(this.form, this.form.password);" />
           
              <div class="clear"></div>
@@ -412,7 +405,7 @@ else
                             <form id="passwordrecoveryform" action="login.php" method="post">
                             <!--<label>Your email:</label>-->
                                 <input type="text" name="passwordrecovery" class="clear" style="width:250px;" placeholder="Enter your email address" />
-                                <input type="submit" name="submit" value="Email a new password" class="buttonM bBlue" />
+                                <input type="submit" name="submit" value="Email a new password" class="buttonM bBlue" onclick="formhashrecovery(this.form);"/>
                             </form>
                         </div>
 

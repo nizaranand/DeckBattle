@@ -9,7 +9,6 @@ if(login_check($mysqli) != true) {
  header('Location: ./login.php?error=notloggedin');
   
 } else {
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -76,11 +75,30 @@ if(login_check($mysqli) != true) {
 <script type="text/javascript" src="js/plugins/others/jquery.elfinder.js"></script>
 
 <script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
+
 <script type="text/javascript" src="js/files/bootstrap.js"></script>
+
+<?php
+//check passrecovery active > show growl message
+if ($_SESSION['passrecoveryactive'] == 1)
+{
+?>
+<script type="text/javascript">
+  jQuery.noConflict()(function($){
+	  $(document).ready(function() { 
+$.jGrowl("You have recovered your password but didn't changed it yet!<br /><br />Please change your password at the 'My Profile' page.", { sticky: true });
+ });
+});
+</script> 
+
+<?php }
+?>
+
 <script type="text/javascript" src="js/files/functions.js"></script>
 
 <script type="text/javascript" src="js/charts/chart.js"></script>
 <script type="text/javascript" src="js/charts/hBar_side.js"></script>
+ 
 
 </head>
 
@@ -97,7 +115,7 @@ if(login_check($mysqli) != true) {
                 <li><a title="" class="search"></a></li>
                 <li><a href="#" title="" class="screen"></a></li>
                 <li><a href="#" title="" class="settings"></a></li>
-                <li><a href="#" title="" class="logout"></a></li>
+                <li><a href="login.php?logout=true" title="" class="logout"></a></li>
                 <li class="showTabletP"><a href="#" title="" class="sidebar"></a></li>
             </ul>
             <a title="" class="iButton"></a>
