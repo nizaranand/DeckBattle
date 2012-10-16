@@ -22,7 +22,7 @@ if(isset($_POST['email'], $_POST['p'])) {
    } 
    else
 	{
-      header('Location: ./login.php?error=notcorrect');
+      header('Location: ./login.php?error=notcorrect&email='.$email);
   	}
   
 } else { 

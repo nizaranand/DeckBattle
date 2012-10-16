@@ -1,5 +1,11 @@
 $(function() {
 	
+	if (rec)
+	{
+		$.jGrowl("You have recovered your password but didn't changed it yet!<br /><br />Please change your password at the 'My Profile' page.", { sticky: true });
+
+	}
+	
 	//===== File manager =====//	
 	
 	$().ready(function() {

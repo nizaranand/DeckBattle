@@ -84,11 +84,7 @@ if ($_SESSION['passrecoveryactive'] == 1)
 {
 ?>
 <script type="text/javascript">
-  jQuery.noConflict()(function($){
-	  $(document).ready(function() { 
-$.jGrowl("You have recovered your password but didn't changed it yet!<br /><br />Please change your password at the 'My Profile' page.", { sticky: true });
- });
-});
+var rec = true;
 </script> 
 
 <?php }
