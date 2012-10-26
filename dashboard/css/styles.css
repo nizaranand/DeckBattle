@@ -258,7 +258,7 @@ background: -ms-linear-gradient(top, #DA8854 0%,#C35A32 100%);
 background: linear-gradient(top, #DA8854 0%,#C35A32 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#da8854', endColorstr='#c35a32',GradientType=0 );
 }
-.user > span { display: block; color: #c2c2c2; margin-top: 10px; }
+.user > span { display: block; color: #c2c2c2; margin-top: 10px; word-wrap: break-word; margin-left: 5px; margin-right: 5px; }
 
 
 /* === Nav for user dropdown (responsive) === */ 
@@ -1369,19 +1369,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', end
 /* ===== Content progress bars ===== */
 
 .contentProgress { background: #e6e6e6; border: 1px solid #ccc; box-shadow: 0 1px 0 #fff, 0 1px 0 #ddd inset; -webkit-box-shadow: 0 1px 0 #fff, 0 1px 0 #ddd inset; -moz-box-shadow: 0 1px 0 #fff, 0 1px 0 #ddd inset; }
-.contentProgress, .barG, .barB, .barO, .barBl, .barGr, .barR { border-radius: 6px; -webkit-border-radius: 6px; -moz-border-radius: 6px; height: 4px; }
-.whead .contentProgress, .whead .barG, .whead .barB, .whead .barO, .whead .barBl, .whead .barGr, .whead .barR { height: 3px; }
+.contentProgress, .barG, .barB, .barO, .barBl, .barGr, .barR .barW { border-radius: 6px; -webkit-border-radius: 6px; -moz-border-radius: 6px; height: 4px; }
+.whead .contentProgress, .whead .barG, .whead .barB, .whead .barO, .whead .barBl, .whead .barGr, .whead .barR, .whead .barW { height: 3px; }
 
 #sidebar .contentProgress { background: #ccc; box-shadow: 0 1px 0 #eee, 0 1px 0 #c1c1c1 inset; -webkit-box-shadow: 0 1px 0 #eee, 0 1px 0 #c1c1c1 inset; -moz-box-shadow: 0 1px 0 #eee, 0 1px 0 #c1c1c1 inset; border: 1px solid #c1c1c1; }
-#sidebar .contentProgress, #sidebar .barG, #sidebar .barB, #sidebar .barO, #sidebar .barBl, #sidebar .barGr, #sidebar .barR { height: 3px; }
+#sidebar .contentProgress, #sidebar .barG, #sidebar .barB, #sidebar .barO, #sidebar .barBl, #sidebar .barGr, #sidebar .barR, #sidebar .barW { height: 3px; }
 
-.barG, .barB, .barO, .barBl, .barGr, .barR { background: url(../images/elements/ui/progress.png) repeat-x; width: 0; margin: -1px 0 0 -1px; border: 1px solid; }
+.barG, .barB, .barO, .barBl, .barGr, .barR, .barW { background: url(../images/elements/ui/progress.png) repeat-x; width: 0; margin: -1px 0 0 -1px; border: 1px solid; }
 .barG { background-position: 0 0; border-color: #97af32; }
 .barB { background-position: 0 -5px; border-color: #5f9fce; }
 .barO { background-position: 0 -10px; border-color: #d28346; }
 .barBl { background-position: 0 -15px; border-color: #4c4c4c; }
 .barGr { background-position: 0 -20px; border-color: #7b7b7b; }
 .barR { background-position: 0 -25px; border-color: #c8514e; }
+.barW { background-position: 0 -30px; border-color: #ffffff; }
 
 
 /* ===== Timepicker  ===== */

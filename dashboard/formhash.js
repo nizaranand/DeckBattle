@@ -1,8 +1,6 @@
 function formhash(form, password) {
    
-   // Create a new element input, this will be out hashed password field.
    var p = document.createElement("input");
-   // Add the new element to our form.
    form.appendChild(p);
    p.name = "p";
    p.type = "hidden"
@@ -18,7 +16,7 @@ function formhash(form, password) {
    
    // Make sure the plaintext password doesn't get sent.
    password.value = "";
-   // Finally submit the form.
+
    form.submit();
 }
 
@@ -38,6 +36,45 @@ function formhashrecovery(form) {
    pgen.type = "hidden"
    pgen.value = passgenerated;
    
+   form.submit();
+}
+
+
+function formchangepass(form,p1,p2) {
+ 
+   var p = document.createElement("input");
+   form.appendChild(p);
+   p.name = "p";
+   p.type = "hidden"
+   
+   if (p1.value != "")
+   {
+   p.value = hex_sha512(p1.value);
+   }
+   else
+   {
+	   p.value = "";
+   }
+   
+   var pcheck = document.createElement("input");
+   form.appendChild(pcheck);
+   pcheck.name = "pcheck";
+   pcheck.type = "hidden"
+
+   if (p2.value != "")
+   {	   
+
+   pcheck.value = hex_sha512(p2.value);
+   
+   }
+   else
+   {
+   pcheck.value = "";
+   }
+   
+   p1.value = "";
+   p2.value = "";
+      
    form.submit();
 }
 

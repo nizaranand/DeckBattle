@@ -72,6 +72,17 @@ if (isset($_GET['activation']) && $_GET['activation'] != "")
 		$error = "Something went wrong. Not a valid activation link.";
 }
 
+//ACTIVATE NEW EMAIL
+if (isset($_GET['emailactivation']) && $_GET['emailactivation'] != "")
+{
+	$isemailactivated = activateEmail($_GET['emailactivation'],$mysqli);	
+	
+	if ($isemailactivated)
+		$success = "New email activated, you can login now with your new email address!";
+	else
+		$error = "Something went wrong. Not a valid activation link.";
+}
+
 //REQUEST NEW ACTIVATION EMAIL
 if (isset($_GET['request']) && $_GET['request'] != "")
 {
@@ -109,7 +120,7 @@ if (isset($_POST['passwordrecovery'])){
 	}
 	else
 	{
-		$error = "We can't find your email, are you sure you filled in the right one? Or your account isn't activated yet, <a href=\"login.php?request=". $_POST['passwordrecovery'] . "\" >request a new activation email</a>.";
+		$error = "We can't find your email, are you sure you filled in the right one? Or your account isn't activated yet, <a href=\"login.php?request=". $_POST['passwordrecovery'] . "\" > Click here and we will send you a new activation email to: " . $_POST['passwordrecovery'] .".</a>.";
 	}
 }
 
@@ -192,13 +203,15 @@ if(isset($_GET['error'])) {
 <script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
 <script type="text/javascript" src="js/files/bootstrap.js"></script>
 <script type="text/javascript" src="js/files/login.js"></script>
+
+<script type="text/javascript">
+var rec = false;
+</script> 
 <script type="text/javascript" src="js/files/functions.js"></script>
 
 <script type="text/javascript" src="sha512.js"></script>
 <script type="text/javascript" src="formhash.js"></script>
-<script type="text/javascript">
-var rec = false;
-</script> 
+
 
 </head>
 
@@ -256,8 +269,9 @@ if (isset($_GET['action']))
             </div>
         </div>
             
-        <input type="text" name="email" placeholder="Your email address" class="loginUsername" value="<?php echo $email_get;?>" />
-        <input type="password" name="password" placeholder="Password" class="loginPassword" />
+        <input type="text" data-prompt-position="centerRight" name="email" placeholder="Your email address" id="email" class="validate[required,custom[email]]" value="<?php echo $email_get;?>" />
+        <input data-prompt-position="centerRight" class="validate[required,custom[onlyLetterNumber]]" type="text" name="username" id="username" placeholder="Your username" />
+        <input data-prompt-position="centerRight" type="password" name="password" id="password" placeholder="Password" class="validate[required,minSize[6]]" />
         <input type="hidden" name="signup" value="true" />
         <div class="logControl">
             <input type="submit" name="submit" value="Sign up!" class="buttonM bGreen" onclick="formhash(this.form, this.form.password);" />
@@ -327,8 +341,9 @@ else
             </div>
         </div>
             
-        <input type="text" name="email" placeholder="Your email address" class="loginUsername" value="<?php echo $email_get;?>">
-        <input type="password" name="password" placeholder="Password" class="loginPassword" />
+        <input data-prompt-position="centerRight" type="text" name="email" placeholder="Your email address" id="email" class="validate[required,custom[email]]" value="<?php echo $email_get;?>">
+        <input  data-prompt-position="centerRight" class="validate[required,custom[onlyLetterNumber]]" type="text" name="username" id="username" placeholder="Your username" />
+        <input data-prompt-position="centerRight" type="password" name="password" id="password" placeholder="Password" class="validate[required,minSize[6]]" />
         <input type="hidden" name="signup" value="true" />
         <div class="logControl">
           <!--  <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember2" /><label for="remember2">Remember me</label></div> -->

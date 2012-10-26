@@ -301,7 +301,7 @@ padding-right:10px;
                 <th>EditionAbbreviation</th>
                 <th style="width:30px;">Edition</th>
                 <th style="width:30px;">Rarity</th>
-                <th style="width:30px;">#</th>
+                <th style="width:30px;"></th>
                 <th style="width:30px;"></th>
               </tr>
             </thead>

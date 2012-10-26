@@ -779,7 +779,8 @@ $(function() {
 		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Mythic.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
 		if (aData[7] == 'T')
 		$('td:eq(5)', nRow).html( '<img src="http://www.deckbattle.com/mtgicons/'+aData[6].replace(":","").replace("\"","")+'_Rare.gif"  alt="'+aData[6].replace(":","").replace("\"","")+'" />');
-		
+
+		$('td:eq(6)', nRow).html('#' + aData[8]);
 		
 		$('td:eq(7)', nRow).html( '<ul class="btn-group toolbar"><li><a href="#" class="tablectrl_small bDefault" data-toggle="dropdown"><span class="iconb" data-icon="&#xe1f7;"></span></a><ul class="dropdown-menu pull-right"><li><a href="#" style="padding-left:12px;"><span class="icos-add"></span>Add to compare card</a></li><li><a href="#" class="" style="padding-left:12px;"><span class="icos-heart"></span>Share card</a></li><li><a href="#" class="" style="padding-left:12px;"><span class="icos-pencil"></span>Login for more options...</a></li></ul></li></ul>');
 

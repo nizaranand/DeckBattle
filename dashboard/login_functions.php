@@ -15,11 +15,11 @@ function sec_session_start() {
 
 function login($email, $password_input, $mysqli) {
 	// Using prepared Statements means that SQL injection is not possible. 
-	if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM members WHERE isactivated = 1 AND email = ? LIMIT 1")) { 
+	if ($stmt = $mysqli->prepare("SELECT id, username, password, salt, avatar FROM members WHERE isactivated = 1 AND email = ? LIMIT 1")) { 
 		$stmt->bind_param('s', $email); // Bind "$email" to parameter.
 		$stmt->execute(); // Execute the prepared query.
 		$stmt->store_result();
-		$stmt->bind_result($user_id, $username, $db_password, $salt); // get variables from result.
+		$stmt->bind_result($user_id, $username, $db_password, $salt,$avatar); // get variables from result.
 		$stmt->fetch();
 		$password = hash('sha512', $password_input.$salt); // hash the password with the unique salt.
 		
@@ -42,18 +42,20 @@ function login($email, $password_input, $mysqli) {
 					$_SESSION['user_id'] = $user_id; 
 					$username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
 					$_SESSION['username'] = $username;
+					$_SESSION['email'] = $email;
 					$_SESSION['login_string'] = hash('sha512', $password.$ip_address.$user_browser);
+					$_SESSION['avatar'] = $avatar;
 					// Login successful.
 					return true;    
 				} 
 				else {
 					// Password is not correct
 					//check if the pass is from recovery
-					if ($stmt = $mysqli->prepare("SELECT id, username, passrecovery, saltrecovery FROM members WHERE isactivated = 1 AND email = ? LIMIT 1")) { 
+					if ($stmt = $mysqli->prepare("SELECT id, username, passrecovery, saltrecovery,avatar FROM members WHERE isactivated = 1 AND email = ? LIMIT 1")) { 
 						$stmt->bind_param('s', $email); // Bind "$email" to parameter.
 						$stmt->execute(); // Execute the prepared query.
 						$stmt->store_result();
-						$stmt->bind_result($user_id, $username, $db_password, $salt); // get variables from result.
+						$stmt->bind_result($user_id, $username, $db_password, $salt, $avatar); // get variables from result.
 						$stmt->fetch();
 						$password = hash('sha512', $password_input.$salt); // hash the password with the unique salt.
 				//	echo '<br />into pass recovery: submitted pass:' . $password_input . ' dbpass: '. $db_password . ' hashed pass with recoverd salt: ' . $password;
@@ -70,7 +72,9 @@ function login($email, $password_input, $mysqli) {
 								$_SESSION['user_id'] = $user_id; 
 								$username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
 								$_SESSION['username'] = $username;
+								$_SESSION['email'] = $email;
 								$_SESSION['login_string'] = hash('sha512', $password.$ip_address.$user_browser);
+								$_SESSION['avatar'] = $avatar;
 								// Login successful.
 								return true;    
 							} 
@@ -241,7 +245,7 @@ $message = '
 <body>
 <p> After 5 tries your account gets locked. </p>
 <p>Here is your activation link to activate your DeckBattle account:</p>
-<p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?activation=' . $actid . '</a></p>
+<p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '</a></p>
 <p>Best regards, DeckBattle</p>
 <p>If it wasnt you, please contact us</p>
 </body>
@@ -257,7 +261,6 @@ clearBruteForce($user_id,$mysqli);
 }
 
 function clearBruteForce($user_id, $mysqli) {
-	
 	//clear brute force.. Activated id is now leading.		
 	if ($delete = $mysqli->prepare("DELETE FROM login_attempts WHERE user_id = ? ;")) {    
 	   $delete->bind_param('s',$user_id); 
@@ -272,6 +275,32 @@ function activateUser($activation, $mysqli){
 	   $update_stmt->execute();
 	   
 	   return true;
+	}		
+	
+	return false;
+}
+
+// EMAIL ACTIVATION FUNCTION
+function activateEmail($emailactivationid, $mysqli){	
+
+//get the filled in email
+     if ($stmt = $mysqli->prepare("SELECT emailnew FROM members WHERE emailnewactivation = ? LIMIT 1")) { 
+        $stmt->bind_param('s', $emailactivationid); // Bind "$user_id" to parameter.
+        $stmt->execute(); // Execute the prepared query.
+        $stmt->store_result();
+ 
+        if($stmt->num_rows == 1) { // If the user exists
+           $stmt->bind_result($emailnew); // get variables from result.
+           $stmt->fetch();
+
+
+			if ($update_stmt = $mysqli->prepare("UPDATE members SET email = ?,emailnew = '', emailnewactivation = '' WHERE emailnewactivation = ?;")) {    
+	   		$update_stmt->bind_param('ss', $emailnew,$emailactivationid); 
+	   		$update_stmt->execute();
+	   
+	   		return true;
+			}
+		}
 	}		
 	
 	return false;
@@ -318,7 +347,7 @@ function signup($email, $password_post, $mysqli) {
 			</head>
 			<body>
 			  <p>Here is your activation link to activate your DeckBattle account:</p>
-			  <p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?activation=' . $actid . '</a></p>
+			  <p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '</a></p>
 			  <p>Best regards, DeckBattle</p>
 			</body>
 			</html>
@@ -358,7 +387,7 @@ function activationmail($email, $mysqli) {
 			</head>
 			<body>
 			  <p>Here is your activation link to activate your DeckBattle account:</p>
-			  <p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?activation=' . $actid . '</a></p>
+			  <p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?email='. $email.'&activation=' . $actid . '</a></p>
 			  <p>Best regards, DeckBattle</p>
 			</body>
 			</html>
@@ -418,7 +447,80 @@ function passwordrecovery (	$emailForRecovery, $password_post, $passwordgenerate
 			
 			return false;
 	
- 
+	}
  }
-}
+ 
+ function changepass($userid, $password_post, $mysqli ) {
+	
+	if ($userid == "")
+	{
+		return false;	
+	}
+	else
+	{
+		
+		$random_newsalt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+		$newpassword = hash('sha512', $password_post.$random_newsalt);
+
+		if ($new = $mysqli->prepare("UPDATE members SET password = ?, salt = ?, passrecovery = '', saltrecovery = '' WHERE id = ? and isactivated = 1;")) {    
+	   $new->bind_param('sss', $newpassword,$random_newsalt,$userid); 
+	   $new->execute();
+		$new->store_result();
+	
+	
+	//create new login string for session
+			$ip_address = $_SERVER['REMOTE_ADDR']; // Get the IP address of the user. 
+			$user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
+			$_SESSION['login_string'] = hash('sha512', $newpassword.$ip_address.$user_browser);
+				 return true;
+		}
+			return false;
+	}
+ }
+ 
+ 
+ function changeusername($userid,$username, $mysqli) {
+
+		if ($new = $mysqli->prepare("UPDATE members SET username = ? WHERE id = ? and isactivated = 1;")) {    
+	   $new->bind_param('ss', $username,$userid); 
+	   $new->execute();
+	   			$_SESSION['username'] = $username;
+										
+	 	return true;
+		}
+		return false;
+ }
+ 
+ 
+ function changeemail($userid,$emailnew, $mysqli) {
+
+	$actid = hash('sha512', $emailnew);
+		if ($new = $mysqli->prepare("UPDATE members SET emailnew = ?, emailnewactivation = ? WHERE id = ? and isactivated = 1;")) {    
+	   $new->bind_param('sss', $emailnew,$actid,$userid); 
+	   $new->execute();
+	   //todo send mail
+	   	//
+			$to  = $emailnew;
+			$subject = 'DeckBattle Email Change Activation';
+			$message = '
+			<html>
+			<head>
+			  <title>DeckBattle Email Change Activation</title>
+			</head>
+			<body>
+			  <p>Here is your activation link for the email you changes at your DeckBattle account:</p>
+		<p><a href="http://www.deckbattle.com/dashboard/login.php?email='. $emailnew.'&emailactivation=' . $actid . '">http://www.deckbattle.com/dashboard/login.php?email='. $emailnew.'&emailactivation=' . $actid . '</a></p>
+			  <p>Best regards, DeckBattle - if password recovery was not initiated by you please contact us.</p>
+			</body>
+			</html>
+			';
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: DeckBattle <support@deckbattle.com>' . "\r\n";
+			mail($to, $subject, $message, $headers);
+	 	return true;
+		}
+		return false;
+ }
+ 
 ?>

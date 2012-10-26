@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>VALERA - Responsive Wordpress Theme - Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Ivor">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    </head>
+    
+<body data-spy="scroll" id="top">
+
+<!-- Documentation Navbar -->
+
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container"> 
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> 
+	<a class="brand" href="#">VALERA</a> <!-- TIP: Change this for the name of your file -->
+     	<div class="nav-collapse">
+        <ul class="nav">
+              <li><a href="#top" class="active">Top</a></li>
+              <li><a href="#wpinstall">WP Instalation</a></li>
+              <li><a href="#tinstall">Theme Instalation</a></li>
+              <li><a href="#short">Shortcodes</a></li>
+              <li><a href="#port">Add Portfolio</a></li>
+              <li><a href="#credits">Credits</a></li>
+              <li><a href="#contact" >Contact us</a></li>
+              <li><a href="#more" >More</a></li>
+          </ul>
+</div>
+	</div>
+		</div>
+			</div> <!-- End of Navbar -->
+
+<!-- Main Container Beginning -->			
+			
+<div class="container">
+    
+	<div class="masthead">
+    	<img src="assets/img/logo.png" alt="logo" style="margin-bottom:20px;" />
+	    <h2>VALERA - RESPONSIVE WORDPRESS THEME DOCUMENTATION</h2>
+	    <p style="font-size:16px; line-height:20px;"><strong>Creator:</strong> <a href="http://themeforest.net/user/OrangeIdea">Orange Idea</a> <strong><br>Contact:</strong> <a href="mailto:orangeidea@mail.ru">orangeidea@mail.ru</a><br> <strong>Created On:</strong>  13/05/2012</p>
+	</div> <!-- masthead -->
+	
+   <div id="intro">
+    <p class="highlight hero-unit">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/OrangeIdea">here</a>. Thanks so much!</p>
+  </div> <!-- intro -->
+      
+<section id="wpinstall">
+	<div class="page-header">
+	  <h1>How to install WordPress</h1>
+	</div>
+		    	<p>This is a short walkthrough of WordPress installation. This part will be useful if you install WordPress theme for the first time.</p>
+		    	<p>Before you start, you must have a server that supports PHP and provide access to a MySQL database. First step is to install WordPress on your server. You must download WordPress ZIP file from <a href="http://wordpress.org/download/">http://wordpress.org/download/</a>, extract the files and you'll get a folder named "wordpress". Now you must upload all files from this folder to your server via FTP client. Content from this folder must be located in the root of the website, so that this location will be the URL of your website.</p>
+		    	<p>If you will access your site URL now, you should see only a note: <em>"There doesn't seem to be a wp-config.php file…".</em></p>
+			    <img src="images/create-configuration-file.png" alt="" />	
+			    <p>In next step you must manually create a configuration file. Open the wordpress folder and make a copy of file named <em>wp-config-sample.php</em>. Change name of this copy to <em>wp-config.php</em> and open this file in an editor, it can be a simple editor like Notepad. </p>	    	
+			    <p>Now you must modify this file and add information about your database. You need to have four data pieces to do this:</p>
+				<ul>
+					<li>Address of database server — for example: mysql.yourdomain.com</li>
+					<li>Server username — for example: yourusername</li>
+					<li>Server password — for example: 123456789</li>
+					<li>Database name — for example: wpdbname</li>
+				</ul>
+				<p>You must fill these four data pieces into your wp-config.php file. This is how it would look like for our example data:</p>
+				<div class="one code">
+					<code>/** The name of the database for WordPress */<br/>
+						define('DB_NAME', 'wpdbname');<br/>
+						/** MySQL database username */<br/>
+						define('DB_USER', 'username');<br/>
+						/** MySQL database password */<br/>
+						define('DB_PASSWORD', '123456789');<br/>
+						/** MySQL hostname */<br/>
+						define('DB_HOST', 'mysql.yourdomain.com');
+					</code>
+				</div>
+			    <img src="images/wordpress-database-conection.jpg" alt="" />
+			    <p>Now go back to browser and reload your site that is pointing to your WordPress installation. If all the data from <em>wp-config.php</em> file is correct you will see the installation page:</p>
+			    <img src="images/login-wordpress-data.jpg" alt="" />
+			    <p>Just fill in the name of your blog and your email address, and click on Install WordPress button (this data can be changed later). Now you will see the last page of WordPress installation process that shows the default Username, which is always admin, and a randomly generated Password.</p>
+			    <img src="images/succes-wordpress-installed.jpg" alt="" />
+			    <p>You must remember this password or just copy and paste it to a temporary file. After this click on Log In button or enter admin panel by pointing to your browser to http://yourdomain.com/wp-admin. You will be redirected to admin panel login page where you have to enter default Username and randomly generated password. You can change Username and Password when you are logged into admin panel. Just click on Username (admin) in the top right corner of admin panel. And that's it, now you can install your theme to your WordPress installation. And that's it, now you can install RISE Theme to your WordPress installation.</p>
+			    <p>You can either choose to upload the theme to your server via FTP (only upload the unzipped folder "RISE" into the folder <em>wp-content/themes/</em> ) or via wordpress upload function. After copy WP Theme you must login to admin panel (or refresh this panel if you are still logged), go to Themes (under <em>Appearance</em>, on the left WordPress menu) and activate RISE Theme.</p>
+
+    <hr />
+
+    <div class="row" id="tinstall">
+      <div class="span3">
+        <h3>Install a WordPress theme</h3>
+		 <p>Login to admin panel.</p>
+        <p>Go to <em>Appearance &#8594; Themes</em> and click on the tab <em>Install Themes</em>. Choose upload.</p>
+        <p>Click on <em>Browse...</em>, select the downloaded theme file and click in <em>Install Now</em></p>.
+      	<br><br><br><br><br><br><br>
+        <hr>
+        <h3>ACTIVATE</h3>
+        <p>After successfull installation click on <em>Activate</em> or go to <em>Appearance &#8594; Themes</em> and click on <em>Activate</em> to activate the newly installed theme.</p>
+        <p>Next you will see a new submenu item <em>Appearance &#8594; RISE Options</em>. Use the submenu items <em>RISE Options</em> and menu <em>Portfolio</em> to manage the theme settings.</p>
+		<br><br><br><br><br><br><br>
+        <hr>
+        <p style="color:red">After activation, you should see the VALERA Theme at the top of the admin panel:</p>
+      </div>
+
+<div class="span9">
+<pre class="prettyprint linenums">
+<img src="images/install-theme.png" alt="" /><br>
+<img src="images/activate-theme.png" alt="" /><br>
+<img src="images/activate-theme.png" alt="" />
+</pre>
+
+      </div><div class="span12">
+      <h4><br/><br/>Reset your options</h4>	
+      			    			    
+				<p style=" border:1px solid red; text-align:center; padding:10px; color:red">Important!<br/>For first time activation, you need to hit <em>Options Reset</em> to store your default options in the database and then hit <em>Save All Changes</em> (Under menu <em>Appearance</em> &#8594; <em>RISE Options</em>). </p>			    
+			    <img src="images/options-reset.png" alt="" />
+        </div>
+        </div>
+
+    <hr />
+
+<div class="row">
+    <div class="span4">
+<h4 id="port">Add a new project to a Portfolio</h4>
+				<p>Log in to your WordPress Administration Panel (Dashboard).</p>
+				<p>Go to <em>Portfolio</em> section and click <em>Add New</em>.</p>
+				<p>Fill the following fields:</p>
+				<ul>
+					<li>Name the new project</li>
+					<li>Project Description</li>
+					<li>Category of project</li>
+					<li>Set featured image</li>	
+                    <li>Set image, or up to 3 images fo slider or vido code</li>									
+					<li>Set adittional information</li>					
+				</ul>
+				<p>Functions are no different from those, that you use when creating a new post or static pages.</p>
+				<p>If you need a new category, click <em>Add New Category</em> and type the name of the category.</p>
+				<p>To enable or disable comments on your draft, select or uncheck the option <em>Allow Comments</em>, which is under the description of your new project.</p>
+				<p>To add an image to your project, click on the link <em>Set featured image</em> and upload a new image or select exists image from Media library.</p>
+				<p>Once all fields are filled, click on <em>Publish</em>.</p>
+			    </div>
+
+<div class="span8">
+<pre class="prettyprint linenums">
+<img src="images/portfolio-add-new.jpg" alt="" />
+</pre>
+      </div>
+        </div>
+
+  </section> <!-- Markup -->
+      
+<section>
+<h2 id="short"><colored>Buttons</colored></h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Button</th>
+        <th>Shortcode</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr>
+        <td><button class="mybutton" href="#">Unlimited</button></td>
+        <td><code>&#91;mybtn url="#"&#93;Text&#91;/mybtn&#93;</code></td>
+        <td>Button with YUOR colors</td>
+      </tr>
+      <tr>
+        <td><button class="btn" href="#">Default</button></td>
+        <td><code>&#91;btn url="#"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Standard gray button with gradient</td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary" href="#">Primary</button></td>
+        <td><code>&#91;btn url="#" style="btn-primary"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Provides extra visual weight and identifies the primary action in a set of buttons</td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-info" href="#">Info</button></td>
+        <td><code>&#91;btn url="#" style="btn-info"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Used as an alternate to the default styles</td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-success" href="#">Success</button></td>
+        <td><code>&#91;btn url="#" style="btn-success"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Indicates a successful or positive action</td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-warning" href="#">Warning</button></td>
+        <td><code>&#91;btn url="#" style="btn-warning"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Indicates caution should be taken with this action</td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-danger" href="#">Danger</button></td>
+        <td><code>&#91;btn url="#" style="btn-danger"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Indicates a dangerous or potentially negative action</td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-inverse" href="#">Inverse</button></td>
+        <td><code>&#91;btn url="#" style="btn-inverse"&#93;Text&#91;/btn&#93;</code></td>
+        <td>Alternate dark gray button, not tied to a semantic action or use</td>
+      </tr>
+     <tr>
+        <td><button class="btn btn-inverse" href="#"><i class="icon-ok icon-white"></i></button></td>
+        <td><code>&#91;btn url="#" style="btn-inverse"&#93;&#91;icon image="icon-ok" style="icon-white"&#93;&#91;/btn&#93;</code></td>
+        <td>Button with incons</td>
+      </tr>
+    </tbody>
+  </table>
+<h3><colored>///</colored> Multiple sizes</h3>
+<table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Button</th>
+        <th>Shortcode</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td><button class="btn btn-large" href="#">Large</button></td>
+        <td><code>&#91;btn size="large" url="#"&#93;Large&#91;/btn&#93;</code></td>
+      </tr>
+      <tr>
+        <td><button class="btn" href="#">Default</button></td>
+        <td><code>&#91;btn url="#"&#93;Text&#91;/btn&#93;</code></td>
+      </tr>      
+      <tr>
+        <td><button class="btn btn-small" href="#">Small</button></td>
+        <td><code>&#91;btn size="small" url="#"&#93;Small&#91;/btn&#93;</code></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-mini" href="#">Mini</button></td>
+        <td><code>&#91;btn size="mini" url="#"&#93;Mini&#91;/btn&#93;</code></td>
+      </tr>
+    </tbody>
+  </table>
+<section>
+<h2><colored>Separators</colored></h3>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Separator</th>
+        <th>Shortcode</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td><hr></td>
+        <td><code>&#91;hr&#93;</code></td>
+      </tr>
+     <tr>
+        <td><hr style="dash"></td>
+        <td><code>&#91;hr style="dash"&#93;</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+<!-- Icons
+================================================== -->
+<section id="icons">
+  <div class="page-header">
+    <h2 class="colored">Icons <small>Graciously provided by <a href="http://glyphicons.com" target="_blank">Glyphicons</a></small></h2>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <ul class="the-icons">
+        <li><i class="icon-glass"></i> icon-glass</li>
+        <li><i class="icon-music"></i> icon-music</li>
+        <li><i class="icon-search"></i> icon-search</li>
+        <li><i class="icon-envelope"></i> icon-envelope</li>
+        <li><i class="icon-heart"></i> icon-heart</li>
+        <li><i class="icon-star"></i> icon-star</li>
+        <li><i class="icon-star-empty"></i> icon-star-empty</li>
+        <li><i class="icon-user"></i> icon-user</li>
+        <li><i class="icon-film"></i> icon-film</li>
+        <li><i class="icon-th-large"></i> icon-th-large</li>
+        <li><i class="icon-th"></i> icon-th</li>
+        <li><i class="icon-th-list"></i> icon-th-list</li>
+        <li><i class="icon-ok"></i> icon-ok</li>
+        <li><i class="icon-remove"></i> icon-remove</li>
+        <li><i class="icon-zoom-in"></i> icon-zoom-in</li>
+        <li><i class="icon-zoom-out"></i> icon-zoom-out</li>
+        <li><i class="icon-off"></i> icon-off</li>
+        <li><i class="icon-signal"></i> icon-signal</li>
+        <li><i class="icon-cog"></i> icon-cog</li>
+        <li><i class="icon-trash"></i> icon-trash</li>
+        <li><i class="icon-home"></i> icon-home</li>
+        <li><i class="icon-file"></i> icon-file</li>
+        <li><i class="icon-time"></i> icon-time</li>
+        <li><i class="icon-road"></i> icon-road</li>
+        <li><i class="icon-download-alt"></i> icon-download-alt</li>
+        <li><i class="icon-download"></i> icon-download</li>
+        <li><i class="icon-upload"></i> icon-upload</li>
+        <li><i class="icon-inbox"></i> icon-inbox</li>
+        <li><i class="icon-play-circle"></i> icon-play-circle</li>
+        <li><i class="icon-repeat"></i> icon-repeat</li>
+      </ul>
+    </div>
+    <div class="span3">
+      <ul class="the-icons">
+        <li><i class="icon-refresh"></i> icon-refresh</li>
+        <li><i class="icon-list-alt"></i> icon-list-alt</li>
+        <li><i class="icon-lock"></i> icon-lock</li>
+        <li><i class="icon-flag"></i> icon-flag</li>
+        <li><i class="icon-headphones"></i> icon-headphones</li>
+        <li><i class="icon-volume-off"></i> icon-volume-off</li>
+        <li><i class="icon-volume-down"></i> icon-volume-down</li>
+        <li><i class="icon-volume-up"></i> icon-volume-up</li>
+        <li><i class="icon-qrcode"></i> icon-qrcode</li>
+        <li><i class="icon-barcode"></i> icon-barcode</li>
+        <li><i class="icon-tag"></i> icon-tag</li>
+        <li><i class="icon-tags"></i> icon-tags</li>
+        <li><i class="icon-book"></i> icon-book</li>
+        <li><i class="icon-bookmark"></i> icon-bookmark</li>
+        <li><i class="icon-print"></i> icon-print</li>
+        <li><i class="icon-camera"></i> icon-camera</li>
+        <li><i class="icon-font"></i> icon-font</li>
+        <li><i class="icon-bold"></i> icon-bold</li>
+        <li><i class="icon-italic"></i> icon-italic</li>
+        <li><i class="icon-text-height"></i> icon-text-height</li>
+        <li><i class="icon-text-width"></i> icon-text-width</li>
+        <li><i class="icon-align-left"></i> icon-align-left</li>
+        <li><i class="icon-align-center"></i> icon-align-center</li>
+        <li><i class="icon-align-right"></i> icon-align-right</li>
+        <li><i class="icon-align-justify"></i> icon-align-justify</li>
+        <li><i class="icon-list"></i> icon-list</li>
+        <li><i class="icon-indent-left"></i> icon-indent-left</li>
+        <li><i class="icon-indent-right"></i> icon-indent-right</li>
+        <li><i class="icon-facetime-video"></i> icon-facetime-video</li>
+        <li><i class="icon-picture"></i> icon-picture</li>
+      </ul>
+    </div>
+    <div class="span3">
+      <ul class="the-icons">
+        <li><i class="icon-pencil"></i> icon-pencil</li>
+        <li><i class="icon-map-marker"></i> icon-map-marker</li>
+        <li><i class="icon-adjust"></i> icon-adjust</li>
+        <li><i class="icon-tint"></i> icon-tint</li>
+        <li><i class="icon-edit"></i> icon-edit</li>
+        <li><i class="icon-share"></i> icon-share</li>
+        <li><i class="icon-check"></i> icon-check</li>
+        <li><i class="icon-move"></i> icon-move</li>
+        <li><i class="icon-step-backward"></i> icon-step-backward</li>
+        <li><i class="icon-fast-backward"></i> icon-fast-backward</li>
+        <li><i class="icon-backward"></i> icon-backward</li>
+        <li><i class="icon-play"></i> icon-play</li>
+        <li><i class="icon-pause"></i> icon-pause</li>
+        <li><i class="icon-stop"></i> icon-stop</li>
+        <li><i class="icon-forward"></i> icon-forward</li>
+        <li><i class="icon-fast-forward"></i> icon-fast-forward</li>
+        <li><i class="icon-step-forward"></i> icon-step-forward</li>
+        <li><i class="icon-eject"></i> icon-eject</li>
+        <li><i class="icon-chevron-left"></i> icon-chevron-left</li>
+        <li><i class="icon-chevron-right"></i> icon-chevron-right</li>
+        <li><i class="icon-plus-sign"></i> icon-plus-sign</li>
+        <li><i class="icon-minus-sign"></i> icon-minus-sign</li>
+        <li><i class="icon-remove-sign"></i> icon-remove-sign</li>
+        <li><i class="icon-ok-sign"></i> icon-ok-sign</li>
+        <li><i class="icon-question-sign"></i> icon-question-sign</li>
+        <li><i class="icon-info-sign"></i> icon-info-sign</li>
+        <li><i class="icon-screenshot"></i> icon-screenshot</li>
+        <li><i class="icon-remove-circle"></i> icon-remove-circle</li>
+        <li><i class="icon-ok-circle"></i> icon-ok-circle</li>
+        <li><i class="icon-ban-circle"></i> icon-ban-circle</li>
+      </ul>
+    </div>
+    <div class="span3">
+      <ul class="the-icons">
+        <li><i class="icon-arrow-left"></i> icon-arrow-left</li>
+        <li><i class="icon-arrow-right"></i> icon-arrow-right</li>
+        <li><i class="icon-arrow-up"></i> icon-arrow-up</li>
+        <li><i class="icon-arrow-down"></i> icon-arrow-down</li>
+        <li><i class="icon-share-alt"></i> icon-share-alt</li>
+        <li><i class="icon-resize-full"></i> icon-resize-full</li>
+        <li><i class="icon-resize-small"></i> icon-resize-small</li>
+        <li><i class="icon-plus"></i> icon-plus</li>
+        <li><i class="icon-minus"></i> icon-minus</li>
+        <li><i class="icon-asterisk"></i> icon-asterisk</li>
+        <li><i class="icon-exclamation-sign"></i> icon-exclamation-sign</li>
+        <li><i class="icon-gift"></i> icon-gift</li>
+        <li><i class="icon-leaf"></i> icon-leaf</li>
+        <li><i class="icon-fire"></i> icon-fire</li>
+        <li><i class="icon-eye-open"></i> icon-eye-open</li>
+        <li><i class="icon-eye-close"></i> icon-eye-close</li>
+        <li><i class="icon-warning-sign"></i> icon-warning-sign</li>
+        <li><i class="icon-plane"></i> icon-plane</li>
+        <li><i class="icon-calendar"></i> icon-calendar</li>
+        <li><i class="icon-random"></i> icon-random</li>
+        <li><i class="icon-comment"></i> icon-comment</li>
+        <li><i class="icon-magnet"></i> icon-magnet</li>
+        <li><i class="icon-chevron-up"></i> icon-chevron-up</li>
+        <li><i class="icon-chevron-down"></i> icon-chevron-down</li>
+        <li><i class="icon-retweet"></i> icon-retweet</li>
+        <li><i class="icon-shopping-cart"></i> icon-shopping-cart</li>
+        <li><i class="icon-folder-close"></i> icon-folder-close</li>
+        <li><i class="icon-folder-open"></i> icon-folder-open</li>
+        <li><i class="icon-resize-vertical"></i> icon-resize-vertical</li>
+        <li><i class="icon-resize-horizontal"></i> icon-resize-horizontal</li>
+      </ul>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="span4">
+      <h3><span class="colored">///</span> Built as a sprite</h3>
+      <p>Instead of making every icon an extra request, we've compiled them into a sprite&mdash;a bunch of images in one file that uses CSS to position the images with <code>background-position</code>. This is the same method we use on Twitter.com and it has worked well for us.</p>
+      <p>All icons classes are prefixed with <code>.icon-</code> for proper namespacing and scoping, much like our other components. This will help avoid conflicts with other tools.</p>
+      <p><a href="http://glyphicons.com" target="_blank">Glyphicons</a> has granted us use of the Halflings set in our open-source toolkit so long as we provide a link and credit here in the docs. Please consider doing the same in your projects.</p>
+    </div>
+    <div class="span4">
+      <h3><span class="colored">///</span> How to use</h3>
+      <p>Bootstrap uses an <code>&#91;i&#93;</code> tag for all icons, but they have no case class&mdash;only a shared prefix. To use, place the following code just about anywhere:</p>
+<pre class="prettyprint linenums">
+&#91;i image="icon-search"&#93;&#91;/i&#93;
+</pre>
+      <p>There are also styles available for inverted (white) icons, made ready with one extra class:</p>
+<pre class="prettyprint linenums">
+&#91;i iamge="icon-search" style="icon-white"&#93;&#91;/i&#93;
+</pre>
+      <p>There are 120 classes to choose from for your icons. Just add an <code>&#91;i&#93;</code> tag with the right classes and you're set. You can find the full list in <strong>sprites.less</strong> or right here in this document.</p>
+      <p>
+        <span class="label label-info">Heads up!</span>
+        When using beside strings of text, as in buttons or nav links, be sure to leave a space after the <code>&#91;i&#93;</code> tag for proper spacing.
+      </p>
+    </div>
+    <div class="span4">
+      <h3><span class="colored">///</span> Use cases</h3>
+      <p>Icons are great, but where would one use them? Here are a few ideas:</p>
+      <ul>
+        <li>As visuals for your sidebar navigation</li>
+        <li>For a purely icon-driven navigation</li>
+        <li>For buttons to help convey the meaning of an action</li>
+        <li>With links to share context on a user's destination</li>
+      </ul>
+      <p>Essentially, anywhere you can put an <code>&#91;i&#93;</code> tag, you can put an icon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Labels
+================================================== -->
+<section id="labels">
+ <h2 class="colored">Inline labels <small>Label and annotate text</small></h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Labels</th>
+        <th>Markup</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="label">Default</span>
+        </td>
+        <td>
+          <code>&#91;label&#93;Default&#91;/label&#93;</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="label label-success">Success</span>
+        </td>
+        <td>
+          <code>&#91;label style="label-success"&#93;Success&#91;/label&#93;</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="label label-warning">Warning</span>
+        </td>
+        <td>
+          <code>&#91;label style="label-warning"&#93;Warning&#91;/label&#93;</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="label label-important">Important</span>
+        </td>
+        <td>
+          <code>&#91;label style="label-important"&#93;Important&#91;/label&#93;</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="label label-info">Info</span>
+        </td>
+        <td>
+          <code>&#91;label style="label-info"&#93;Info&#91;/label&#93;</code>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="label label-inverse">Inverse</span>
+        </td>
+        <td>
+          <code>&#91;label style="label-inverse"&#93;Inverse&#91;/label&#93;</code>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+
+<!-- Badges
+================================================== -->
+<section id="badges">
+    <h2 class="colored">Badges <small>Indicators and unread counts</small></h2>
+  <div class="row">
+    <div class="span4">
+      <h3><span class="colored">///</span> About</h3>
+      <p>Badges are small, simple components for displaying an indicator or count of some sort. They're commonly found in email clients like Mail.app or on mobile apps for push notifications.</p>
+    </div><!-- /.span -->
+    <div class="span8">
+      <h3><span class="colored">///</span> Available classes</h3>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Example</th>
+            <th>Markup</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Default
+            </td>
+            <td>
+              <span class="badge">1</span>
+            </td>
+            <td>
+              <code>&#91;badge&#93;1&#91;/badge&#93;</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Success
+            </td>
+            <td>
+              <span class="badge badge-success">2</span>
+            </td>
+            <td>
+              <code>&#91;badge style="badge-success"&#93;2&#91;/badge&#93;</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Warning
+            </td>
+            <td>
+              <span class="badge badge-warning">4</span>
+            </td>
+            <td>
+              <code>&#91;badge style="badge-warning"&#93;4&#91;/badge&#93;</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Error
+            </td>
+            <td>
+              <span class="badge badge-error">6</span>
+            </td>
+            <td>
+              <code>&#91;badge style="badge-error"&#93;6&#91;/badge&#93;</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Info
+            </td>
+            <td>
+              <span class="badge badge-info">8</span>
+            </td>
+            <td>
+              <code>&#91;badge style="badge-info"&#93;8&#91;/badge&#93;</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Inverse
+            </td>
+            <td>
+              <span class="badge badge-inverse">10</span>
+            </td>
+            <td>
+              <code>&#91;badge style="badge-inverse"&#93;10&#91;/badge&#93;</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+</section>
+
+
+
+
+
+<!-- Alerts & Messages
+================================================== -->
+<section id="alerts">
+  <h2><colored>Allerts</colored></h2>
+  <div class="row">
+<div class="span3">
+      <h4>Default</h4>
+      <div class="alert"><a class="close" data-dismiss="alert">&times;</a><strong>Oh snap!</strong> Change a few things up and try submitting again.</div>
+<pre class="prettyprint linenums">
+&#91;alert &#93;
+  ...
+&#91;/alert&#93;
+</pre>
+    </div>
+    <div class="span3">
+      <h4>Error or danger</h4>
+      <div class="alert alert-error"><a class="close" data-dismiss="alert">&times;</a><strong>Oh snap!</strong> Change a few things up and try submitting again. </div>
+<pre class="prettyprint linenums">
+&#91;alert style="alert-error"&#93;
+  ...
+&#91;/alert&#93;
+</pre>
+    </div>
+    <div class="span3">
+      <h4>Success</h4>
+      <div class="alert alert-success"><a class="close" data-dismiss="alert">&times;</a><strong>Well done!</strong> You successfully read this important alert message.</div>
+<pre class="prettyprint linenums">
+&#91;alert style="alert-success"&#93;
+  ...
+&#91;/alert&#93;
+</pre>
+    </div>
+    <div class="span3">
+      <h4>Information</h4>
+      <div class="alert alert-info"><a class="close" data-dismiss="alert">&times;</a><strong>Heads up!</strong> This alert needs your attention, but it's not super important.</div>
+<pre class="prettyprint linenums">
+&#91;alert style="alert-info"&#93;
+  ...
+&#91;/alert&#93;
+</pre>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- Progress bars
+================================================== -->
+<section id="bars">
+  <h2><colored>Progress bars</colored></h2>
+  <div class="row">
+<div class="span3">
+      <progress_bar width="20%"></progress_bar> <progress_bar width="80%"></progress_bar> <progress_bar width="100%"></progress_bar>
+<pre class="prettyprint linenums">
+&#91;progress_bar width="20%"&#93;
+&#91;/progress_bar&#93;
+</pre>
+    </div>
+    <div class="span3">
+      <progress_bar style="progress-success" width="20%"></progress_bar> <progress_bar style="progress-success" width="80%"></progress_bar> <progress_bar style="progress-success" width="100%"></progress_bar>
+<pre class="prettyprint linenums">
+&#91;progress_bar style="progress-success" width="20%"&#93;
+&#91;/progress_bar&#93;
+</pre>
+    </div>
+    <div class="span3">
+      <progress_bar style="progress-warning" width="20%"></progress_bar> <progress_bar style="progress-warning" width="80%"></progress_bar> <progress_bar style="progress-warning" width="100%"></progress_bar>
+<pre class="prettyprint linenums">
+&#91;progress_bar style="progress-warning" width="20%"&#93;
+&#91;/progress_bar&#93;
+</pre>
+    </div>
+    <div class="span3">
+      <progress_bar style="progress-danger" width="20%"></progress_bar> <progress_bar style="progress-danger" width="80%"></progress_bar> <progress_bar style="progress-danger" width="100%"></progress_bar>
+<pre class="prettyprint linenums">
+&#91;progress_bar style="progress-danger" width="20%"&#93;
+&#91;/progress_bar&#93;
+</pre>
+    </div>
+  </div>
+
+</section>
+
+
+
+
+<!-- Miscellaneous
+================================================== -->
+<section id="misc">
+    <h2 class="colored">Wells</h2>
+  <div class="row">
+<div class="span4"><p>Use the well as a simple effect on an element to give it an inset effect.</p></div>
+    <div class="span4">
+      
+      <div class="well">
+        Look, I'm in a well!
+      </div>
+    </div><div class="span4"><pre class="prettyprint linenums">
+&#91;well&#93;
+  ...
+&#91;/well&#93;
+</pre></div>
+<img src="images/short1.jpg" alt="" />
+  </div><!--/row-->
+</section>
+
+
+
+
+
+
+
+
+<section id="styles">
+    <div class="page-header">
+       <h1>Styles <small>Styles customization and highlights</small></h1>
+     </div>
+
+ <div class="alert alert-info"> <b>Heads up!</b> I'm using two CSS files in this theme. The first one is a generic reset file. Many browser interpret the default behavior of html elements differently. By using a general reset CSS file, we can work round this. This file also contains some general styling, such as anchor tag colors, font-sizes, etc. Keep in mind, that these values might be overridden somewhere else in the file. </div>
+
+<div class="row">
+    <div class="span3">
+  <h3>Stylesheets</h3>
+  <p>Here's a list of the stylesheet files I'm using with this template, you can find more information opening each file:</p>
+</div>
+<div class="span9">
+        <table class="table table-bordered table-striped">
+              <thead>
+            <tr>
+                  <th>File Name</th>
+                  <th>Description</th>
+                </tr>
+          </thead>
+              <tbody>
+            <tr>
+                  <td><code>bootstrap.css</code></td>
+                  <td>main grid css file.</td>
+                </tr>
+            <tr>
+                  <td><code>bootstrap-responsive.css</code></td>
+                  <td>you dont need to edit this file</td>
+                </tr>
+            <tr>
+                  <td><code>docs.css</code></td>
+                  <td>main css file.</td>
+                </tr>
+          </tbody>
+            </table>
+      </div>
+        </div>
+    <hr />
+    <div class="row">
+	<div class="span3">
+	   <h3>CSS Structure</h3>
+	   <p>The second file contains all of the specific stylings for the page. The file is separated into sections using:</p>
+	</div>
+
+<div class="span9">	
+<pre class="prettyprint linenums">
+/* ===  Section === */
+
+some code
+
+/* ===  Section === */
+
+some code
+
+/* ===  Section === */
+
+some code
+
+etc, etc.
+					</pre>
+      </div>
+        </div>
+<!-- Grid system
+================================================== -->
+<section id="gridSystem">
+  <div class="page-header">
+    <h1 class="colored">Default grid system <small>12 columns with a responsive twist</small></h1>
+  </div>
+    <h2 class="colored">Default grid system <small>12 columns with a responsive twist</small></h2>
+
+  <div class="row show-grid">
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+    <div class="span1">1</div>
+  </div>
+  <div class="row show-grid">
+    <div class="span4">4</div>
+    <div class="span4">4</div>
+    <div class="span4">4</div>
+  </div>
+  <div class="row show-grid">
+    <div class="span4">4</div>
+    <div class="span8">8</div>
+  </div>
+  <div class="row show-grid">
+    <div class="span6">6</div>
+    <div class="span6">6</div>
+  </div>
+  <div class="row show-grid">
+    <div class="span12">12</div>
+  </div>
+  <div class="row">
+    <div class="span4">
+      <p>The default grid system provided as part of Bootstrap is a <strong>940px-wide, 12-column grid</strong>.</p>
+      <p>It also has four responsive variations for various devices and resolutions: phone, tablet portrait, table landscape and small desktops, and large widescreen desktops.</p>
+    </div><!-- /.span -->
+    <div class="span4">
+<pre class="prettyprint linenums">
+&#91;row&#93;
+  &#91;span4&#93;...&#91;/span4&#93;
+  &#91;span4&#93;...&#91;/span4&#93;
+&#91;/row&#93;
+</pre>
+    </div><!-- /.span -->
+    <div class="span4">
+      <p>As shown here, a basic layout can be created with two "columns," each spanning a number of the 12 foundational columns we defined as part of our grid system.</p>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+
+  <br>
+
+  
+
+  <h2><span class="colored">///</span> Nesting columns</h2>
+  <div class="row">
+    <div class="span6">
+      <p>With the static (non-fluid) grid system in Bootstrap, nesting is easy. To nest your content, just add a new <code>&#91;row&#93;</code> and set of <code>&#91;span*&#93;</code> columns within an existing <code>&#91;span*&#93;</code> column.</p>
+      <h3>Example</h3>
+      <p>Nested rows should include a set of columns that add up to the number of columns of it's parent. For example, two nested <code>&#91;span3&#93;</code> columns should be placed within a <code>&#91;span6&#93;</code>.</p>
+      <div class="row show-grid">
+        <div class="span6">
+          Level 1 of column
+          <div class="row show-grid">
+            <div class="span3">
+              Level 2
+            </div>
+            <div class="span3">
+              Level 2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.span -->
+    <div class="span6">
+<pre class="prettyprint linenums">
+&#91;row&#93;
+  &#91;span12&#93;
+    Level 1 of column
+    &#91;row&#93;
+      &#91;span6&#93;Level 2&#91;/span6&#93;
+      &#91;span6&#93;Level 2&#91;/span6&#93;
+    &#91;/row&#93;
+  &#91;/span12&#93;
+&#91;/row&#93;
+</pre>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+
+
+
+
+
+</section>
+
+
+
+<!-- Customizaton
+================================================== -->
+<section id="gridCustomization">
+  <div class="page-header">
+    <h2 class="colored">Grid customization</h2>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Default value</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>@gridColumns</code></td>
+        <td>12</td>
+        <td>Number of columns</td>
+      </tr>
+      <tr>
+        <td><code>@gridColumnWidth</code></td>
+        <td>60px</td>
+        <td>Width of each column</td>
+      </tr>
+      <tr>
+        <td><code>@gridGutterWidth</code></td>
+        <td>20px</td>
+        <td>Negative space between columns</td>
+      </tr>
+      <tr>
+        <td><code>@siteWidth</code></td>
+        <td><em>Computed sum of all columns and gutters</em></td>
+        <td>Counts number of columns and gutters to set width of the <code>.container-fixed()</code> mixin</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="span4">
+      <h3>Variables in LESS</h3>
+      <p>Built into Bootstrap are a handful of variables for customizing the default 940px grid system, documented above. All variables for the grid are stored in variables.less.</p>
+    </div><!-- /.span -->
+    <div class="span4">
+      <h3>How to customize</h3>
+      <p>Modifying the grid means changing the three <code>@grid*</code> variables and recompiling Bootstrap. Change the grid variables in variables.less and use one of the <a href="less.html#compiling">four ways documented to recompile</a>. If you're adding more columns, be sure to add the CSS for those in grid.less.</p>
+    </div><!-- /.span -->
+    <div class="span4">
+      <h3>Staying responsive</h3>
+      <p>Customization of the grid only works at the default level, the 940px grid. To maintain the responsive aspects of Bootstrap, you'll also have to customize the grids in responsive.less.</p>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+
+</section>
+
+
+
+
+
+
+<!-- Responsive design
+================================================== -->
+<section id="responsive">
+  <div class="page-header">
+    <h2 class="colored">Responsive design <small>Media queries for various devices and resolutions</small></h2>
+  </div>
+  <!-- Supported devices -->
+  <div class="row">
+    <div class="span4">
+      <p><img src="http://html.orange-idea.com/valera/assets/img/responsive-illustrations.png" alt="Responsive devices"></p>
+      <h3>What they do</h3>
+      <p>Media queries allow for custom CSS based on a number of conditions&mdash;ratios, widths, display type, etc&mdash;but usually focuses around <code>min-width</code> and <code>max-width</code>.</p>
+      <ul>
+        <li>Modify the width of column in our grid</li>
+        <li>Stack elements instead of float wherever necessary</li>
+        <li>Resize headings and text to be more appropriate for devices</li>
+      </ul>
+      <p>Use media queries responsibly and only as a start to your mobile audiences. For larger projects, do consider dedicated code bases and not layers of media queries.</p>
+    </div><!-- /.span -->
+    <div class="span8">
+      <h2><span class="colored">///</span> Supported devices</h2>
+      <p>Bootstrap supports a handful of media queries in a single file to help make your projects more appropriate on different devices and screen resolutions. Here's what's included:</p>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Layout width</th>
+            <th>Column width</th>
+            <th>Gutter width</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Smartphones</td>
+            <td>480px and below</td>
+            <td class="muted" colspan="2">Fluid columns, no fixed widths</td>
+          </tr>
+          <tr>
+            <td>Smartphones to tablets</td>
+            <td>767px and below</td>
+            <td class="muted" colspan="2">Fluid columns, no fixed widths</td>
+          </tr>
+          <tr>
+            <td>Portrait tablets</td>
+            <td>768px and above</td>
+            <td>42px</td>
+            <td>20px</td>
+          </tr>
+          <tr>
+            <td>Default</td>
+            <td>980px and up</td>
+            <td>60px</td>
+            <td>20px</td>
+          </tr>
+          <tr>
+            <td>Large display</td>
+            <td>1200px and up</td>
+            <td>70px</td>
+            <td>30px</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Requires meta tag</h3>
+      <p>To ensure devices display responsive pages properly, include the viewport meta tag.</p>
+      <pre class="prettyprint linenums">&#91;meta name="viewport" content="width=device-width, initial-scale=1.0"&#93;</pre>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+
+  <br>
+
+  <!-- Media query code -->
+  <h2><span class="colored">///</span> Using the media queries</h2>
+  <div class="row">
+    <div class="span4">
+      <p>Bootstrap doesn't automatically include these media queries, but understanding and adding them is very easy and requires minimal setup. You have a few options for including the responsive features of Bootstrap:</p>
+      <ol>
+        <li>Use the compiled responsive version, bootstrap-responsive.css</li>
+        <li>Add @import "responsive.less" and recompile Bootstrap</li>
+        <li>Modify and recompile responsive.less as a separate file</li>
+      </ol>
+      <p><strong>Why not just include it?</strong> Truth be told, not everything needs to be responsive. Instead of encouraging developers to remove this feature, we figure it best to enable it.</p>
+    </div><!-- /.span -->
+    <div class="span8">
+<pre class="prettyprint linenums">
+  // Landscape phones and down
+  @media (max-width: 480px) { ... }
+
+  // Landscape phone to portrait tablet
+  @media (max-width: 768px) { ... }
+
+  // Portrait tablet to landscape and desktop
+  @media (min-width: 768px) and (max-width: 980px) { ... }
+
+  // Large desktop
+  @media (min-width: 1200px) { .. }
+</pre>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+  <br>
+
+  <!-- Responsive utility classes -->
+  <h2><span class="colored">///</span> Responsive utility classes</h2>
+  <div class="row">
+    <div class="span4">
+      <h3>What are they</h2>
+      <p>For faster mobile-friendly development, use these basic utility classes for showing and hidding content by device.</p>
+      <h3>When to use</h2>
+      <p>Use on a limited basis and avoid creating entirely different versions of the same site. Instead, use them to complement each device's presentation.</p>
+      <p>For example, you might show a <code>&#91;select&#93;</code> element for nav on mobile layouts, but not on tablets or desktops.</p>
+    </div><!-- /.span -->
+    <div class="span8">
+      <h3>Support classes</h3>
+      <p>Shown here is a table of the classes we support and their effect on a given media query layout (labeled by device). They can be found in <code>responsive.less</code>.</p>
+      <table class="table table-bordered table-striped responsive-utilities">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Phones <small>480px and below</small></th>
+            <th>Tablets <small>767px and below</small></th>
+            <th>Desktops <small>768px and above</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><code>.visible-phone</code></th>
+            <td class="is-visible">Visible</td>
+            <td class="is-hidden">Hidden</td>
+            <td class="is-hidden">Hidden</td>
+          </tr>
+          <tr>
+            <th><code>.visible-tablet</code></th>
+            <td class="is-hidden">Hidden</td>
+            <td class="is-visible">Visible</td>
+            <td class="is-hidden">Hidden</td>
+          </tr>
+          <tr>
+            <th><code>.visible-desktop</code></th>
+            <td class="is-hidden">Hidden</td>
+            <td class="is-hidden">Hidden</td>
+            <td class="is-visible">Visible</td>
+          </tr>
+          <tr>
+            <th><code>.hidden-phone</code></th>
+            <td class="is-hidden">Hidden</td>
+            <td class="is-visible">Visible</td>
+            <td class="is-visible">Visible</td>
+          </tr>
+          <tr>
+            <th><code>.hidden-tablet</code></th>
+            <td class="is-visible">Visible</td>
+            <td class="is-hidden">Hidden</td>
+            <td class="is-visible">Visible</td>
+          </tr>
+          <tr>
+            <th><code>.hidden-desktop</code></th>
+            <td class="is-visible">Visible</td>
+            <td class="is-visible">Visible</td>
+            <td class="is-hidden">Hidden</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Test case</h3>
+      <p>Resize your browser or load on different devices to test the above clases.</p>
+      <h4>Visible on...</h4>
+      <ul class="responsive-utilities-test">
+        <li>Phone<span class="visible-phone">&#10004; Phone</span></li>
+        <li>Tablet<span class="visible-tablet">&#10004; Tablet</span></li>
+        <li>Desktop<span class="visible-desktop">&#10004; Desktop</span></li>
+      </ul>
+      <h4>Hidden on...</h4>
+      <ul class="responsive-utilities-test hidden-on">
+        <li>Phone<span class="hidden-phone">&#10004; Phone</span></li>
+        <li>Tablet<span class="hidden-tablet">&#10004; Tablet</span></li>
+        <li>Desktop<span class="hidden-desktop">&#10004; Desktop</span></li>
+      </ul>
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+
+      
+  <div class="row">
+    <div class="span4">
+    </div><!-- /.span -->
+  </div><!-- /.row -->
+</section>
+</section>        
+        <!-- Typography
+================================================== -->
+<section id="typography">
+  <div class="page-header">
+    <h1 class="colored">Typography <small>Headings, paragraphs, lists, and other inline type elements</small></h1 class="colored">
+  </div>
+
+  <h2><span class="colored">///</span> Headings &amp; body copy</h2>
+
+  <!-- Headings & Paragraph Copy -->
+  <div class="row">
+    <div class="span4">
+      <h3>Typographic scale</h3>
+      <p>The entire typographic grid is based on two Less variables in our variables.less file: <code>@baseFontSize</code> and <code>@baseLineHeight</code>. The first is the base font-size used throughout and the second is the base line-height.</p>
+      <p>We use those variables, and some math, to create the margins, paddings, and line-heights of all our type and more.</p>
+    </div>
+    <div class="span4">
+      <h3>Example body text</h3>
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec sed odio dui.</p>
+    </div>
+    <div class="span4">
+      <div class="well">
+        <h1>h1. Heading 1</h1 class="colored">
+        <h2>h2. Heading 2</h2>
+        <h3>h3. Heading 3</h3>
+        <h4>h4. Heading 4</h4>
+        <h5>h5. Heading 5</h5>
+        <h6>h6. Heading 6</h6>
+      </div>
+    </div>
+  </div>
+
+  <!-- Misc Elements -->
+  <h2><span class="colored">///</span> Emphasis, address, and abbreviation</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Element</th>
+        <th>Usage</th>
+        <th>Optional</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>&lt;strong&gt;</code>
+        </td>
+        <td>
+          For emphasizing a snippet of text with <strong>important</strong>
+        </td>
+        <td>
+          <span class="muted">None</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>&lt;em&gt;</code>
+        </td>
+        <td>
+          For emphasizing a snippet of text with <em>stress</em>
+        </td>
+        <td>
+          <span class="muted">None</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>&lt;abbr&gt;</code>
+        </td>
+        <td>
+          Wraps abbreviations and acronyms to show the expanded version on hover
+        </td>
+        <td>
+          <p>Include optional <code>title</code> attribute for expanded text</p>
+          Use <code>.initialism</code> class for uppercase abbreviations.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>&lt;address&gt;</code>
+        </td>
+        <td>
+          For contact information for its nearest ancestor or the entire body of work
+        </td>
+        <td>
+          Preserve formatting by ending all lines with <code>&lt;br&gt;</code>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <div class="span4">
+      <h3>Using emphasis</h3>
+      <p><a href="#">Fusce dapibus</a>, <strong>tellus ac cursus commodo</strong>, <em>tortor mauris condimentum nibh</em>, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum. Nulla vitae elit libero, a pharetra augue.</p>
+      <p><strong>Note:</strong> Feel free to use <code>&lt;b&gt;</code> and <code>&lt;i&gt;</code> in HTML5, but their usage has changed a bit. <code>&lt;b&gt;</code> is meant to highlight words or phrases without conveying additional importance while <code>&lt;i&gt;</code> is mostly for voice, technical terms, etc.</p>
+    </div>
+    <div class="span4">
+      <h3>Example addresses</h3>
+      <p>Here are two examples of how the <code>&lt;address&gt;</code> tag can be used:</p>
+      <address>
+        <strong>Twitter, Inc.</strong><br>
+        795 Folsom Ave, Suite 600<br>
+        San Francisco, CA 94107<br>
+        <abbr title="Phone">P:</abbr> (123) 456-7890
+      </address>
+      <address>
+        <strong>Full Name</strong><br>
+        <a href="mailto:#">first.last@gmail.com</a>
+      </address>
+    </div>
+    <div class="span4">
+      <h3>Example abbreviations</h3>
+      <p>Abbreviations with a <code>title</code> attribute have a light dotted bottom border and a help cursor on hover. This gives users extra indication something will be shown on hover.</p>
+      <p>Add the <code>initialism</code> class to an abbreviation to increase typographic harmony by giving it a slightly smaller text size.</p>
+      <p><abbr title="HyperText Markup Language" class="initialism">HTML</abbr> is the best thing since sliced bread.</p>
+      <p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>
+    </div>
+  </div>
+
+
+  <!-- Blockquotes -->
+  <h2><span class="colored">///</span> Blockquotes</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Element</th>
+        <th>Usage</th>
+        <th>Optional</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>&lt;blockquote&gt;</code>
+        </td>
+        <td>
+          Block-level element for quoting content from another source
+        </td>
+        <td>
+          <p>Add <code>cite</code> attribute for source URL</p>
+          Use <code>.pull-left</code> and <code>.pull-right</code> classes for floated options
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>&lt;small&gt;</code>
+        </td>
+        <td>
+          Optional element for adding a user-facing citation, typically an author with title of work
+        </td>
+        <td>
+          Place the <code>&lt;cite&gt;</code> around the title or name of source
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="span4">
+      <p>To include a blockquote, wrap <code>&lt;blockquote&gt;</code> around any <abbr title="HyperText Markup Language">HTML</abbr> as the quote. For straight quotes we recommend a <code>&lt;p&gt;</code>.</p>
+      <p>Include an optional <code>&lt;small&gt;</code> element to cite your source and you'll get an em dash <code>&amp;mdash;</code> before it for styling purposes.</p>
+    </div>
+    <div class="span8">
+<pre class="prettyprint linenums">
+&lt;blockquote&gt;
+  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis.&lt;/p&gt;
+  &lt;small&gt;Someone famous&lt;/small&gt;
+&lt;/blockquote&gt;
+</pre>
+    </div>
+  </div><!--/row-->
+
+  <h3>Example blockquotes</h3>
+  <div class="row">
+    <div class="span6">
+      <p>Default blockquotes are styled as such:</p>
+      <blockquote>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis.</p>
+        <small>Someone famous in <cite title="">Body of work</cite></small>
+      </blockquote>
+    </div>
+    <div class="span6">
+      <p>To float your blockquote to the right, add <code>class="pull-right"</code>:</p>
+      <blockquote class="pull-right">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis.</p>
+        <small>Someone famous in <cite title="">Body of work</cite></small>
+      </blockquote>
+    </div>
+  </div>
+
+
+  <!-- Lists -->
+  <h2 style="margin-top:45px;"><span class="colored">///</span> Lists</h2>
+  <div class="row">
+    <div class="span4">
+      <h3>Unordered</h3>
+      <p><code>&lt;ul&gt;</code></p>
+      <ul>
+        <li>Lorem ipsum dolor sit amet</li>
+        <li>Consectetur adipiscing elit</li>
+        <li>Integer molestie lorem at massa</li>
+        <li>Facilisis in pretium nisl aliquet</li>
+        <li>Nulla volutpat aliquam velit
+          <ul>
+            <li>Phasellus iaculis neque</li>
+            <li>Purus sodales ultricies</li>
+            <li>Vestibulum laoreet porttitor sem</li>
+            <li>Ac tristique libero volutpat at</li>
+          </ul>
+        </li>
+        <li>Faucibus porta lacus fringilla vel</li>
+        <li>Aenean sit amet erat nunc</li>
+        <li>Eget porttitor lorem</li>
+      </ul>
+    </div>
+    <div class="span4">
+      <h3>Unstyled</h3>
+      <p><code>&lt;ul class="unstyled"&gt;</code></p>
+      <ul class="unstyled">
+        <li>Lorem ipsum dolor sit amet</li>
+        <li>Consectetur adipiscing elit</li>
+        <li>Integer molestie lorem at massa</li>
+        <li>Facilisis in pretium nisl aliquet</li>
+        <li>Nulla volutpat aliquam velit
+          <ul>
+            <li>Phasellus iaculis neque</li>
+            <li>Purus sodales ultricies</li>
+            <li>Vestibulum laoreet porttitor sem</li>
+            <li>Ac tristique libero volutpat at</li>
+          </ul>
+        </li>
+        <li>Faucibus porta lacus fringilla vel</li>
+        <li>Aenean sit amet erat nunc</li>
+        <li>Eget porttitor lorem</li>
+      </ul>
+    </div>
+    <div class="span4">
+      <h3>Ordered</h3>
+      <p><code>&lt;ol&gt;</code></p>
+      <ol>
+        <li>Lorem ipsum dolor sit amet</li>
+        <li>Consectetur adipiscing elit</li>
+        <li>Integer molestie lorem at massa</li>
+        <li>Facilisis in pretium nisl aliquet</li>
+        <li>Nulla volutpat aliquam velit</li>
+        <li>Faucibus porta lacus fringilla vel</li>
+        <li>Aenean sit amet erat nunc</li>
+        <li>Eget porttitor lorem</li>
+      </ol>
+    </div>
+  </div><!-- /row -->
+  <br>
+  <div class="row">
+    <div class="span4">
+      <h3>Description</h3>
+      <p><code>&lt;dl&gt;</code></p>
+      <dl>
+        <dt>Description lists</dt>
+        <dd>A description list is perfect for defining terms.</dd>
+        <dt>Euismod</dt>
+        <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+        <dd>Donec id elit non mi porta gravida at eget metus.</dd>
+        <dt>Malesuada porta</dt>
+        <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+      </dl>
+    </div>
+    <div class="span8">
+      <h3>Horizontal description</h3>
+      <p><code>&lt;dl class="dl-horizontal"&gt;</code></p>
+      <dl class="dl-horizontal">
+        <dt>Description lists</dt>
+        <dd>A description list is perfect for defining terms.</dd>
+        <dt>Euismod</dt>
+        <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+        <dd>Donec id elit non mi porta gravida at eget metus.</dd>
+        <dt>Malesuada porta</dt>
+        <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+      </dl>
+    </div>
+  </div><!-- /row -->
+</section>
+
+
+
+<!-- Code
+================================================== -->
+<section id="code">
+  <div class="page-header">
+    <h1 class="colored">Code <small>Inline and block code snippets</small></h1 class="colored">
+  </div>
+  <div class="row">
+    <div class="span4">
+      <h2><span class="colored">///</span> Inline</h2>
+      <p>Wrap inline snippets of code with <code>&lt;code&gt;</code>.</p>
+<pre class="prettyprint linenums">
+For example, &lt;code&gt;section&lt;/code&gt; should be wrapped as inline.
+</pre>
+    </div><!--/span-->
+    <div class="span4">
+      <h2><span class="colored">///</span> Basic block</h2>
+      <p>Use <code>&lt;pre&gt;</code> for multiple lines of code. Be sure to escape any angle brackets in the code for proper rendering.</p>
+<pre>
+&lt;p&gt;Sample text here...&lt;/p&gt;
+</pre>
+<pre class="prettyprint linenums" style="margin-bottom: 9px;">
+&lt;pre&gt;
+  &amp;lt;p&amp;gt;Sample text here...&amp;lt;/p&amp;gt;
+&lt;/pre&gt;
+</pre>
+      <p><strong>Note:</strong> Be sure to keep code within <code>&lt;pre&gt;</code> tags as close to the left as possible; it will render all tabs.</p>
+      <p>You may optionally add the <code>.pre-scrollable</code> class which will set a max-height of 350px and provide a y-axis scrollbar.</p>
+    </div><!--/span-->
+    <div class="span4">
+      <h2><span class="colored">///</span> Google Prettify</h2>
+      <p>Take the same <code>&lt;pre&gt;</code> element and add two optional classes for enhanced rendering.</p>
+<pre class="prettyprint linenums" style="margin-bottom: 9px;">
+&lt;p&gt;Sample text here...&lt;/p&gt;
+</pre>
+<pre class="prettyprint linenums" style="margin-bottom: 9px;">
+&lt;pre class="prettyprint
+     linenums"&gt;
+  &amp;lt;p&amp;gt;Sample text here...&amp;lt;/p&amp;gt;
+&lt;/pre&gt;
+</pre>
+      <p><a href="http://code.google.com/p/google-code-prettify/">Download google-code-prettify</a> and view the readme for <a href="http://google-code-prettify.googlecode.com/svn/trunk/README.html">how to use</a>.</p>
+    </div><!--/span-->
+  </div><!--/row-->
+</section>
+<!-- Tables
+================================================== -->
+<section id="tables">
+  <div class="page-header">
+    <h1 class="colored">Tables <small>For, you guessed it, tabular data</small></h1>
+  </div>
+
+  <h2><span class="colored">///</span> Table markup</h2>
+  <div class="row">
+    <div class="span8">
+      <table class="table table-bordered table-striped">
+        <colgroup>
+          <col class="span1">
+          <col class="span7">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Tag</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>&lt;table&gt;</code>
+            </td>
+            <td>
+              Wrapping element for displaying data in a tabular format
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&lt;thead&gt;</code>
+            </td>
+            <td>
+              Container element for table header rows (<code>&lt;tr&gt;</code>) to label table columns
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&lt;tbody&gt;</code>
+            </td>
+            <td>
+              Container element for table rows (<code>&lt;tr&gt;</code>) in the body of the table
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&lt;tr&gt;</code>
+            </td>
+            <td>
+              Container element for a set of table cells (<code>&lt;td&gt;</code> or <code>&lt;th&gt;</code>) that appears on a single row
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&lt;td&gt;</code>
+            </td>
+            <td>
+              Default table cell
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&lt;th&gt;</code>
+            </td>
+            <td>
+              Special table cell for column (or row, depending on scope and placement) labels<br>
+              Must be used within a <code>&lt;thead&gt;</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>&lt;caption&gt;</code>
+            </td>
+            <td>
+              Description or summary of what the table holds, especially useful for screen readers
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="span4">
+<pre class="prettyprint linenums">
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</pre>
+    </div>
+  </div>
+
+  <h2><span class="colored">///</span> Table options</h2>
+  <table class="table table-bordered table-striped">
+  <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Default</td>
+        <td class="muted">None</td>
+        <td>No styles, just columns and rows</td>
+      </tr>
+      <tr>
+        <td>Basic</td>
+        <td>
+          <code>.table</code>
+        </td>
+        <td>Only horizontal lines between rows</td>
+      </tr>
+      <tr>
+        <td>Bordered</td>
+        <td>
+          <code>.table-bordered</code>
+        </td>
+        <td>Rounds corners and adds outer border</td>
+      </tr>
+      <tr>
+        <td>Zebra-stripe</td>
+        <td>
+          <code>.table-striped</code>
+        </td>
+        <td>Adds light gray background color to odd rows (1, 3, 5, etc)</td>
+      </tr>
+      <tr>
+        <td>Condensed</td>
+        <td>
+          <code>.table-condensed</code>
+        </td>
+        <td>Cuts vertical padding in half, from 8px to 4px, within all <code>td</code> and <code>th</code> elements</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h2><span class="colored">///</span> Example tables</h2>
+
+  <h3>1. Default table styles</h3>
+  <div class="row">
+    <div class="span4">
+      <p>Tables are automatically styled with only a few borders to ensure readability and maintain structure. With 2.0, the <code>.table</code> class is required.</p>
+<pre class="prettyprint linenums">
+&lt;table class="table"&gt;
+  
+&lt;/table&gt;</pre>
+    </div>
+    <div class="span8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <h3>2. Striped table</h3>
+  <div class="row">
+    <div class="span4">
+      <p>Get a little fancy with your tables by adding zebra-striping&mdash;just add the <code>.table-striped</code> class.</p>
+      <p class="muted"><strong>Note:</strong> Striped tables use the <code>:nth-child</code> CSS selector and is not available in IE7-IE8.</p>
+<pre class="prettyprint linenums" style="margin-bottom: 18px;">
+&lt;table class="table table-striped"&gt;
+  
+&lt;/table&gt;</pre>
+    </div>
+    <div class="span8">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <h3>3. Bordered table</h3>
+  <div class="row">
+    <div class="span4">
+      <p>Add borders around the entire table and rounded corners for aesthetic purposes.</p>
+<pre class="prettyprint linenums">
+&lt;table class="table table-bordered"&gt;
+  
+&lt;/table&gt;</pre>
+    </div>
+    <div class="span8">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2">1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@TwBootstrap</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <h3>4. Condensed table</h3>
+  <div class="row">
+    <div class="span4">
+      <p>Make your tables more compact by adding the <code>.table-condensed</code> class to cut table cell padding in half (from 8px to 4px).</p>
+<pre class="prettyprint linenums" style="margin-bottom: 18px;">
+&lt;table class="table table-condensed"&gt;
+  
+&lt;/table&gt;</pre>
+    </div>
+    <div class="span8">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <h3>5. Combine them all!</h3>
+  <div class="row">
+    <div class="span4">
+      <p>Feel free to combine any of the table classes to achieve different looks by utilizing any of the available classes.</p>
+<pre class="prettyprint linenums" style="margin-bottom: 18px;">
+&lt;table class="table table-striped table-bordered table-condensed"&gt;
+  ...
+&lt;/table&gt;</pre>
+    </div>
+    <div class="span8">
+      <table class="table table-striped table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th></th>
+            <th colspan="2">Full name</th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Forms
+================================================== -->
+<section id="forms">
+  <div class="page-header">
+    <h1 class="colored">Forms</h1>
+  </div>
+  <div class="row">
+    <div class="span4">
+      <h2><span class="colored">///</span> Flexible HTML and CSS</h2>
+      <p>The best part about forms in Bootstrap is that all your inputs and controls look great no matter how you build them in your markup. No superfluous HTML is required, but we provide the patterns for those who require it.</p>
+      <p>More complicated layouts come with succinct and scalable classes for easy styling and event binding, so you're covered at every step.</p>
+    </div>
+    <div class="span4">
+      <h2><span class="colored">///</span> Four layouts included</h2>
+      <p>Bootstrap comes with support for four types of form layouts:</p>
+      <ul>
+        <li>Vertical (default)</li>
+        <li>Search</li>
+        <li>Inline</li>
+        <li>Horizontal</li>
+      </ul>
+      <p>Different types of form layouts require some changes to markup, but the controls themselves remain and behave the same.</p>
+    </div>
+    <div class="span4">
+      <h2><span class="colored">///</span> Control states and more</h2>
+      <p>Bootstrap's forms include styles for all the base form controls like input, textarea, and select you'd expect. But it also comes with a number of custom components like appended and prepended inputs and support for lists of checkboxes.</p>
+      <p>States like error, warning, and success are included for each type of form control. Also included are styles for disabled controls.</p>
+    </div>
+  </div>
+
+  <h2><span class="colored">///</span> Four types of forms</h2>
+  <p>Bootstrap provides simple markup and styles for four styles of common web forms.</p>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Vertical (default)</th>
+        <td><code>.form-vertical</code> <span class="muted">(not required)</span></td>
+        <td>Stacked, left-aligned labels over controls</td>
+      </tr>
+      <tr>
+        <th>Inline</th>
+        <td><code>.form-inline</code></td>
+        <td>Left-aligned label and inline-block controls for compact style</td>
+      </tr>
+      <tr>
+        <th>Search</th>
+        <td><code>.form-search</code></td>
+        <td>Extra-rounded text input for a typical search aesthetic</td>
+      </tr>
+      <tr>
+        <th>Horizontal</th>
+        <td><code>.form-horizontal</code></td>
+        <td>Float left, right-aligned labels on same line as controls</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h2><span class="colored">///</span> Example forms <small>using just form controls, no extra markup</small></h2>
+  <div class="row">
+    <div class="span3">
+      <h3>Basic form</h3>
+      <p>With v2.0, we have lighter and smarter defaults for form styles. No extra markup, just form controls.</p>
+    </div>
+    <div class="span9">
+      <form class="well">
+        <label>Label name</label>
+        <input type="text" class="span3" placeholder="Type something"> <span class="help-inline">Associated help text!</span>
+        <p class="help-block">Example block-level help text here.</p>
+        <label class="checkbox">
+          <input type="checkbox"> Check me out
+        </label>
+        <button type="submit" class="btn">Submit</button>
+      </form>
+<pre class="prettyprint linenums">
+&lt;form class="well"&gt;
+  &lt;label&gt;Label name&lt;/label&gt;
+  &lt;input type="text" class="span3" placeholder="Type something"&gt;
+  &lt;span class="help-inline"&gt;Associated help text!&lt;/span&gt;
+  &lt;label class="checkbox"&gt;
+    &lt;input type="checkbox"&gt; Check me out
+  &lt;/label&gt;
+  &lt;button type="submit" class="btn"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+    </div>
+  </div> <!-- /row -->
+  <div class="row">
+    <div class="span3">
+      <h3>Search form</h3>
+      <p>Reflecting default WebKit styles, just add <code>.form-search</code> for extra rounded search fields.</p>
+    </div>
+    <div class="span9">
+      <form class="well form-search">
+        <input type="text" class="input-medium search-query">
+        <button type="submit" class="btn">Search</button>
+      </form>
+<pre class="prettyprint linenums">
+&lt;form class="well form-search"&gt;
+  &lt;input type="text" class="input-medium search-query"&gt;
+  &lt;button type="submit" class="btn"&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+    </div>
+  </div> <!-- /row -->
+  <div class="row">
+    <div class="span3">
+      <h3>Inline form</h3>
+      <p>Inputs are block level to start. For <code>.form-inline</code> and <code>.form-horizontal</code>, we use inline-block.</p>
+    </div>
+    <div class="span9">
+      <form class="well form-inline">
+        <input type="text" class="input-small" placeholder="Email">
+        <input type="password" class="input-small" placeholder="Password">
+        <label class="checkbox">
+          <input type="checkbox"> Remember me
+        </label>
+        <button type="submit" class="btn">Sign in</button>
+      </form>
+<pre class="prettyprint linenums">
+&lt;form class="well form-inline"&gt;
+  &lt;input type="text" class="input-small" placeholder="Email"&gt;
+  &lt;input type="password" class="input-small" placeholder="Password"&gt;
+  &lt;label class="checkbox"&gt;
+    &lt;input type="checkbox"&gt; Remember me
+  &lt;/label&gt;
+  &lt;button type="submit" class="btn"&gt;Sign in&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+    </div>
+  </div><!-- /row -->
+
+  <br>
+
+  <h2><span class="colored">///</span> Horizontal forms</h2>
+  <div class="row">
+    <div class="span8">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Controls Bootstrap supports</legend>
+          <div class="control-group">
+            <label class="control-label" for="input01">Text input</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="input01">
+              <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="optionsCheckbox">Checkbox</label>
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="optionsCheckbox" value="option1">
+                Option one is this and that&mdash;be sure to include why it's great
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="select01">Select list</label>
+            <div class="controls">
+              <select id="select01">
+                <option>something</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="multiSelect">Multicon-select</label>
+            <div class="controls">
+              <select multiple="multiple" id="multiSelect">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="fileInput">File input</label>
+            <div class="controls">
+              <input class="input-file" id="fileInput" type="file">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="textarea">Textarea</label>
+            <div class="controls">
+              <textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save changes</button>
+            <button class="btn">Cancel</button>
+          </div>
+        </fieldset>
+      </form>
+      <h3>Example markup</h3>
+      <p>Given the above example form layout, here's the markup associated with the first input and control group. The <code>.control-group</code>, <code>.control-label</code>, and <code>.controls</code> classes are all required for styling.</p>
+<pre class="prettyprint linenums">
+&lt;form class="form-horizontal"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Legend text&lt;/legend&gt;
+    &lt;div class="control-group"&gt;
+      &lt;label class="control-label" for="input01"&gt;Text input&lt;/label&gt;
+      &lt;div class="controls"&gt;
+        &lt;input type="text" class="input-xlarge" id="input01"&gt;
+        &lt;p class="help-block"&gt;Supporting help text&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+</pre>
+    </div>
+    <div class="span4">
+      <h3>What's included</h3>
+      <p>Shown on the left are all the default form controls we support. Here's the bulleted list:</p>
+      <ul>
+        <li>text inputs (text, password, email, etc)</li>
+        <li>checkbox</li>
+        <li>radio</li>
+        <li>select</li>
+        <li>multiple select</li>
+        <li>file input</li>
+        <li>textarea</li>
+      </ul>
+      <hr>
+      <h3>New defaults with v2.0</h3>
+      <p>Up to v1.4, Bootstrap's default form styles used the horizontal layout. With Bootstrap 2, we removed that constraint to have smarter, more scalable defaults for any form.</p>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="span8">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Form control states</legend>
+          <div class="control-group">
+            <label class="control-label" for="focusedInput">Focused input</label>
+            <div class="controls">
+              <input class="input-xlarge focused" id="focusedInput" type="text" value="This is focused">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Uneditable input</label>
+            <div class="controls">
+              <span class="input-xlarge uneditable-input">Some value here</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="disabledInput">Disabled input</label>
+            <div class="controls">
+              <input class="input-xlarge disabled" id="disabledInput" type="text" placeholder="Disabled input here" disabled>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="optionsCheckbox2">Disabled checkbox</label>
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="optionsCheckbox2" value="option1" disabled>
+                This is a disabled checkbox
+              </label>
+            </div>
+          </div>
+          <div class="control-group warning">
+            <label class="control-label" for="inputWarning">Input with warning</label>
+            <div class="controls">
+              <input type="text" id="inputWarning">
+              <span class="help-inline">Something may have gone wrong</span>
+            </div>
+          </div>
+          <div class="control-group error">
+            <label class="control-label" for="inputError">Input with error</label>
+            <div class="controls">
+              <input type="text" id="inputError">
+              <span class="help-inline">Please correct the error</span>
+            </div>
+          </div>
+          <div class="control-group success">
+            <label class="control-label" for="inputSuccess">Input with success</label>
+            <div class="controls">
+              <input type="text" id="inputSuccess">
+              <span class="help-inline">Woohoo!</span>
+            </div>
+          </div>
+          <div class="control-group success">
+            <label class="control-label" for="selectError">Select with success</label>
+            <div class="controls">
+              <select id="selectError">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+              <span class="help-inline">Woohoo!</span>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save changes</button>
+            <button class="btn">Cancel</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="span4">
+      <h3>Redesigned browser states</h3>
+      <p>Bootstrap features styles for browser-supported focused and <code>disabled</code> states. We remove the default Webkit <code>outline</code> and apply a <code>box-shadow</code> in its place for <code>:focus</code>.</p>
+      <hr>
+      <h3>Form validation</h3>
+      <p>It also includes validation styles for errors, warnings, and success. To use, add the error class to the surrounding <code>.control-group</code>.</p>
+<pre class="prettyprint linenums">
+&lt;fieldset
+  class="control-group error"&gt;
+  
+&lt;/fieldset&gt;
+</pre>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="span8">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Extending form controls</legend>
+          <div class="control-group">
+            <label class="control-label">Form grid sizes</label>
+            <div class="controls docs-input-sizes">
+              <input class="span1" type="text" placeholder=".span1">
+              <input class="span2" type="text" placeholder=".span2">
+              <input class="span3" type="text" placeholder=".span3">
+              <select class="span1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+              <select class="span2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+              <select class="span3">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+              <p class="help-block">Use the same <code>.span*</code> classes from the grid system for input sizes.</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Alternate sizes</label>
+            <div class="controls docs-input-sizes">
+              <input class="input-mini" type="text" placeholder=".input-mini">
+              <input class="input-small" type="text" placeholder=".input-small">
+              <input class="input-medium" type="text" placeholder=".input-medium">
+              <p class="help-block">You may also use static classes that don't map to the grid, adapt to the responsive CSS styles, or account for varying types of controls (e.g., <code>input</code> vs. <code>select</code>).</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="prependedInput">Prepended text</label>
+            <div class="controls">
+              <div class="input-prepend">
+                <span class="add-on">@</span><input class="span2" id="prependedInput" size="16" type="text">
+              </div>
+              <p class="help-block">Here's some help text</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="appendedInput">Appended text</label>
+            <div class="controls">
+              <div class="input-append">
+                <input class="span2" id="appendedInput" size="16" type="text"><span class="add-on">.00</span>
+              </div>
+              <span class="help-inline">Here's more help text</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="appendedPrependedInput">Append and prepend</label>
+            <div class="controls">
+              <div class="input-prepend input-append">
+                <span class="add-on">$</span><input class="span2" id="appendedPrependedInput" size="16" type="text"><span class="add-on">.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="appendedPrependedInput">Append with button</label>
+            <div class="controls">
+              <div class="input-append">
+                <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">Go!</button>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inlineCheckboxes">Inline checkboxes</label>
+            <div class="controls">
+              <label class="checkbox inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+              </label>
+              <label class="checkbox inline">
+                <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+              </label>
+              <label class="checkbox inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="optionsCheckboxList">Checkboxes</label>
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" name="optionsCheckboxList1" value="option1">
+                Option one is this and that&mdash;be sure to include why it's great
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" name="optionsCheckboxList2" value="option2">
+                Option two can also be checked and included in form results
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" name="optionsCheckboxList3" value="option3">
+                Option three can&mdash;yes, you guessed it&mdash;also be checked and included in form results
+              </label>
+              <p class="help-block"><strong>Note:</strong> Labels surround all the options for much larger click areas and a more usable form.</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Radio buttons</label>
+            <div class="controls">
+              <label class="radio">
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                Option one is this and that&mdash;be sure to include why it's great
+              </label>
+              <label class="radio">
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                Option two can is something else and selecting it will deselect option one
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save changes</button>
+            <button class="btn">Cancel</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="span4">
+      <h3>Prepend &amp; append inputs</h3>
+      <p>Input groups&mdash;with appended or prepended text&mdash;provide an easy way to give more context for your inputs. Great examples include the @ sign for Twitter usernames or $ for finances.</p>
+      <hr>
+      <h3>Checkboxes and radios</h3>
+      <p>Up to v1.4, Bootstrap required extra markup around checkboxes and radios to stack them. Now, it's a simple matter of repeating the <code>&lt;label class="checkbox"&gt;</code> that wraps the <code>&lt;input type="checkbox"&gt;</code>.</p>
+      <p>Inline checkboxes and radios are also supported. Just add <code>.inline</code> to any <code>.checkbox</code> or <code>.radio</code> and you're done.</p>
+      <hr>
+      <h4>Inline forms and append/prepend</h4>
+      <p>To use prepend or append inputs in an inline form, be sure to place the <code>.add-on</code> and <code>input</code> on the same line, without spaces.</p>
+      <hr>
+      <h4>Form help text</h4>
+      <p>To add help text for your form inputs, include inline help text with <code>&lt;span class="help-inline"&gt;</code> or a help text block with <code>&lt;p class="help-block"&gt;</code> after the input element.</p>
+    </div>
+  </div><!-- /row -->
+</section>
+
+<!-- Buttons
+================================================== -->
+
+
+
+
+<!-- Icons
+================================================== -->
+
+  </section>
+      <!-- Styles -->
+      
+      <!-- JavaScript -->
+      
+<!-- Photoshop -->
+      
+       <!-- Installation -->
+      
+
+	<section id="credits">
+	  <div class="page-header">
+	    <h1>Credits Files <small>Some of your credits and sources</small></h1>
+	  </div>
+	  <p>I've used the following images, icons or other files as listed.</p>
+	  <h3>JavaScript</h3>
+	  <ol>
+	    <li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a> <small>&mdash; Main plugins. </small></li>
+	    <li><a href="http://isotope.metafizzy.co/index.html">Isotope</a> <small>&mdash; Portfolio filter. </small></li>
+	    <li><a href="http://www.woothemes.com/flexslider/">FlexSlider</a> <small>&mdash; Awesome responsive slider. </small></li>
+	  </ol>
+	  <h3>CSS</h3>
+	  <ol>
+	    <li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a> <small>&mdash; Main CSS. </small></li>
+	  </ol>
+	  <h3>Images</h3>
+	  <ol>
+	    <li><a href="http://365psd.com">365PSD</a> <small>&mdash; Awesome site with awesom features. </small></li>
+	  </ol>
+	</section><!-- Credits -->
+      
+
+      <hr />
+
+<section id="more">
+	  <div class="page-header">
+	    <h1>Want more features? <small>css and js</small></h1>
+	  </div>
+	  <ol>
+	    <li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a> <small>&mdash; visit this site, all botstrap features are included in VALERA!. </small></li>
+	  </ol>
+	</section><!-- Credits -->
+    
+    <hr />
+    
+<div class="goodbye">
+    <p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you might consider visiting the forums and asking your question in the "Item Discussion" section.</p>
+  </div>
+
+      <hr />
+
+<div>
+    <p>&copy; Company 2012</p>
+</div>
+
+</div><!-- /container --> 
+
+<!-- Le javascript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="assets/js/jquery.js"></script> 
+<script src="assets/js/scripts.js"></script> 
+<script src="assets/js/google-code-prettify/prettify.js"></script> 
+<script src="assets/js/bootstrap-transition.js"></script> 
+<script src="assets/js/bootstrap-alert.js"></script> 
+<script src="assets/js/bootstrap-modal.js"></script> 
+<script src="assets/js/bootstrap-dropdown.js"></script> 
+<script src="assets/js/bootstrap-scrollspy.js"></script> 
+<script src="assets/js/bootstrap-tab.js"></script> 
+<script src="assets/js/bootstrap-tooltip.js"></script> 
+<script src="assets/js/bootstrap-popover.js"></script> 
+<script src="assets/js/bootstrap-button.js"></script> 
+<script src="assets/js/bootstrap-collapse.js"></script>
+</body>
+</html>
