@@ -1,12 +1,14 @@
 <?php
-include 'db_connect.php';
-include 'login_functions.php';
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+
+include  'dashboard/include/db_connect.php';
+include  'dashboard/include/login_functions.php';
 
 sec_session_start();
 
 if(login_check($mysqli) != true) {
  
- header('Location: ./login.php?error=notloggedin');
+ header('Location: http://www.deckbattle.com/dashboard/login.php?error=notloggedin');
   
 } else {
 
@@ -106,110 +108,28 @@ if (isset($_POST['changeinfo']))
 <link href="css/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 
-<script type="text/javascript" src="js/plugins/forms/ui.spinner.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.mousewheel.js"></script>
- 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
-
-<script type="text/javascript" src="js/plugins/tables/jquery.dataTables.js"></script>
-<script type="text/javascript" src="js/plugins/tables/jquery.sortable.js"></script>
-<script type="text/javascript" src="js/plugins/tables/jquery.resizable.js"></script>
-
-<script type="text/javascript" src="js/plugins/forms/autogrowtextarea.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.uniform.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.autotab.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.chosen.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.dualListBox.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.cleditor.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.ibutton.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.validationEngine.js"></script>
-
-<script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
-<script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
-<script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
-<script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
-
-<script type="text/javascript" src="js/plugins/wizards/jquery.form.wizard.js"></script>
-<script type="text/javascript" src="js/plugins/wizards/jquery.validate.js"></script>
-<script type="text/javascript" src="js/plugins/wizards/jquery.form.js"></script>
-
-<script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.breadcrumbs.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.tipsy.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.progress.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.timeentry.min.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.fancybox.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.fileTree.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.sourcerer.js"></script>
-
-<script type="text/javascript" src="js/plugins/others/jquery.fullcalendar.js"></script>
-<script type="text/javascript" src="js/plugins/others/jquery.elfinder.js"></script>
-
-<script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
-
-<script type="text/javascript" src="js/files/bootstrap.js"></script>
-
-<script type="text/javascript">
-<?php
-//check passrecovery active > show growl message
-if ($_SESSION['passrecoveryactive'] == 1)
-{
-	echo "var rec = true;";
- }
- else
- {
-	echo "var rec = false;";
- }
-
-?>
-
-function finishAjax(id, response) {
-  $('#usernameLoading').hide();
-  $('#'+id).html(unescape(response));
-  $('#'+id).fadeIn();
-} //finishAjax
-
-
-</script> 
-
-<script type="text/javascript" src="js/files/functions.js"></script>
-
-<script type="text/javascript" src="sha512.js"></script>
-<script type="text/javascript" src="formhash.js"></script>
-
-<script type="text/javascript" src="js/charts/chart.js"></script>
-<script type="text/javascript" src="js/charts/hBar_side.js"></script>
-
+<?php include 'dashboard/include/script_include.php'; ?>
 
 </head>
 
 <body>
 
-<?php include './dashboard_header.php'; ?>
-<?php include './dashboard_farleftsidebar.php'; ?>
-<?php include './dashboard_leftsidebar.php'; ?>
+<?php include 'dashboard/include/dashboard_header.php'; ?>
+<?php include 'dashboard/include/dashboard_farleftsidebar.php'; ?>
+
+
+<?php include 'dashboard/include/dashboard_leftsidebar.php'; ?>
     
 <!-- Content begins -->
 <div id="content">
-<?php include './dashboard_pageheader.php'; ?>
-<?php include './dashboard_breadcrumb.php'; ?>  
-
-
+<?php include 'dashboard/include/dashboard_pageheader.php'; 
+createPageHeader("Settings",$mysqli);
+?>
+<?php include 'dashboard/include/dashboard_breadcrumb.php';
+generateBreadcrumb("Dashboard","Settings");
+ ?>  
+ 
     <!-- Main content -->
     <div class="wrapper">
    <?php 
@@ -253,7 +173,7 @@ $error2 = "";
 
 ?>
 
-       <form action="profile.php" class="main" method="post" id="validate">
+       <form action="settings.php" class="main" method="post" id="validate">
             <fieldset>
                 <div class="widget fluid">
                     <div class="whead"><h6>Settings</h6>

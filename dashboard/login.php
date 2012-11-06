@@ -1,6 +1,8 @@
 <?php
-include 'db_connect.php';
-include 'login_functions.php';
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+
+include  'dashboard/include/db_connect.php';
+include  'dashboard/include/login_functions.php';
 
 sec_session_start();
 
@@ -136,8 +138,8 @@ if(isset($_GET['error'])) {
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -146,72 +148,12 @@ if(isset($_GET['error'])) {
 <link href="css/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<?php include 'dashboard/include/script_include.php'; ?>
 
-<script type="text/javascript" src="js/plugins/forms/ui.spinner.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.mousewheel.js"></script>
- 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-<script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.orderBars.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.pie.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
-<script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
-
-<script type="text/javascript" src="js/plugins/tables/jquery.dataTables.js"></script>
-<script type="text/javascript" src="js/plugins/tables/jquery.sortable.js"></script>
-<script type="text/javascript" src="js/plugins/tables/jquery.resizable.js"></script>
-
-<script type="text/javascript" src="js/plugins/forms/autogrowtextarea.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.uniform.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.autotab.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.chosen.min.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.dualListBox.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.cleditor.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.ibutton.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
-<script type="text/javascript" src="js/plugins/forms/jquery.validationEngine.js"></script>
-
-<script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
-<script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
-<script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
-<script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
-
-<script type="text/javascript" src="js/plugins/wizards/jquery.form.wizard.js"></script>
-<script type="text/javascript" src="js/plugins/wizards/jquery.validate.js"></script>
-<script type="text/javascript" src="js/plugins/wizards/jquery.form.js"></script>
-
-<script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.breadcrumbs.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.tipsy.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.progress.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.timeentry.min.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.fancybox.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.fileTree.js"></script>
-<script type="text/javascript" src="js/plugins/ui/jquery.sourcerer.js"></script>
-
-<script type="text/javascript" src="js/plugins/others/jquery.fullcalendar.js"></script>
-<script type="text/javascript" src="js/plugins/others/jquery.elfinder.js"></script>
-
-<script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
-<script type="text/javascript" src="js/files/bootstrap.js"></script>
 <script type="text/javascript" src="js/files/login.js"></script>
 
-<script type="text/javascript">
-var rec = false;
-</script> 
-<script type="text/javascript" src="js/files/functions.js"></script>
-
-<script type="text/javascript" src="sha512.js"></script>
-<script type="text/javascript" src="formhash.js"></script>
-
+<script type="text/javascript" src="js/crypto/sha512.js"></script>
+<script type="text/javascript" src="js/crypto/formhash.js"></script>
 
 </head>
 
@@ -220,49 +162,40 @@ var rec = false;
 <!-- Top line begins -->
 <div id="top">
 	<div class="wrapper">
-    	<a href="#" title="" class="logo"><img src="images/DeckBattle_Inverted_small.png" alt="" /></a>
+    	<a href="login.php" title="Login" class="logo"><img src="images/DeckBattle_Inverted_small.png" alt="Deckbattle Dashboard" /></a>
         
-        <!-- Right top nav -->
-        <div class="topNav">
-            <ul class="userNav">
-                <li><a href="#" title="" class="screen"></a></li>
-                <li><a href="#" title="" class="settings"></a></li>
-                <li><a href="#" title="" class="logout"></a></li>
-            </ul>
-        </div>
         <div class="clear"></div>
 
 <?php 
 if ($success != "")
 {
 	?>
-<div class="nNote nSuccess">
-<p><?php echo $success; $success = "";$error = ""; ?></p>
-</div>
+	<div class="nNote nSuccess">
+		<p><?php echo $success; $success = "";$error = ""; ?></p>
+	</div>
 <?php 
 }
 if ($error != "")
 {
 ?>
-<div class="nNote nFailure">
-<p><?php echo $error; $success = "";$error = ""; ?></p>
-</div>
-<?php } ?>
-    </div>
+	<div class="nNote nFailure">
+		<p><?php echo $error; $success = "";$error = ""; ?></p>
+	</div>
+<?php 
+}
+?>
+    </div> 
 </div>
 <!-- Top line ends -->
 
-
-<!-- Login wrapper begins -->
 <div class="loginWrapper">
 <?php 
-if (isset($_GET['action']))
+if (isset($_GET['action']) && $_GET['action'] == "signup")
 {
 ?>
-    <!-- New user form -->
-    <form action="login.php?action=signup" method="post" id="login"> <!-- signup form -->
+    <form action="login.php?action=signup" method="post" id="login">
         <div class="loginPic">
-            <a href="#" title=""><img src="images/DeckBattle_login.png" alt="" /></a>
+            <img src="images/DeckBattle_login.png" alt="Sign up!" />
             <span>Sign up</span>
             <div class="loginActions">
                 <div><a href="#" title="Login" class="logback flip tipE"></a></div>
@@ -274,17 +207,16 @@ if (isset($_GET['action']))
         <input data-prompt-position="centerRight" type="password" name="password" id="password" placeholder="Password" class="validate[required,minSize[6]]" />
         <input type="hidden" name="signup" value="true" />
         <div class="logControl">
-            <input type="submit" name="submit" value="Sign up!" class="buttonM bGreen" onclick="formhash(this.form, this.form.password);" />
+            <input type="submit" name="submitSignup" value="Sign up!" class="buttonM bGreen" onclick="formhash(this.form, this.form.password);" />
               <div class="clear"></div>
             <div style="padding-top:10px;"><a href="/">- Back to Deckbattle.com -</a></div>
         </div>
     </form>
 
-    <!-- Current user form -->
-<form action="process_login.php" method="post" name="login_form" id="recover" >
+	<form action="./services/process_login.php" method="post" name="login_form" id="recover" >
         <div class="loginPic">
-            <a href="#" title=""><img src="images/DeckBattle_login.png" alt="" /></a> <!-- if remember me, use avatar -->
-            <span>Login</span> <!-- if remember me on > your name and avaar -->
+            <img src="images/DeckBattle_login.png" alt="" />
+            <span>Login</span>
             <div class="loginActions">
                 <div><a href="#" title="Sign up!" class="logleft flip tipE"></a></div>
                 <div><a id="formDialogPassRecovery_open" href="#" title="Forgot password?" class="logright tipW"></a></div>
@@ -296,7 +228,7 @@ if (isset($_GET['action']))
         
         <div class="logControl">
             <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember1" name="remember1" value="rememberme" /><label for="remember1">Remember me</label></div>
-            <input type="submit" name="submit" value="Login" class="buttonM bBlue" onclick="formhash(this.form, this.form.password);" />
+            <input type="submit" name="submitLogin" value="Login" class="buttonM bBlue" onclick="formhash(this.form, this.form.password);" />
           
              <div class="clear"></div>
            <div style="padding-top:10px;"><a href="/">- Back to Deckbattle.com -</a></div>
@@ -307,12 +239,11 @@ if (isset($_GET['action']))
 }
 else
 {
-	?>
-	<!-- Current user form -->
-<form action="process_login.php" method="post" name="login_form" id="login">
+?>
+<form action="./services/process_login.php" method="post" name="login_form" id="login">
         <div class="loginPic">
-            <a href="#" title=""><img src="images/DeckBattle_login.png" alt="" /></a> <!-- if remember me, use avatar -->
-            <span>Login</span> <!-- if remember me on > your name and avaar -->
+            <img src="images/DeckBattle_login.png" alt="Login" />
+            <span>Login</span>
             <div class="loginActions">
                 <div><a href="#" title="Sign up!" class="logleft flip tipE"></a></div>
                 <div><a id="formDialogPassRecovery_open" href="#" title="Forgot password?" class="logright tipW"></a></div>
@@ -324,17 +255,16 @@ else
         
         <div class="logControl">
             <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember1" name="remember1" value="rememberme" /><label for="remember1">Remember me</label></div>
-            <input type="submit" name="submit" value="Login" class="buttonM bBlue" onclick="formhash(this.form, this.form.password);" />
+            <input type="submit" name="submitLogin" value="Login" class="buttonM bBlue" onclick="formhash(this.form, this.form.password);" />
           
              <div class="clear"></div>
            <div style="padding-top:10px;"><a href="/">- Back to Deckbattle.com -</a></div>
         </div>
     </form>
     
-    <!-- New user form -->
     <form action="login.php?action=signup" method="post" id="recover"> <!-- signup form -->
         <div class="loginPic">
-            <a href="#" title=""><img src="images/DeckBattle_login.png" alt="" /></a>
+            <img src="images/DeckBattle_login.png" alt="Sign up!" />
             <span>Sign up</span>
             <div class="loginActions">
                 <div><a href="#" title="Login" class="logback flip tipE"></a></div>
@@ -347,7 +277,7 @@ else
         <input type="hidden" name="signup" value="true" />
         <div class="logControl">
           <!--  <div class="memory"><input type="checkbox" checked="checked" class="check" id="remember2" /><label for="remember2">Remember me</label></div> -->
-            <input type="submit" name="submit" value="Sign up!" class="buttonM bGreen" onclick="formhash(this.form, this.form.password);" />
+            <input type="submit" name="submitSignup" value="Sign up!" class="buttonM bGreen" onclick="formhash(this.form, this.form.password);" />
          
               <div class="clear"></div>
             <div style="padding-top:10px;"><a href="/">- Back to Deckbattle.com -</a></div>
@@ -359,14 +289,13 @@ else
 </div>
 <!-- Login wrapper ends -->
 
-           <!-- Dialog content -->
-                        <div id="formDialogPassRecovery" class="dialog" title="Password recovery" style="text-align:center;">
-                            <form id="passwordrecoveryform" action="login.php" method="post">
-                            <!--<label>Your email:</label>-->
-                                <input type="text" name="passwordrecovery" class="clear" style="width:250px;" placeholder="Enter your email address" />
-                                <input type="submit" name="submit" value="Email a new password" class="buttonM bBlue" onclick="formhashrecovery(this.form);"/>
-                            </form>
-                        </div>
+    <!-- Dialog content -->
+    <div id="formDialogPassRecovery" class="dialog" title="Password recovery" style="text-align:center;">
+        <form id="passwordrecoveryform" action="login.php" method="post">
+            <input type="text" name="passwordrecovery" class="clear" style="width:250px;" placeholder="Enter your email address" />
+            <input type="submit" name="submit" value="Email a new password" class="buttonM bBlue" onclick="formhashrecovery(this.form);"/>
+        </form>
+    </div>
 
 </body>
 </html>

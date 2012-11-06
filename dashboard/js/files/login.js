@@ -1,4 +1,30 @@
 $(function(){
+
+	$("#login").validationEngine();
+	$("#recover").validationEngine();
+
+	// Dialog
+    $('#formDialogPassRecovery').dialog({
+        autoOpen: false,
+        width: 300
+      /*  buttons: {
+            "Request new password": function () {
+			
+                $(this).dialog("close");
+					$("passwordrecoveryform").submit();
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }*/
+        //}
+    });
+
+ // Dialog Link
+    $('#formDialogPassRecovery_open').click(function () {
+        $('#formDialogPassRecovery').dialog('open');
+        return false;
+    });
+
 	
 	// Checking for CSS 3D transformation support
 	$.support.css3d = supportsCSS3D();
@@ -41,4 +67,18 @@ $(function(){
 		
 		return false;
 	}
+	
+	//===== Login pic hover animation =====//
+	
+	$(".loginPic").hover(
+		function() { 
+		
+		$('.logleft, .logback').animate({left:10, opacity:1},200); 
+		$('.logright').animate({right:10, opacity:1},200); },
+		
+		function() { 
+		$('.logleft, .logback').animate({left:0, opacity:0},200);
+		$('.logright').animate({right:0, opacity:0},200); }
+	);
+	
 });
