@@ -16,7 +16,7 @@
       <div class="divider"><span></span></div>
       
       <div id="general">
-        <div id="general">
+        <div id="">
           <ul class="subNav">
             <li><a href="/dashboard/collection/collection.php" title=""><span class="icos-images2"></span>Card Collection</a></li>
             <li><a href="/dashboard/collection/decks.php" title=""><span class="icos-fullscreen"></span>Deck Collection</a></li>
@@ -25,6 +25,20 @@
             <li><a href="/dashboard/collection/wishlist.php" title=""><span class="icos-beta"></span>Wish List</a></li>
           </ul>
         </div>
+              <div class="divider"><span></span></div>
+
+        <div class="fluid sideWidget">
+                            <div class="formRow">
+                             <form action="/dashboard/collection/decks.php" method="post" enctype="multipart/form-data" class="main" id="validate">
+                    
+                    <label><strong>Import Deck (.dec)</strong></label>
+                    <input type="file" class="fileInput" id="deckimport" name="deckimport" />
+                </div>
+
+                <div><input type="submit" class="buttonS bGreyish" value="Import Deck" /></div>
+            </div>
+
+
       </div>
       
       <!-- tab 2 -->

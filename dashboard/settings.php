@@ -111,6 +111,12 @@ if (isset($_POST['changeinfo']))
 
 <?php include 'dashboard/include/script_include.php'; ?>
 
+<script>
+$(function() {
+$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+});
+</script>
 </head>
 
 <body>

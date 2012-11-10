@@ -24,7 +24,12 @@ if(login_check($mysqli) != true) {
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
 <?php include 'dashboard/include/script_include.php'; ?>
+<script>
+$(function() {
+$("select, .check, .check :checkbox, input:radio, input:file").uniform();
 
+});
+</script>
 </head>
 
 <body>

@@ -142,6 +142,10 @@ function finishAjax(id, response) {
 
 } //finishAjax
 
+$(function() {
+$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+});
 </script> 
 
 </head>

@@ -155,6 +155,12 @@ if(isset($_GET['error'])) {
 <script type="text/javascript" src="js/crypto/sha512.js"></script>
 <script type="text/javascript" src="js/crypto/formhash.js"></script>
 
+<script>
+$(function() {
+$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+});
+</script>
 </head>
 
 <body>

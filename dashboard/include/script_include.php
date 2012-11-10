@@ -5,6 +5,15 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+<script src="/dashboard/js/plugins/charts/excanvas.min.js" type="text/javascript"></script>
+<script src="/dashboard/js/plugins/charts/jquery.flot.js" type="text/javascript"></script>
+<script src="/dashboard/js/plugins/charts/jquery.flot.orderBars.js" type="text/javascript"></script>
+
+<script src="/dashboard/js/plugins/charts/jquery.flot.pie.js" type="text/javascript"></script>
+
+<script src="/dashboard/js/plugins/charts/jquery.flot.resize.js" type="text/javascript"></script>
+
+
 <script type="text/javascript" src="/dashboard/js/plugins/charts/jquery.sparkline.min.js"></script>
 
 <script type="text/javascript" src="/dashboard/js/plugins/tables/jquery.dataTables.js"></script>
@@ -46,7 +55,6 @@
 <script type="text/javascript" src="/dashboard/js/files/tipsy_functions.js"></script>
 
 <script type="text/javascript" src="/dashboard/js/files/standard/functions.js"></script>
-
 <script type="text/javascript">
 
 <?php

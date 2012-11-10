@@ -26,6 +26,9 @@ if(login_check($mysqli) != true) {
 				}
 	
 	}
+
+include 'dashboard/services/uploaddeck.php';
+
 	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -248,6 +251,12 @@ $(function() {
       return false;
   });
 });
+
+
+$(function() {
+$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+});
 </script>
 </head>
 
@@ -267,6 +276,48 @@ generateBreadcrumb("Dashboard","Cards & Decks","Decks");
  ?>  
     <!-- Main content -->
     <div class="wrapper">
+       <?php 
+if ($success != "")
+{
+	?>
+<div class="nNote nSuccess">
+<p><?php echo $success;?></p>
+</div>
+<?php 
+}
+
+if ($info != "")
+{
+	?>
+<div class="nNote nInformation">
+<p><?php echo $info;?></p>
+</div>
+<?php 
+}
+
+if ($error != "")
+{
+?>
+<div class="nNote nFailure">
+<p><?php echo $error;?></p>
+</div>
+<?php } 
+if ($error2 != "")
+{
+?>
+<div class="nNote nFailure">
+<p><?php echo $error2;?></p>
+</div>
+<?php } 
+
+$success = "";
+$info = "";
+$error = ""; 
+$error2 = ""; 
+
+?>
+
+
       <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" id="adddeckdialog_open">Add Deck</a> </div>
       <div>
         <ul class="splitter">

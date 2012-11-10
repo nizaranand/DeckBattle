@@ -492,8 +492,8 @@ $(function() {
 
 
 	//===== Form elements styling =====//
-	
-	$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+	//manual add to files otherwise ... datatable must be generated first.
+//	$("select, .check, .check :checkbox, input:radio, input:file").uniform();
 
 	
 });

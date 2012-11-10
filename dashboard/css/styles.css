@@ -1283,7 +1283,7 @@ label.error { color: #A73939; font-size: 11px; display: block; width: 100%; whit
 
 /* ===== Notification messages ===== */
 
-.nNote { cursor: pointer; margin: 32px 0px 0px 0px; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; }
+.nNote { cursor: pointer; margin: 16px 0px 0px 0px; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; }
 #sidebar .nNote { margin: 0; border-radius: 0; border-left: none; border-right: none; box-shadow: 0 1px 1px #f5f5f5; -webkit-box-shadow: 0 1px 1px #f5f5f5; -moz-box-shadow: 0 1px 1px #f5f5f5; }
 .nNote p { padding: 10px 25px 10px 25px; margin: 0px; text-align: center; font-weight: bold; text-shadow: 0 1px 0 #fff;  }
 .nMessage p { font-size: 11px; }
