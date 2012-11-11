@@ -27,7 +27,7 @@ if(isset($_FILES['deckimport']))
     //We use PHP SWITCH statement to check valid image format, PHP SWITCH is similar to IF/ELSE statements
     //suitable if we want to compare the a variable with many different values
  
- $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/decks/' . $_SESSION['user_id'] . "/";
+ $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/dashboard/import/decks/' . $_SESSION['user_id'] . "/";
  if (!is_dir($uploaddir)) {
     mkdir($uploaddir);
 }
