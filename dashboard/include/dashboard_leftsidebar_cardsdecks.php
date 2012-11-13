@@ -31,11 +31,13 @@
                             <div class="formRow">
                              <form action="/dashboard/collection/decks.php" method="post" enctype="multipart/form-data" class="main" id="validate">
                     
-                    <label><strong>Import Deck (.dec)</strong></label>
+                    <label><strong>Import Deck (.db1/.dec/.txt)</strong></label>
                     <input type="file" class="fileInput" id="deckimport" name="deckimport" />
                 </div>
 
                 <div><input type="submit" class="buttonS bGreyish" value="Import Deck" /></div>
+                <h6>OR</h6>
+                <a class="buttonL bGreen" href="/dashboard/syncdropbox.php">Sync with Dropbox</a>
             </div>
 
 

@@ -91,11 +91,11 @@ generateBreadcrumb("Dashboard","Cards & Decks","Deck Detail");
 		$isFavorite = '<div class="fs1 iconb" data-icon="&#xe084;"></div>';
 		$userid = $_SESSION['user_id'];
 		
-		if ($stmt = $mysqli->prepare("SELECT deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalnormal, (SELECT SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalfoil FROM user_decks ud WHERE ud.id = ? AND userid = ?")) { 
+		if ($stmt = $mysqli->prepare("SELECT deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalnormal, (SELECT SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalfoil , markfordropbox FROM user_decks ud WHERE ud.id = ? AND userid = ?")) { 
 		$stmt->bind_param('ss', $deckid,$userid); 
 		$stmt->execute(); 
 		$stmt->store_result();
-		$stmt->bind_result($db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_totalnormal, $db_totalfoil); // get variables from result.
+		$stmt->bind_result($db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_totalnormal, $db_totalfoil,$db_isDropbox); // get variables from result.
 		
 		
  $stmt->fetch(); 
@@ -110,12 +110,21 @@ if ($db_deckimage != "")
 	$imgurl = "/dashboard/images/decks/" + $db_deckimage;
 }
 
+
 if ($db_isFavorite == "1")
 {
-$isFavorite = '<div class="fs1 iconb" data-icon="&#xe086;"></div>';
+$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
 }
 else
-		$isFavorite = '<div class="fs1 iconb" data-icon="&#xe084;"></div>';
+		$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+
+if ($db_isDropbox == "1")
+{
+$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
+}
+else
+$dropbox = '';
+
 
 $name = $db_deckname;
 
@@ -186,14 +195,17 @@ $class = "fivecolors";
 
 }
 }
+
+
+
 		?>
   <div class="fluid" style="margin-top:10px;">
     <div class="grid12">
      
       <h3 style="display: inline-block;margin-top:10px;font-size:32px"><?php echo $name; ?></h3>
-    <!--
     <ul class="titleToolbar" style="display: inline-block;">
-                       
+                       <li><a class="" href="#">Mark/Unmark for Dropbox Sync.</a></li>
+<!--                       
                        <li><a class="" href="#">Check Legality</a></li>
                         <li><a class="" href="#">Compare Deck</a></li>
                          <li><a class="" href="#"><span class="icos-heart"></span>Share Deck</a></li>
@@ -204,8 +216,8 @@ $class = "fivecolors";
                                 <li><a href="#"><span class="icos-trash"></span>Remove</a></li>
                                
                             </ul>
-                        </li>
-                   </ul> -->
+                        </li>-->
+                   </ul> 
     </div>
   </div>
         
@@ -221,7 +233,7 @@ $class = "fivecolors";
         </div>
         <div class="clear"></div>
       </div>
-      <div class="body" style="text-align:center;"> <img src="<?php echo $imgurl; ?>" alt="" /> <?php echo $isFavorite; ?> </div>
+      <div class="body" style="text-align:center;"> <img src="<?php echo $imgurl; ?>" alt="" /><br /> <?php echo $isFavorite; ?><?php echo $dropbox; ?> </div>
     </div>
     <div class="widget grid2">
       <div class="whead">

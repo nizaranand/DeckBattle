@@ -90,7 +90,9 @@ function syncFiles($content,$db){
 				if (checkExtension($file["name"],"dec")) {
 					$info = importDeckedBuilder($_SESSION['user_id'],"" . $file["name"],$Deckname);
 				}
-				
+				if (checkExtension($file["name"],"db1")) {
+//					$info = importDeckBattle($_SESSION['user_id'],"" . $file["name"],$Deckname);
+				}
 				unlink($file["name"]);
 			}
 		}
@@ -109,29 +111,179 @@ function checkExtension($file,$extensionToCheck)
 				return false;
 }
 
-if (isset($_POST['syncDropbox'])) {
+function getFilesMarkedForDropbox($mysqli,$db){
 
-syncFiles($metaData["body"]->contents,$dropbox);
+		if ($stmt = $mysqli->prepare("SELECT id, deckname, updated,dropboxPath FROM user_decks WHERE userid = ? AND markfordropbox = 1")) { 
+		$stmt->bind_param('s', $_SESSION['user_id']); 
+		$stmt->execute(); 
+		$stmt->store_result();
+		$stmt->bind_result($deckid,$db_deckname, $updated, $dropboxPath); // get variables from result.
+		
+		
+ while ($stmt->fetch()) {
+    $path = "/";
+	$metaData = $db->metaData($path);
+	$content = $metaData["body"]->contents;
 
+	 if (!checkIfDeckInDropbox($content,$db_deckname,$db))
+	 {
+	 				$date = strtotime($updated);
+
+				?>
+					 <li>
+								<span class="uPut">
+									<span style="font-weight:bold;color:#2B6893;"><?php echo $db_deckname; ?></span>
+									<!--<span>We've just set up a new server. Our gurus ...</span> -->
+								</span>
+								
+								<span class="uDate"><span><?php echo strftime("%d",$date); ?></span><?php echo  strftime("%b",$date);  ?></span>
+								<span class="clear"></span>
+					</li>
+	   
+				
+				<?
+	 }
+ 		}
+		}
 }
 
 
-
-function getFiles($content,$db){
+function checkIfDeckInDropbox($content,$deckname_input,$db){
+	$result = false;
+	
 	$max = sizeof($content);
 	if ($max > 0) {
 		for ($i=0; $i<$max; $i++) {
 			if ($content[$i]->is_dir == "1") {
 				$metaDataDeep = $db->metaData($content[$i]->path);
-				getFiles($metaDataDeep["body"]->contents,$db);
+				checkIfDeckInDropbox($metaDataDeep["body"]->contents,$deckname_input,$db);
 			}
 			else {
 	
 				$modified = $content[$i]->modified;
 				$date = strtotime($modified);
-				$class = "uDone";
+				
+				$outFile = false;
+				$fileForname = $db->getFile($content[$i]->path, $outFile);
+				$Deckname = urldecode($fileForname["name"]);
 
-				if (checkExtension($content[$i]->path,"dec")) {
+				if (checkExtension($Deckname,"dec"))
+				{
+					$Deckname = str_replace(".dec","",$Deckname);
+				}
+				if (checkExtension($Deckname,"db1"))
+				{
+					$Deckname = str_replace(".db1","",$Deckname);
+				}
+				
+				if ($Deckname == $deckname_input)
+				$result = true;
+			}
+		}
+	}
+	
+	return($result);
+}
+
+
+
+function checkIfDeckExists($deckpath,$db,$mysqli)
+{
+	$outFile = false;
+	$fileForname = $db->getFile($deckpath, $outFile);
+	$deckname = urldecode($fileForname["name"]);
+
+	if (checkExtension($deckname,"dec"))
+	{
+		$deckname = str_replace(".dec","",$deckname);
+	}
+	if (checkExtension($deckname,"db1"))
+	{
+		$deckname = str_replace(".db1","",$deckname);
+	}
+	if ($stmt = $mysqli->prepare("SELECT deckname FROM user_decks WHERE deckname = ?")) { 
+		$stmt->bind_param('s', $deckname); 
+		$stmt->execute(); 
+		$stmt->store_result();
+		
+		if($stmt->num_rows == 0) {
+			return "uNew";
+		}
+		else
+		{
+			return "uSync";
+		}
+	}
+	
+}
+
+function addFilesToDropbox($db,$mysqli){
+	if ($stmt = $mysqli->prepare("SELECT id, deckname, updated,dropboxPath,extension FROM user_decks WHERE userid = ? AND markfordropbox = 1")) { 
+	$stmt->bind_param('s', $_SESSION['user_id']); 
+	$stmt->execute(); 
+	$stmt->store_result();
+	$stmt->bind_result($deckid,$db_deckname, $updated, $dropboxPath,$extension); // get variables from result.
+		
+		 while ($stmt->fetch()) {
+			$path = "/";
+			$metaData = $db->metaData($path);
+			$content = $metaData["body"]->contents;
+		
+			 if (!checkIfDeckInDropbox($content,$db_deckname,$db))
+			 {
+				//create file
+				$ourFileName = $db_deckname . $extension;
+				$ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
+				//put in data
+				
+if ($stmt1 = $mysqli->prepare("SELECT cardid, amount_normal, amount_foil, location,Ncardname FROM user_decks_cards join Ncards on cardid=Ncardid WHERE deckid = ? ")) { 
+	$stmt1->bind_param('s', $deckid); 
+	$stmt1->execute(); 
+	$stmt1->store_result();
+	$stmt1->bind_result($cardid,$an, $af, $location,$cardname); // get variables from result.
+		
+		 while ($stmt1->fetch()) {
+				$stringData = $cardid . ";" . $an . ";" . $af. ";" .$location. ";" . $cardname. "\n";
+				fwrite($ourFileHandle, $stringData);
+		 }
+}
+				fclose($ourFileHandle);
+				
+				//put file
+				$put = $db->putFile($ourFileName);
+				//add file path to database
+				//update dropbox path
+		
+				//delete original file
+				unlink($ourFileName);
+		
+			 }
+		  }
+	}
+}
+
+if (isset($_POST['syncDropbox'])) {
+	addFilesToDropbox($dropbox,$mysqli);
+	syncFiles($metaData["body"]->contents,$dropbox);
+}
+
+
+
+function getFiles($content,$db,$mysqli){
+	$max = sizeof($content);
+	if ($max > 0) {
+		for ($i=0; $i<$max; $i++) {
+			if ($content[$i]->is_dir == "1") {
+				$metaDataDeep = $db->metaData($content[$i]->path);
+				getFiles($metaDataDeep["body"]->contents,$db,$mysqli);
+			}
+			else {
+	
+				$modified = $content[$i]->modified;
+				$date = strtotime($modified);
+				$class = checkIfDeckExists($content[$i]->path,$db,$mysqli);
+	
+				if (checkExtension($content[$i]->path,"dec") || checkExtension($content[$i]->path,"db1")) {
 				
 				?>
 					 <li>
@@ -155,7 +307,7 @@ function getFiles($content,$db){
 		?>
 		 <li>
                             <span>
-                                <span style="font-weight:bold;color:#2B6893;">No Files.</span>
+                                <span style="font-weight:bold;color:#2B6893;">No Files at /App/DeckBattle of your Dropbox Account. If you just uploaded new decks to your account, please wait a second, browse DeckBattle and return to this page.It sometimes takes a couple of seconds to get a new listing from dropbox.</span>
                                 <!--<span>We've just set up a new server. Our gurus ...</span> -->
                             </span>
                             
@@ -222,22 +374,41 @@ generateBreadcrumb("Dashboard","Sync Dropbox");
         ?>
 		<form action="" method="post" >
 	<div class="wButton">
-        <input class="buttonL bGreen" style="margin-top: 10px;width:100%;" type="submit" name="syncDropbox" id="syncDropbox" value="Sync Dropbox files">
+        <input class="buttonL bGreen" style="margin-top: 10px;width:100%;" type="submit" name="syncDropbox" id="syncDropbox" value="Synchronize your Decks with Dropbox">
 
 </div>	
 
         </form>
-
-        <div class="widget">
-                    <div class="whead"><h6>Dropbox Files <?php if ($accountInfo["body"]->email != "") echo "(". $accountInfo["body"]->email . ")"; ?></h6><div class="clear"></div></div>
+<div class="fluid">
+        <div class="widget grid6">
+                    <div class="whead"><h6>Synchronisation Listing | <?php if ($accountInfo["body"]->email != "") echo "Dropbox account: ". $accountInfo["body"]->email . ""; ?></h6><div class="clear"></div></div>
                     <ul class="updates">
-                    <?php      
-						getFiles($metaData["body"]->contents,$dropbox);
+                    <?php    
+						getFilesMarkedForDropbox($mysqli,$dropbox);  
+						getFiles($metaData["body"]->contents,$dropbox,$mysqli);
 					?>
                    </ul>
          </div>
     
+     <div class="widget grid6">
+                    <div class="whead"><h6>Important Notes</h6><div class="clear"></div></div><div class="body">
+                    <ul class="liWarning">
+                    <li>For your safety, DeckBattle only looks in the folder "/App/DeckBattle" in your Dropbox account.</li>
+                    <li>The <strong>LATEST VERSION</strong> takes priority. So if the file in Dropbox has been changed last, it will overwrite the deck on DeckBattle and vice versa.</li>
+                    <li>Syncing will <strong>OVERWRITE</strong> a deck.</li>
+                    <li>Foil cards are <strong>NOT</strong> supported in .dec files. If you export your deck with foil cards to a .dec file they are replaced by normal cards.</li>
+                    <li>Decks are synced by <strong>NAME WITHOUT EXTENSION</strong>. So keep that in mind when you have files with the same name but different extensions.</li>
+                    </ul>
+                    <ul class="liInfo">
+                    <li>.dec files are supported. These files are created by Deckedbuilder.</li>
+                    <li>.db1 files are supported. These are native DeckBattle exports, Version 1.</li>
+                    <li>.txt files are supported. Download example file for the structure.</li>
+                	<li>Cards are synced by Name (.txt) <strong>OR</strong> Multiverse ID if available (.dec / .db1).</li>
+                    </ul></div>
+             </div>
         <!-- content ends-->
+         </div>
+  
         <div class="clear"></div>
     </div>
     <!-- Main content ends -->

@@ -1181,10 +1181,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bb934f', end
 .updates li span { display: block; }
 .updates li > span > a { font-weight: bold; }
 
-.uDone, .uAlert, .uNotice { float: left; display: block; padding-left: 22px; max-width: 76%; }
+.uDone, .uAlert, .uNotice, .uNew, .uSync, .uPut { float: left; display: block; padding-left: 22px; max-width: 76%; }
 .uDone { background: url(/dashboard/images/elements/other/updateDone.png) no-repeat 0 4px; }
 .uAlert { background: url(/dashboard/images/elements/other/updateWarning.png) no-repeat 0 4px; }
 .uNotice { background: url(/dashboard/images/elements/other/updateNotice.png) no-repeat 0 4px; }
+/* dropbox sync */
+.uNew { background: url(/dashboard/images/elements/other/grown.png) no-repeat 0 4px; }
+.uSync { background: url(/dashboard/images/elements/other/taskProgress.png) no-repeat 0 4px; }
+.uPut { background: url(/dashboard/images/elements/other/dropped.png) no-repeat 0 4px; }
 
 
 /* === Grid === */

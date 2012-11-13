@@ -24,7 +24,7 @@ if(isset($_POST['email'], $_POST['p'])) {
    } 
    else
 	{
-      header('Location: ./login.php?error=notcorrect&email='.$email);
+      header('Location: /dashboard/login.php?error=notcorrect&email='.$email);
   	}
   
 } else { 

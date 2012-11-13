@@ -364,11 +364,11 @@ $error2 = "";
 		$isFavorite = '<div class="fs1 iconb" data-icon="&#xe084;"></div>';
 		
 		
-		if ($stmt = $mysqli->prepare("SELECT ud.id, deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal)+SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalcards FROM user_decks ud WHERE userid = ?")) { 
+		if ($stmt = $mysqli->prepare("SELECT ud.id, deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal)+SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalcards, markfordropbox FROM user_decks ud WHERE userid = ?")) { 
 		$stmt->bind_param('s', $_SESSION['user_id']); 
 		$stmt->execute(); 
 		$stmt->store_result();
-		$stmt->bind_result($deckid,$db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_total); // get variables from result.
+		$stmt->bind_result($deckid,$db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_total,$db_isDropbox); // get variables from result.
 		
 		
  while ($stmt->fetch()) {
@@ -385,10 +385,18 @@ if ($db_deckimage != "")
 
 if ($db_isFavorite == "1")
 {
-$isFavorite = '<div class="fs1 iconb" data-icon="&#xe086;"></div>';
+$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
 }
 else
-		$isFavorite = '<div class="fs1 iconb" data-icon="&#xe084;"></div>';
+		$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+
+if ($db_isDropbox == "1")
+{
+$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
+}
+else
+$dropbox = '';
+
 
 $name = $db_deckname;
 
@@ -461,7 +469,7 @@ $class = "fivecolors";
 
 }
 		?>
-          <li data-id="id-<?php echo $id; ?>" class="<?php echo $class; ?>"><a href="deckdetail.php?deckid=<?php echo $deckid;?>" ><img src="<?php echo $imgurl; ?>" alt="" /></a><strong><?php echo $name; ?></strong><span><?php echo $totalamount; ?> cards</span><?php echo $isFavorite; ?></li>
+          <li data-id="id-<?php echo $id; ?>" class="<?php echo $class; ?>"><a href="deckdetail.php?deckid=<?php echo $deckid;?>" ><img src="<?php echo $imgurl; ?>" alt="" /></a><strong><?php echo $name; ?></strong><span><?php echo $totalamount; ?> cards</span><div><?php echo $isFavorite; ?><?php echo $dropbox; ?></div></li>
           <?php
 $id++;
  }
