@@ -204,7 +204,7 @@ $class = "fivecolors";
      
       <h3 style="display: inline-block;margin-top:10px;font-size:32px"><?php echo $name; ?></h3>
     <ul class="titleToolbar" style="display: inline-block;">
-                       <li><a class="" href="#">Mark/Unmark for Dropbox Sync.</a></li>
+                       <li><a class="" href="#">Dropbox Settings</a></li>
 <!--                       
                        <li><a class="" href="#">Check Legality</a></li>
                         <li><a class="" href="#">Compare Deck</a></li>

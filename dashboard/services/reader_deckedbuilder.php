@@ -28,7 +28,7 @@ if ($stmt = $mysqli->prepare("SELECT id FROM user_decks WHERE userid = ? AND dec
 	$deckid  = $rowid;
 				
 	if($stmt->num_rows == 0) { // If the user + deck not exists
-		if ($insert = $mysqli->prepare("INSERT INTO user_decks (userid, deckname) VALUES (?,?)")) {    
+		if ($insert = $mysqli->prepare("INSERT INTO user_decks (userid, deckname,extension) VALUES (?,?,'.dec')")) {    
 			$insert->bind_param('ss',$userid ,$deckname); 
 			$insert->execute();
 			

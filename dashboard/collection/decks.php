@@ -11,24 +11,21 @@ if(login_check($mysqli) != true) {
  header('Location: http://www.deckbattle.com/dashboard/login.php?error=notloggedin');
   
 } else {
-	
-//move to a service!!!	
-	if (isset($_POST['deckname']) && $_POST['deckname'] != "")
-	{
-	
-	$userid = $_SESSION['user_id'];
-	$deckname = $_POST['deckname'];
-	$decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black']. $_POST['Blue']. $_POST['Artifact'];
-	
-	if ($insert = $mysqli->prepare("INSERT INTO user_decks (userid, deckname, color) VALUES (?,?,?);")) {    
-					$insert->bind_param('sss',$userid,$deckname ,$decktype); 
-					$insert->execute();
-				}
-	
+
+	include 'dashboard/services/uploaddeck.php';
+
+	//TODO:move to a service!!!
+	if (isset($_POST['deckname']) && $_POST['deckname'] != "") {
+
+		$userid = $_SESSION['user_id'];
+		$deckname = $_POST['deckname'];
+		$decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black']. $_POST['Blue']. $_POST['Artifact'];
+		
+		if ($insert = $mysqli->prepare("INSERT INTO user_decks (userid, deckname, color,updated,extension) VALUES (?,?,?,now(),'.db1');")) {    
+			$insert->bind_param('sss',$userid,$deckname ,$decktype); 
+			$insert->execute();
+		}
 	}
-
-include 'dashboard/services/uploaddeck.php';
-
 	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -115,9 +112,24 @@ var userid = '<?php echo $_SESSION['user_id']; ?>';
 
 <?php include 'dashboard/include/script_include.php'; ?>
 
-<script type="text/javascript">
-  
- (function($) {
+<script>
+ 
+$(function() {
+ $("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+  $('#adddeckdialog').dialog({
+        autoOpen: false,
+        width: 380
+    });
+	
+   
+ $('#adddeckdialog_open').click(function () {
+      $('#adddeckdialog').dialog('open');
+      return false;
+  });
+});
+ 
+  $(function() {
 	$.fn.sorted = function(customOptions) {
 		var options = {
 			reversed: false,
@@ -142,7 +154,7 @@ var userid = '<?php echo $_SESSION['user_id']; ?>';
 		return $(arr);
 	};
 
-})(jQuery);
+});
 
 $(function() {
   
@@ -237,27 +249,10 @@ $(function() {
       $preferences.useScaling = true;
 });	
 
+ 
 
-$(function() {
-
-  $('#adddeckdialog').dialog({
-        autoOpen: false,
-        width: 380
-    });
-	
-   
- $('#adddeckdialog_open').click(function () {
-      $('#adddeckdialog').dialog('open');
-      return false;
-  });
-});
-
-
-$(function() {
-$("select, .check, .check :checkbox, input:radio, input:file").uniform();
-
-});
 </script>
+
 </head>
 
 <body>
@@ -318,7 +313,7 @@ $error2 = "";
 ?>
 
 
-      <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" id="adddeckdialog_open">Add Deck</a> </div>
+  <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" id="adddeckdialog_open">Add Deck</a> </div>
       <div>
         <ul class="splitter">
           <li>
@@ -388,7 +383,7 @@ if ($db_isFavorite == "1")
 $isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
 }
 else
-		$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+	$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
 
 if ($db_isDropbox == "1")
 {
@@ -485,9 +480,9 @@ $id++;
 
            <!-- Dialog content -->
     <div id="adddeckdialog" class="dialog" title="Add Deck" style="text-align:center;">
-        <form id="addeckform" action="" method="post">
+        <form id="adddeckform" action="" method="post">
             <input type="text" name="deckname" class="clear" style="width:250px;" placeholder="Enter the name for your deck" />
-            
+          
         <div class="grid9 check">
             <input type="checkbox" id="check1" name="Red" value="{R}" />
             <label for="check1"  class="mr20">Red</label>
@@ -503,7 +498,7 @@ $id++;
             <label for="check6"  class="mr20">Artifact</label>
         </div>
           <div style="clear:both;">
-            <input type="submit" name="submit" value="Create Deck" class="buttonM bBlue" /></div>
+           <input type="submit" name="createdeck" value="Create Deck" class="buttonM bBlue" /></div> 
         </form>
     </div>
 

@@ -46,6 +46,7 @@
 <script type="text/javascript" src="/dashboard/js/plugins/ui/jquery.sourcerer.js"></script>
 <script type="text/javascript" src="/dashboard/js/plugins/ui/jquery.easytabs.min.js"></script>
 
+
 <script type="text/javascript" src="/dashboard/js/files/standard/bootstrap.js"></script>
 <script type="text/javascript" src="/dashboard/js/plugins/ui/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/dashboard/js/plugins/ui/jquery.quicksand.js"></script>

@@ -35,7 +35,7 @@
                     <input type="file" class="fileInput" id="deckimport" name="deckimport" />
                 </div>
 
-                <div><input type="submit" class="buttonS bGreyish" value="Import Deck" /></div>
+                <div><input type="submit" class="buttonS bGreyish" name="importdeck" value="Import Deck" /></div></form>
                 <h6>OR</h6>
                 <a class="buttonL bGreen" href="/dashboard/syncdropbox.php">Sync with Dropbox</a>
             </div>

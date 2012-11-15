@@ -2,6 +2,7 @@
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 include 'dashboard/include/db_connect.php';
 include 'dashboard/services/reader_deckedbuilder.php';
+include 'dashboard/services/reader_deckbattle.php';
 
 if(isset($_FILES['deckimport']))
 {
@@ -14,45 +15,41 @@ if(isset($_FILES['deckimport']))
 	else
 	{
  
-    // Elements (values) of $_FILES['ImageFile'] array
-    //let's access these values by using their index position
     $DeckName      =  strtolower($_FILES['deckimport']['name']);
-    $TempSrc        = $_FILES['deckimport']['tmp_name']; // Tmp name of image file stored in PHP tmp folder
-    $FileType      = $_FILES['deckimport']['type']; //Obtain file type, returns "image/png", image/jpeg, text/plain etc.
- 
+    $TempSrc        = $_FILES['deckimport']['tmp_name']; 
+  
     $Extension = substr($DeckName, strrpos($DeckName, '.'));
     $Extension = str_replace('.','',$Extension);
  
-    //Let's use $ImageType variable to check wheather uploaded file is supported.
-    //We use PHP SWITCH statement to check valid image format, PHP SWITCH is similar to IF/ELSE statements
-    //suitable if we want to compare the a variable with many different values
  
- $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/dashboard/import/decks/' . $_SESSION['user_id'] . "/";
- if (!is_dir($uploaddir)) {
-    mkdir($uploaddir);
-}
-$uploadfile = $uploaddir . basename($_FILES['deckimport']['name']);
+ $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/dashboard/imports/decks/' . $_SESSION['user_id'] . "/";
+	 if (!is_dir($uploaddir)) {
+    		mkdir($uploaddir);
+	}
+	
+	$uploadfile = $uploaddir . basename($_FILES['deckimport']['name']);
 
-if (move_uploaded_file($_FILES['deckimport']['tmp_name'], $uploadfile)) {
-   switch(strtolower($Extension))
-    {
-        case 'dec':
-	      	$info = importDeckedBuilder($_SESSION['user_id'],$uploadfile,$DeckName);
-     	    
-	        break;
-        case 'txt':
-            break;
-        case 'csv':
-            break;
-        default:
-            $error = 'Unsupported File!'; //output error and exit
-    }
+	if (move_uploaded_file($_FILES['deckimport']['tmp_name'], $uploadfile)) {
+	   switch(strtolower($Extension))
+		{
+			case 'dec':
+					$info = importDeckedBuilder($_SESSION['user_id'],$uploadfile,$DeckName);
+					break;
+			case 'db1':
+					$info = importDeckBattle($_SESSION['user_id'],$uploadfile,$DeckName);
+					break;
+			case 'txt':
+					break;
+			default:
+				$error = 'Unsupported File!'; //output error and exit
+		}
+		
+		unlink($uploadfile);
 
-} else {
-    $error= "Something went wrong, please try again or contact support.";
-}
+	} else {
+		$error= "Something went wrong, please try again or contact support.";
+	}
 
- 
 	}
 }
  ?>
