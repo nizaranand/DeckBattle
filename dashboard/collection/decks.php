@@ -1,69 +1,32 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
+include  'dashboard/include/base_include.php';
 
-include  'dashboard/include/db_connect.php';
-include  'dashboard/include/login_functions.php';
+include 'dashboard/services/uploaddeck.php';
+//TODO:move to a service!!!
+if (isset($_POST['deckname']) && $_POST['deckname'] != "") {
 
-sec_session_start();
-
-if(login_check($mysqli) != true) {
- 
- header('Location: http://www.deckbattle.com/dashboard/login.php?error=notloggedin');
-  
-} else {
-
-	include 'dashboard/services/uploaddeck.php';
-
-	//TODO:move to a service!!!
-	if (isset($_POST['deckname']) && $_POST['deckname'] != "") {
-
-		$userid = $_SESSION['user_id'];
-		$deckname = $_POST['deckname'];
-		$decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black']. $_POST['Blue']. $_POST['Artifact'];
-		
-		if ($insert = $mysqli->prepare("INSERT INTO user_decks (userid, deckname, color,updated,extension) VALUES (?,?,?,now(),'.db1');")) {    
-			$insert->bind_param('sss',$userid,$deckname ,$decktype); 
-			$insert->execute();
-		}
-	}
+	$userid = $_SESSION['user_id'];
+	$deckname = $_POST['deckname'];
+	$decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black']. $_POST['Blue']. $_POST['Artifact'];
 	
+	if ($insert = $mysqli->prepare("INSERT INTO user_decks (userid, deckname, color,updated,extension) VALUES (?,?,?,now(),'.db1');")) {    
+		$insert->bind_param('sss',$userid,$deckname ,$decktype); 
+		$insert->execute();
+	}
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-  <title>DeckBattle Decks</title>
-
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>DeckBattle</title>
 <link href="/dashboard/css/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
- <style>
-.btn-group:before, .btn-group:after {
-	content: "";
-	display: none;
-}
-
-.btn-group.toolbar {
-	margin-left:8px;
-}
-
-.centeredtd {
-	text-align:center;
-}
-
-label {
-	padding-left:10px;	
-}
-
-.dataTables_length {
-
-padding-right:10px;	
-	
-}
-
-
+<link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
+<style>
 .image-grid {
-	
 }
 .image-grid:after {
 	clear: both;
@@ -88,7 +51,6 @@ padding-right:10px;
 .image-grid li strong {
 	color: #000;
 }
-
 strong {
 	color: #000;
 	font-weight: normal;
@@ -97,21 +59,14 @@ strong {
 	display: inline-block;
 	line-height: 1;
 }
-
-.splitter li { margin-top:5px;
+.splitter li {
+	margin-top: 5px;
 }
 .splitter > li {
 /*	padding-left: 8px;*/
 }
-
 </style>
-
-<script type="text/javascript">
-var userid = '<?php echo $_SESSION['user_id']; ?>';
-</script> 
-
 <?php include 'dashboard/include/script_include.php'; ?>
-
 <script>
  
 $(function() {
@@ -127,9 +82,9 @@ $(function() {
       $('#adddeckdialog').dialog('open');
       return false;
   });
-});
- 
-  $(function() {
+
+//Quicksand
+
 	$.fn.sorted = function(customOptions) {
 		var options = {
 			reversed: false,
@@ -153,10 +108,6 @@ $(function() {
 		});
 		return $(arr);
 	};
-
-});
-
-$(function() {
   
   var read_button = function(class_names) {
     var r = {
@@ -246,262 +197,144 @@ $(function() {
     
   }); 
   
-      $preferences.useScaling = true;
+     $preferences.useScaling = true;
 });	
 
- 
-
 </script>
-
 </head>
 
 <body>
-
 <?php include 'dashboard/include/dashboard_header.php'; ?>
 <?php include 'dashboard/include/dashboard_farleftsidebar.php'; ?>
 <?php include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php'; ?>
-    
+
 <!-- Content begins -->
 <div id="content">
-<?php include 'dashboard/include/dashboard_pageheader.php'; 
-createPageHeader("Deck Collection",$mysqli);
-?>
-<?php include 'dashboard/include/dashboard_breadcrumb.php';
-generateBreadcrumb("Dashboard","Cards & Decks","Decks");
- ?>  
-    <!-- Main content -->
-    <div class="wrapper">
-       <?php 
-if ($success != "")
-{
-	?>
-<div class="nNote nSuccess">
-<p><?php echo $success;?></p>
-</div>
-<?php 
-}
-
-if ($info != "")
-{
-	?>
-<div class="nNote nInformation">
-<p><?php echo $info;?></p>
-</div>
-<?php 
-}
-
-if ($error != "")
-{
-?>
-<div class="nNote nFailure">
-<p><?php echo $error;?></p>
-</div>
-<?php } 
-if ($error2 != "")
-{
-?>
-<div class="nNote nFailure">
-<p><?php echo $error2;?></p>
-</div>
-<?php } 
-
-$success = "";
-$info = "";
-$error = ""; 
-$error2 = ""; 
-
-?>
-
-
-  <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" id="adddeckdialog_open">Add Deck</a> </div>
-      <div>
-        <ul class="splitter">
-          <li>
-            <ul>
-              <li class="segment-1 selected-1"><a class="buttonS bSea " href="#" data-value="all">All Decks</a></li>
-              <li class="segment-0 "><a class="buttonS bDefault " href="#" data-value="white">White</a></li>
-              <li class="segment-2"><a class="buttonS bGreen " href="#" data-value="green">Green</a></li>
-              <li class="segment-3"><a class="buttonS bRed " href="#" data-value="red">Red</a></li>
-              <li class="segment-4"><a class="buttonS bBlue " href="#" data-value="blue">Blue</a></li>
-              <li class="segment-5"><a class="buttonS bBlack  " href="#" data-value="black" >Black</a></li>
-              <li class="segment-6"><a class="buttonS bGreyish " href="#" data-value="artifact">Artifact</a></li>
-              <li class="segment-7"><a class="buttonS bGold " href="#" data-value="twocolors">Two colors</a></li>
-              <li class="segment-8"><a class="buttonS bGold " href="#" data-value="threecolors">Three colors</a></li>
-              <li class="segment-9"><a class="buttonS bGold " href="#" data-value="fourcolors">Four colors</a></li>
-              <li class="segment-10"><a class="buttonS bGold " href="#" data-value="fivecolors">Five colors</a></li>
-              <li class="segment-11"><a class="buttonS bGreyish " href="#" data-value="none">None</a></li>
-            
-            </ul>
-          </li>
-          <li>Sort by:
-            <ul>
-              <li class="segment-12"><a href="#" data-value="name">Name</a></li>
-              <li class="segment-13"><a href="#" data-value="size">Size</a></li>
-             <!-- <li class="segment-13"><a href="#" data-value="size">New</a></li> -->
-            </ul>
-          </li>
-         <!-- <li>View as:
+  <?php include 'dashboard/include/dashboard_pageheader.php'; createPageHeader("Deck Collection",$mysqli);?>
+  <?php include 'dashboard/include/dashboard_breadcrumb.php'; generateBreadcrumb("Dashboard","Cards & Decks","Decks");?>
+  <!-- Main content -->
+  <div class="wrapper">
+    <?php include  'dashboard/include/messages.php'; ?>
+    <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" id="adddeckdialog_open">Add Deck</a> </div>
+    <div>
+      <ul class="splitter">
+        <li>
+          <ul>
+            <li class="segment-1 selected-1"><a class="buttonS bSea " href="#" data-value="all">All Decks</a></li>
+            <li class="segment-0 "><a class="buttonS bDefault " href="#" data-value="white">White</a></li>
+            <li class="segment-2"><a class="buttonS bGreen " href="#" data-value="green">Green</a></li>
+            <li class="segment-3"><a class="buttonS bRed " href="#" data-value="red">Red</a></li>
+            <li class="segment-4"><a class="buttonS bBlue " href="#" data-value="blue">Blue</a></li>
+            <li class="segment-5"><a class="buttonS bBlack  " href="#" data-value="black" >Black</a></li>
+            <li class="segment-6"><a class="buttonS bGreyish " href="#" data-value="artifact">Artifact</a></li>
+            <li class="segment-7"><a class="buttonS bGold " href="#" data-value="twocolors">Two colors</a></li>
+            <li class="segment-8"><a class="buttonS bGold " href="#" data-value="threecolors">Three colors</a></li>
+            <li class="segment-9"><a class="buttonS bGold " href="#" data-value="fourcolors">Four colors</a></li>
+            <li class="segment-10"><a class="buttonS bGold " href="#" data-value="fivecolors">Five colors</a></li>
+            <li class="segment-11"><a class="buttonS bGreyish " href="#" data-value="none">None</a></li>
+          </ul>
+        </li>
+        <li>Sort by:
+          <ul>
+            <li class="segment-12"><a href="#" data-value="name">Name</a></li>
+            <li class="segment-13"><a href="#" data-value="size">Size</a></li>
+            <!-- <li class="segment-13"><a href="#" data-value="size">New</a></li> -->
+          </ul>
+        </li>
+        <!-- <li>View as:
             <ul>
               <li><a href="#" data-value="covers">Covers</a></li>
               <li><a href="#" data-value="list">List</a></li>
             </ul>
           </li>-->
-        </ul>
-      </div>
-      <div> 
-        <ul id="list" class="image-grid">
-          <?php
-		$id = 1;
+      </ul>
+    </div>
+    <div>
+      <ul id="list" class="image-grid">
+        <?php
+		$id = 0;
 		$class = "all";
-		$imgurl = "/dashboard/images/decks/standardcovers/deckcover_nocards.png";
+		$imgurl = $noColorDeckImage;
 		$name = "";
 		$totalamount = "0";
 		$isFavorite = '<div class="fs1 iconb" data-icon="&#xe084;"></div>';
-		
 		
 		if ($stmt = $mysqli->prepare("SELECT ud.id, deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal)+SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalcards, markfordropbox FROM user_decks ud WHERE userid = ?")) { 
 		$stmt->bind_param('s', $_SESSION['user_id']); 
 		$stmt->execute(); 
 		$stmt->store_result();
-		$stmt->bind_result($deckid,$db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_total,$db_isDropbox); // get variables from result.
+		$stmt->bind_result($deckid,$db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_total,$db_isDropbox); 
 		
+		while ($stmt->fetch()) {
 		
- while ($stmt->fetch()) {
-
-if ($db_total != "")
-$totalamount = $db_total;
-else
-$totalamount = 0;
-
-if ($db_deckimage != "")
-{
-	$imgurl = "/dashboard/images/decks/" + $db_deckimage;
-}
-
-if ($db_isFavorite == "1")
-{
-$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
-}
-else
-	$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
-
-if ($db_isDropbox == "1")
-{
-$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
-}
-else
-$dropbox = '';
-
-
-$name = $db_deckname;
-
-if ($imgurl != "")
-{
-//check main color, or type of colors.
-if ($db_color == "")
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_nocards.png";
-$class = "none";
-}
-if ($db_color == "{R}")
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_mountain.png";
-$class = "red";
-}
-if ($db_color == "{G}")
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_forest.png";
-$class = "green";
-}
-if ($db_color == "{B}")
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_swamp.png";
-$class = "black";
-}
-if ($db_color == "{U}"){
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_island.png";
-$class = "blue";
-}
-if ($db_color == "{W}")
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_plains.png";
-$class = "white";
-}
-if ($db_color == "{A}")
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_artifact.png";
-$class = "artifact";
-}
-
-$temp = explode("}",$db_color);
-$size = count($temp);
-
-if ($size == 3)
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_multicolor.png";
-$class = "twocolors";
-}
-
-if ($size == 4)
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_multicolor.png";
-$class = "threecolors";
-}
-
-if ($size == 5)
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_multicolor.png";
-$class = "fourcolors";
-}
-
-if ($size == 6)
-{
-$imgurl = "/dashboard/images/decks/standardcovers/deckcover_multicolor.png";
-$class = "fivecolors";
-}
-
-
-
-}
+			$name = $db_deckname;
+			
+			if ($db_total != "") {
+				$totalamount = $db_total;
+			}
+			
+			if ($db_isFavorite == "1") {
+				$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
+			}
+			else {
+				$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+			}
+			
+			if ($db_isDropbox == "1")
+			{
+				$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
+			}
+			
+			$temparray = determineImageAndClass($db_color);
+			
+			$imgurl = $temparray['url'];
+			$class =  $temparray['class'];
+			
+			if ($db_deckimage != "") {
+		
+				$checkimgurl = $dir_usercovers . $db_deckimage;
+				
+				if (file_exists($checkimgurl)) {
+					$imgurl = $checkimgurl;
+				}
+			}
 		?>
-          <li data-id="id-<?php echo $id; ?>" class="<?php echo $class; ?>"><a href="deckdetail.php?deckid=<?php echo $deckid;?>" ><img src="<?php echo $imgurl; ?>" alt="" /></a><strong><?php echo $name; ?></strong><span><?php echo $totalamount; ?> cards</span><div><?php echo $isFavorite; ?><?php echo $dropbox; ?></div></li>
-          <?php
-$id++;
- }
-}
+        <li data-id="id-<?php echo $id; ?>" class="<?php echo $class; ?>"><a href="deckdetail.php?deckid=<?php echo $deckid;?>" ><img src="<?php echo $imgurl; ?>" alt="" height="178" width="128" /></a><strong><?php echo $name; ?></strong><span><?php echo $totalamount; ?> cards</span><div><?php echo $isFavorite; ?><?php echo $dropbox; ?></div>
+        </li>
+        <?php
+		$id++;
+ 		}
+	}
 		?>
-        </ul>
-      </div>
+      </ul>
     </div>
   </div>
-  <!-- Main content ends -->
-  </div>
-  <!-- Content ends -->
+<!-- Main content ends -->
+</div>
+<!-- Content ends --> 
 
-           <!-- Dialog content -->
-    <div id="adddeckdialog" class="dialog" title="Add Deck" style="text-align:center;">
-        <form id="adddeckform" action="" method="post">
-            <input type="text" name="deckname" class="clear" style="width:250px;" placeholder="Enter the name for your deck" />
-          
-        <div class="grid9 check">
-            <input type="checkbox" id="check1" name="Red" value="{R}" />
-            <label for="check1"  class="mr20">Red</label>
-            <input type="checkbox" id="check2" name="Green" value="{G}" />
-            <label for="check2"  class="mr20">Green</label>
-             <input type="checkbox" id="check3" name="White" value="{W}" />
-            <label for="check3"  class="mr20">White</label>
-             <input type="checkbox" id="check4" name="Black" value="{B}" />
-            <label for="check4"  class="mr20">Black</label>
-             <input type="checkbox" id="check5" name="Blue" value="{U}" />
-            <label for="check5"  class="mr20">Blue</label>
-             <input type="checkbox" id="check6" name="Artifact" value="{A}" />
-            <label for="check6"  class="mr20">Artifact</label>
-        </div>
-          <div style="clear:both;">
-           <input type="submit" name="createdeck" value="Create Deck" class="buttonM bBlue" /></div> 
-        </form>
+<!-- Dialog content -->
+<div id="adddeckdialog" class="dialog" title="Add Deck" style="text-align:center;">
+  <form id="adddeckform" action="" method="post">
+    <input type="text" name="deckname" class="clear" style="width:250px;" placeholder="Enter the name for your deck" />
+    <div class="grid9 check">
+      <input type="checkbox" id="check1" name="Red" value="{R}" />
+      <label for="check1"  class="mr20">Red</label>
+      <input type="checkbox" id="check2" name="Green" value="{G}" />
+      <label for="check2"  class="mr20">Green</label>
+      <input type="checkbox" id="check3" name="White" value="{W}" />
+      <label for="check3"  class="mr20">White</label>
+      <input type="checkbox" id="check4" name="Black" value="{B}" />
+      <label for="check4"  class="mr20">Black</label>
+      <input type="checkbox" id="check5" name="Blue" value="{U}" />
+      <label for="check5"  class="mr20">Blue</label>
+      <input type="checkbox" id="check6" name="Artifact" value="{A}" />
+      <label for="check6"  class="mr20">Artifact</label>
     </div>
-
-  </body>
+    <div style="clear:both;">
+      <input type="submit" name="createdeck" value="Create Deck" class="buttonM bBlue" />
+    </div>
+  </form>
+</div>
+</body>
 </html>
-<?php } ?>
