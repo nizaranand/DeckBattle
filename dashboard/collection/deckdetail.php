@@ -1,64 +1,61 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include  'dashboard/include/base_include.php';
+include 'dashboard/include/base_include.php';
 
 //
-	$class = "all";
-	$imgurl = $noColorDeckImage;
-	$name = "";
-	$totalamount = "0";
-	$userid = $_SESSION['user_id'];
-	$dropbox = '';
+$class = "all";
+$imgurl = $noColorDeckImage;
+$name = "";
+$totalamount = "0";
+$userid = $_SESSION['user_id'];
+$dropbox = '';
 
-	$deckid = $_GET['deckid'];
+$deckid = $_GET['deckid'];
 
-	if (intval($deckid) > 0) {
-		include  'dashboard/services/uploaddeckcover.php';
+if (intval($deckid) > 0) {
+	include 'dashboard/services/uploaddeckcover.php';
 
-		$_SESSION['deckid'] = $deckid;
-	
-		if ($stmt = $mysqli->prepare("SELECT deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalnormal, (SELECT SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalfoil , markfordropbox FROM user_decks ud WHERE ud.id = ? AND userid = ?")) { 
-			$stmt->bind_param('ss', $deckid,$userid); 
-			$stmt->execute(); 
-			$stmt->store_result();
-			$stmt->bind_result($db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_totalnormal, $db_totalfoil,$db_isDropbox); 	
-			$stmt->fetch(); 
-		
-			$name = $db_deckname;
-			
-			if ($db_total != "") {
-				$totalamount = $db_total;
-			}
-			
-			if ($db_isFavorite == "1") {
-				$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
-			}
-			else {
-				$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
-			}
-			
-			if ($db_isDropbox == "1")
-			{
-				$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
-			}
-			
-			$temparray = determineImageAndClass($db_color);
-			
-			$imgurl = $temparray['url'];
-			$class =  $temparray['class'];
-			
-			if ($db_deckimage != "") {
-		
-				$checkimgurl = $dir_usercovers . $db_deckimage;
-				
-				if (file_exists($checkimgurl)) {
-					$imgurl = $checkimgurl;
-				}
+	$_SESSION['deckid'] = $deckid;
+
+	if ($stmt = $mysqli -> prepare("SELECT deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalnormal, (SELECT SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalfoil , markfordropbox FROM user_decks ud WHERE ud.id = ? AND userid = ?")) {
+		$stmt -> bind_param('ss', $deckid, $userid);
+		$stmt -> execute();
+		$stmt -> store_result();
+		$stmt -> bind_result($db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_totalnormal, $db_totalfoil, $db_isDropbox);
+		$stmt -> fetch();
+
+		$name = $db_deckname;
+
+		if ($db_total != "") {
+			$totalamount = $db_total;
+		}
+
+		if ($db_isFavorite == "1") {
+			$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
+		} else {
+			$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+		}
+
+		if ($db_isDropbox == "1") {
+			$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
+		}
+
+		$temparray = determineImageAndClass($db_color);
+
+		$imgurl = $temparray['url'];
+		$class = $temparray['class'];
+
+		if ($db_deckimage != "") {
+
+			$checkimgurl = $dir_usercovers . $db_deckimage;
+
+			if (file_exists($checkimgurl)) {
+				$imgurl = $checkimgurl;
 			}
 		}
 	}
+}
 //
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -69,7 +66,9 @@ include  'dashboard/include/base_include.php';
 <link href="/dashboard/css/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 <link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
-<?php include 'dashboard/include/script_include.php'; ?>
+<?php
+	include 'dashboard/include/script_include.php';
+ ?>
 <script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
 <script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
 <script type="text/javascript" src="/dashboard/js/files/datatable_toolbars.js"></script>
@@ -78,21 +77,33 @@ include  'dashboard/include/base_include.php';
 <script type="text/javascript" src="/dashboard/js/charts/pie_deckdetail.js"></script>
 <script type="text/javascript" src="/dashboard/js/charts/bar_manacurve.js"></script>
 <script type="text/javascript">
-$(function() {
-	$("select, .check, .check :checkbox, input:radio, input:file").uniform();
-});
+	$(function() {
+		$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+	}); 
 </script>
 </head>
 
 <body>
-<?php include 'dashboard/include/dashboard_header.php'; ?>
-<?php include 'dashboard/include/dashboard_farleftsidebar.php'; ?>
-<?php include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php'; ?>
+<?php
+	include 'dashboard/include/dashboard_header.php';
+ ?>
+<?php
+	include 'dashboard/include/dashboard_farleftsidebar.php';
+ ?>
+<?php
+	include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+ ?>
 
 <!-- Content begins -->
 <div id="content">
-  <?php include 'dashboard/include/dashboard_pageheader.php'; createPageHeader("Deck Detail",$mysqli);?>
-  <?php include 'dashboard/include/dashboard_breadcrumb.php'; generateBreadcrumb("Dashboard","Cards & Decks","Deck Detail");?>
+  <?php
+	include 'dashboard/include/dashboard_pageheader.php';
+	createPageHeader("Deck Detail", $mysqli);
+?>
+  <?php
+	include 'dashboard/include/dashboard_breadcrumb.php';
+	generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
+?>
   <!-- Main content -->
   <div class="wrapper">
     <div class="wButton grid6"> <a class="buttonL bGreen" style="margin-top: 10px;" title="" href="add_cards_deck.php">Add cards to Deck</a> <a class="buttonL bBlue" style="margin-top: 5px;" title="" href="decks.php">Back to Deck Collection</a> </div>
