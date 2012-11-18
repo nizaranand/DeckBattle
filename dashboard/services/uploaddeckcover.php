@@ -32,8 +32,7 @@ if(isset($_FILES['imagefile']))
 	 // array of valid extensions
     $validExtensions = array('.jpg', '.jpeg', '.gif', '.png');
     // get extension of the uploaded file
-    $fileExtension = strrchr($_FILES['imagefile']['name'], ".");
-    // check if file Extension is on the list of allowed ones
+ $fileExtension = strrchr($_FILES['imagefile']['name'], ".");// check if file Extension is on the list of allowed ones
     if (in_array($fileExtension, $validExtensions)) {
      //   echo 'Uploaded file is allowed!';
     

@@ -22,11 +22,11 @@
           
     if ( is_wp_error($user_verify) )   
     {  
-       echo "<span class="error">Invalid username or password. Please try again!</span>";  
+       echo "<span class='error'>Invalid username or password. Please try again!</span>";  
        exit();  
      } else   
      {    
-       echo "<script type="text/javascript">window.location='". get_bloginfo('url') ."'</script>";  
+       echo "<script type='text/javascript'>window.location='". get_bloginfo('url') ."'</script>";  
        exit();  
      }  
     } else {   

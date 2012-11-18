@@ -133,7 +133,7 @@ class DropboxClient
     public function putFile($file, $path = "/", $name = null, $overwrite = true) {
         // Check for file existence before
         if (!file_exists($file)) {
-            throw new Exception("Local file '" . $file . "' does not exist");\
+            throw new Exception("Local file '" . $file . "' does not exist");
         }
 
         // Dropbox has a 150MB limit upload for the API

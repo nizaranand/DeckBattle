@@ -1,21 +1,7 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
+include 'dashboard/include/base_include.php';
 
-include  'dashboard/include/db_connect.php';
-include  'dashboard/include/login_functions.php';
-
-sec_session_start();
-
-if(login_check($mysqli) != true) {
- 
- header('Location: http://www.deckbattle.com/dashboard/login.php?error=notloggedin');
-  
-} else {
-
-$error = "";
-$error2 = "";
-$success = "";
-$success2 = "";
 $password_post = "";
 $password_check = "";
 
@@ -29,7 +15,6 @@ if (isset($_POST['pcheck']))
 		$password_check = $_POST['pcheck']; 
 	}
 }
-
 	
 if (isset($_POST['p']))
 {
@@ -42,8 +27,7 @@ if (isset($_POST['p']))
 	}
 }
 
-
-	//CHANGE PASS
+//CHANGE PASS
 if ($password_post != "" && $password_check != "" && isset($_POST['changepass'])) {
 	if ($password_check == $password_post)
 		{
@@ -101,116 +85,71 @@ include 'dashboard/services/uploadavatar.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-<title>My Profile - DeckBattle</title>
-
-<link href="css/styles.css" rel="stylesheet" type="text/css" />
-<!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
-
-<?php include 'dashboard/include/script_include.php'; ?>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>DeckBattle</title>
+		<link href="/dashboard/css/styles.css" rel="stylesheet" type="text/css" />
+		<!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
+<?php
+	include 'dashboard/include/script_include.php';
+ ?>
 
 <script type="text/javascript" src="js/files/login.js"></script>
-
 <script type="text/javascript" src="js/crypto/sha512.js"></script>
 <script type="text/javascript" src="js/crypto/formhash.js"></script>
 
 <script type="text/javascript">
-$(function() {
-	$('#usernameLoading').hide();
-	
-	$('#username').keyup(function(){
-	  $('#usernameLoading').show();
-      $.post("./services/usernamecheck.php", {
-        username: $('#username').val(),
-		session_username: $('#session_username').val()
-      }, function(response){
-        $('#usernameResult').fadeOut();
-        setTimeout("finishAjax('usernameResult', '"+escape(response)+"')", 400);
-      });
-	
-    	return false;
+	$(function() {
+		$('#usernameLoading').hide();
+
+		$('#username').keyup(function() {
+			$('#usernameLoading').show();
+			$.post("./services/usernamecheck.php", {
+				username : $('#username').val(),
+				session_username : $('#session_username').val()
+			}, function(response) {
+				$('#usernameResult').fadeOut();
+				setTimeout("finishAjax('usernameResult', '" + escape(response) + "')", 400);
+			});
+
+			return false;
+		});
 	});
-});
-	
 
-function finishAjax(id, response) {
-  $('#usernameLoading').hide();
-  $('#'+id).html(unescape(response));
-  $('#'+id).fadeIn();
+	function finishAjax(id, response) {
+		$('#usernameLoading').hide();
+		$('#' + id).html(unescape(response));
+		$('#' + id).fadeIn();
 
-} //finishAjax
+	}//finishAjax
 
-$(function() {
-$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+	$(function() {
+		$("select, .check, .check :checkbox, input:radio, input:file").uniform();
 
-});
+	}); 
 </script> 
-
 </head>
 
 <body>
-
-<?php include 'dashboard/include/dashboard_header.php';?>
-<?php include 'dashboard/include/dashboard_farleftsidebar.php'; ?>
-
-
-<?php include 'dashboard/include/dashboard_leftsidebar.php'; ?>
+<?php
+	include 'dashboard/include/dashboard_header.php';
+	include 'dashboard/include/dashboard_farleftsidebar.php';
+	include 'dashboard/include/dashboard_leftsidebar.php';
+ ?>
     
 <!-- Content begins -->
 <div id="content">
-<?php include 'dashboard/include/dashboard_pageheader.php'; 
-createPageHeader("Profile",$mysqli);
-?>
-<?php include 'dashboard/include/dashboard_breadcrumb.php';
-generateBreadcrumb("Dashboard","Profile");
+<?php
+	include 'dashboard/include/dashboard_pageheader.php';
+	createPageHeader("Profile", $mysqli);
+	include 'dashboard/include/dashboard_breadcrumb.php';
+	generateBreadcrumb("Dashboard", "Profile");
  ?>  
  
-
     <!-- Main content -->
     <div class="wrapper">
-   <?php 
-if ($success != "")
-{
-	?>
-<div class="nNote nSuccess">
-<p><?php echo $success;?></p>
-</div>
-<?php 
-}
-
-if ($success2 != "")
-{
-	?>
-<div class="nNote nSuccess">
-<p><?php echo $success2;?></p>
-</div>
-<?php 
-}
-
-if ($error != "")
-{
-?>
-<div class="nNote nFailure">
-<p><?php echo $error;?></p>
-</div>
-<?php } 
-if ($error2 != "")
-{
-?>
-<div class="nNote nFailure">
-<p><?php echo $error2;?></p>
-</div>
-<?php } 
-
-$success = "";
-$success2 = "";
-$error = ""; 
-$error2 = ""; 
-
-?>
-
+<?php include  'dashboard/include/messages.php'; ?>
        <form action="profile.php" method="post" enctype="multipart/form-data" class="main" id="validate">
             <fieldset>
                 <div class="widget fluid">
@@ -263,7 +202,5 @@ $error2 = "";
     </div>
 </div>
 <!-- Content ends -->  
-
 </body>
 </html>
-<?php } ?>

@@ -1,6 +1,4 @@
-<!-- Breadcrumbs line -->
 <?php
-
 function generateBreadcrumb($firstpage="", $secondpage="",$thirdpage="")
 {
 	?>
@@ -11,33 +9,32 @@ function generateBreadcrumb($firstpage="", $secondpage="",$thirdpage="")
 	if ($firstpage != "" && $secondpage != "" && $thirdpage != "")
 	{
 	?>
-      <li><a href="#"><?php echo $firstpage;?></a></li>
-       <li><a href="#"><?php echo $secondpage;?></a></li>
-      <li class="current"><a href="#"><?php echo $thirdpage;?></a></li>
+      <li><a href="#"><?php echo $firstpage; ?></a></li>
+       <li><a href="#"><?php echo $secondpage; ?></a></li>
+      <li class="current"><a href="#"><?php echo $thirdpage; ?></a></li>
     
 <?php
-	}
-	else if ($firstpage != "" && $secondpage != "")
-	{
+}
+else if ($firstpage != "" && $secondpage != "")
+{
 	?>	
 	
-     <li><a href="#"><?php echo $firstpage;?></a></li>
-     <li class="current"><a href="#"><?php echo $secondpage;?></a></li>
+     <li><a href="#"><?php echo $firstpage; ?></a></li>
+     <li class="current"><a href="#"><?php echo $secondpage; ?></a></li>
     
     	
 	<?php
 	}
 	else if ($firstpage != "")
-{?>
-	    <li class="current"><a href="#"><?php echo $firstpage;?></a></li>
+	{
+?>
+	    <li class="current"><a href="#"><?php echo $firstpage; ?></a></li>
  <?php
 }
 	?>
     
         </ul>
   </div>
-
-    
 	<!--
 	 <div class="breadLinks">
     <ul>
@@ -54,9 +51,8 @@ function generateBreadcrumb($firstpage="", $secondpage="",$thirdpage="")
     <div class="clear"></div>
   </div> 
 -->
+</div>
 	
-	
-<?php	
-	echo '</div>';
+<?php
 }
-?>
+	?>

@@ -1,51 +1,55 @@
 <?php 
 if ($success != "") { ?>
     <div class="nNote nSuccess">
-    <p><?php echo $success;?></p>
+    <p><?php echo $success; ?></p>
     </div>
-<?php 
-}
+<?php
+		}
 
-if ($success2 != "") { ?>
+		if ($success2 != "") {
+ ?>
     <div class="nNote nSuccess">
-    <p><?php echo $success2;?></p>
+    <p><?php echo $success2; ?></p>
     </div>
-<?php 
-}
+<?php
+		}
 
-if ($info != "") { ?>
+		if ($info != "") {
+ ?>
     <div class="nNote nInformation">
-    <p><?php echo $info;?></p>
+    <p><?php echo $info; ?></p>
     </div>
-<?php 
-}
+<?php
+		}
 
-if ($info2 != "") { ?>
+		if ($info2 != "") {
+ ?>
     <div class="nNote nInformation">
-    <p><?php echo $info2;?></p>
+    <p><?php echo $info2; ?></p>
     </div>
-<?php 
-}
+<?php
+		}
 
-if ($error != "") { ?>
+		if ($error != "") {
+ ?>
     <div class="nNote nFailure">
-    <p><?php echo $error;?></p>
+    <p><?php echo $error; ?></p>
     </div>
-<?php 
-} 
+<?php
+		}
 
-if ($error2 != "") { ?>
+		if ($error2 != "") {
+ ?>
     <div class="nNote nFailure">
-    <p><?php echo $error2;?></p>
+    <p><?php echo $error2; ?></p>
     </div>
-<?php 
-} 
+<?php
+		}
 
-$success = "";
-$success2 = "";
-$info = "";
-$info2 = "";
-$error = ""; 
-$error2 = ""; 
-
-?>
+		$success = "";
+		$success2 = "";
+		$info = "";
+		$info2 = "";
+		$error = "";
+		$error2 = "";
+	?>

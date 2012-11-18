@@ -3,17 +3,14 @@
 <div class="mainNav">
   <div class="user"> <a title="" class="leftUserDrop">
   
-  <?php 
-  if ($_SESSION['avatar'] != "")
-  {
-   echo '<img src="/avatars/'. $_SESSION['avatar'].'" alt="" />';
-  }
-  else
-  {
-	  echo '<img src="/dashboard/images/user.png" alt="" />';
-  }
+  <?php
+	if ($_SESSION['avatar'] != "") {
+		echo '<img src="/avatars/' . $_SESSION['avatar'] . '" alt="" />';
+	} else {
+		echo '<img src="/dashboard/images/user.png" alt="" />';
+	}
   ?>
-  <!--<span><strong>3</strong></span>--></a><span><?php echo $_SESSION['username']; ?></span>
+  <!-- TODO: label messages <span><strong>3</strong></span>--></a><span><?php echo $_SESSION['username']; ?></span>
     <ul class="leftUser">
       <li><a href="/dashboard/profile.php" title="" class="sProfile">My profile</a></li>
       <li><a href="/dashboard/settings.php" title="" class="sSettings">Settings</a></li>
@@ -28,7 +25,8 @@
                     <input type="text" placeholder="search..." name="userSearch" />
                     <input type="submit" value="" />
                 </form>
-            </div> --> 
+            </div> 
+      --> 
     
     <!-- User nav -->
     <ul class="userNav">

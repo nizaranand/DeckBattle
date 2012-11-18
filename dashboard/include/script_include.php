@@ -1,7 +1,7 @@
-<script>
-var userid = '<?php echo $_SESSION['user_id']; ?>';
-var deckid = '<?php echo $_SESSION['deckid']; ?>';
-</script> 
+<script>var userid =  '<?php echo $_SESSION['user_id']; ?>
+	';
+	var deckid = '
+<?php echo $_SESSION['deckid']; ?>';</script>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 
@@ -57,18 +57,16 @@ var deckid = '<?php echo $_SESSION['deckid']; ?>';
 <script type="text/javascript" src="/dashboard/js/files/tipsy_functions.js"></script>
 
 <script type="text/javascript" src="/dashboard/js/files/standard/functions.js"></script>
-<script type="text/javascript">
-
-<?php
+<script type="text/javascript"><?php
 //check passrecovery active > show growl message
 if ($_SESSION['passrecoveryactive'] == 1)
 {
 ?>
-$(function() {
-	$.jGrowl("You have recovered your password but didn't changed it yet!<br /><br />Please change your password at the<br /><a href='profile.php' style='color:#68A341;'>'My Profile' page</a>.", { sticky: true });
-})
-<?php 
+	$(function() {
+		$.jGrowl("You have recovered your password but didn't changed it yet!<br /><br />Please change your password at the<br /><a href='profile.php' style='color:#68A341;'>'My Profile' page</a>.", {
+			sticky : true
+		});
+	})
+<?php
 }
-?>
-
-</script> 
+?></script>
