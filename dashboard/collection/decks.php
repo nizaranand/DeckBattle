@@ -73,6 +73,7 @@ include 'dashboard/include/script_include.php';
 	$(function() {
 		$("select, .check, .check :checkbox, input:radio, input:file").uniform();
 
+		//Dialog
 		$('#adddeckdialog').dialog({
 			autoOpen : false,
 			width : 380
@@ -84,7 +85,6 @@ include 'dashboard/include/script_include.php';
 		});
 
 		//Quicksand
-
 		$.fn.sorted = function(customOptions) {
 			var options = {
 				reversed : false,
