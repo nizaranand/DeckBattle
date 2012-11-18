@@ -12,65 +12,65 @@ include 'dashboard/include/base_include.php';
 		<!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 		<link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
 		<?php
-			include 'dashboard/include/script_include.php';
- ?>
+		include 'dashboard/include/script_include.php';
+		?>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_toolbars.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_addtocollection.js"></script>
 		<script type="text/javascript">
 			$(function() {
-$("select, .check, .check :checkbox, input:radio, input:file").uniform();
-});
+			$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+			});
 
-function addcardstocollection(_cardid, _cardname, amount_normal, amount_foil,wn,wf,f) {
-$.post("/dashboard/services/addcards_collection.php", {
-cardid: _cardid,
-userid: '<?php echo $_SESSION['user_id']; ?>
-	',
-	amountn: amount_normal,
-	amountf: amount_foil,
-	wishamountn: wn,
-	wishamountf: wf,
-	addtofav: f
-	}, function(response){
-	setTimeout("finishAjax("+_cardid+",'"+_cardname+"','Collection','"+escape(response)+"')", 400);
-	});
-	}
+			function addcardstocollection(_cardid, _cardname, amount_normal, amount_foil,wn,wf,f) {
+			$.post("/dashboard/services/addcards_collection.php", {
+			cardid: _cardid,
+			userid: '<?php echo $_SESSION['user_id']; ?>
+				',
+				amountn: amount_normal,
+				amountf: amount_foil,
+				wishamountn: wn,
+				wishamountf: wf,
+				addtofav: f
+				}, function(response){
+				setTimeout("finishAjax("+_cardid+",'"+_cardname+"','Collection','"+escape(response)+"')", 400);
+				});
+				}
 
-	function finishAjax(id ,name,list,response) { //TODO: make json callback
-	$.jGrowl('Card: '+ name +' added');
-	if (response != "") {
-	var n=response.split("/");
-	$('#'+id).html(n[0] + '/' + n[1]);
-	$('#usercardstotal').html(parseInt(n[4]));
-	$('#usercardstotalTip').attr("original-title", parseInt(n[2]) + " Normal &amp; " + parseInt(n[3]) + " Foil");
-	}
-	}
+				function finishAjax(id ,name,list,response) { //TODO: make json callback
+				$.jGrowl('Card: '+ name +' added');
+				if (response != "") {
+				var n=response.split("/");
+				$('#'+id).html(n[0] + '/' + n[1]);
+				$('#usercardstotal').html(parseInt(n[4]));
+				$('#usercardstotalTip').attr("original-title", parseInt(n[2]) + " Normal &amp; " + parseInt(n[3]) + " Foil");
+				}
+				}
 		</script>
 	</head>
 
 	<body>
 		<?php
 		include 'dashboard/include/dashboard_header.php';
- ?>
+		?>
 		<?php
-			include 'dashboard/include/dashboard_farleftsidebar.php';
- ?>
+		include 'dashboard/include/dashboard_farleftsidebar.php';
+		?>
 		<?php
-			include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
- ?>
+		include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+		?>
 
 		<!-- Content begins -->
 		<div id="content">
 			<?php
 			include 'dashboard/include/dashboard_pageheader.php';
 			createPageHeader("Add Cards", $mysqli);
-		?>
+			?>
 			<?php
-				include 'dashboard/include/dashboard_breadcrumb.php';
-				generateBreadcrumb("Dashboard", "Cards & Decks", "Add Cards");
- ?>
+			include 'dashboard/include/dashboard_breadcrumb.php';
+			generateBreadcrumb("Dashboard", "Cards & Decks", "Add Cards");
+			?>
 
 			<!-- Main content -->
 			<div class="wrapper">
