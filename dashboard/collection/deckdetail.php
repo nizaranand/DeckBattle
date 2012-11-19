@@ -13,47 +13,69 @@ $dropbox = '';
 $deckid = $_GET['deckid'];
 
 if (intval($deckid) > 0) {
-	include 'dashboard/services/uploaddeckcover.php';
+    include 'dashboard/services/uploaddeckcover.php';
 
-	$_SESSION['deckid'] = $deckid;
+    $_SESSION['deckid'] = $deckid;
 
-	if ($stmt = $mysqli -> prepare("SELECT deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalnormal, (SELECT SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalfoil , markfordropbox FROM user_decks ud WHERE ud.id = ? AND userid = ?")) {
-		$stmt -> bind_param('ss', $deckid, $userid);
-		$stmt -> execute();
-		$stmt -> store_result();
-		$stmt -> bind_result($db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_totalnormal, $db_totalfoil, $db_isDropbox);
-		$stmt -> fetch();
+//TODO:move to a service!!!
+if (isset($_POST['colorsused'])) {
+    $userid = $_SESSION['user_id'];
+    $decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black'] . $_POST['Blue'] . $_POST['Artifact'];
 
-		$name = $db_deckname;
+    if ($insert = $mysqli -> prepare("UPDATE user_decks SET color=? WHERE id=? and userid = ?")) {
+        $insert -> bind_param('sss', $decktype, $_SESSION['deckid'],$userid );
+        $insert -> execute();
+    }
+}
 
-		if ($db_total != "") {
-			$totalamount = $db_total;
-		}
 
-		if ($db_isFavorite == "1") {
-			$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
-		} else {
-			$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
-		}
+//GET DECK DETAILS
+    if ($stmt = $mysqli -> prepare("SELECT deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalnormal, (SELECT SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalfoil , markfordropbox FROM user_decks ud WHERE ud.id = ? AND userid = ?")) {
+        $stmt -> bind_param('ss', $deckid, $userid);
+        $stmt -> execute();
+        $stmt -> store_result();
+        $stmt -> bind_result($db_deckname, $db_deckimage, $db_isFavorite, $db_color, $db_totalnormal, $db_totalfoil, $db_isDropbox);
+        $stmt -> fetch();
 
-		if ($db_isDropbox == "1") {
-			$dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
-		}
+        $name = $db_deckname;
 
-		$temparray = determineImageAndClass($db_color);
+        if ($db_total != "") {
+            $totalamount = $db_total;
+        }
 
-		$imgurl = $temparray['url'];
-		$class = $temparray['class'];
+        if ($db_isFavorite == "1") {
+            $isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
+        } else {
+            $isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+        }
 
-		if ($db_deckimage != "") {
+        if ($db_isDropbox == "1") {
+            $dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
+        }
 
-			$checkimgurl = $dir_usercovers . $db_deckimage;
+        $temparray = determineImageAndClass($db_color);
 
-			if (file_exists($checkimgurl)) {
-				$imgurl = $checkimgurl;
-			}
-		}
-	}
+        $imgurl = $temparray['url'];
+        $class = $temparray['class'];
+
+        if ($db_deckimage != "") {
+
+            $checkimgurl = $dir_usercovers . $db_deckimage;
+
+            if (file_exists($checkimgurl)) {
+                $imgurl = $dir_imagedeckcover . $db_deckimage;
+            }
+        }    
+    }
+
+     $averagemanacost = calcAverageManaCost($deckid);
+        $zerocolored = calcColoredMana(0);
+        $onecolored = calcColoredMana(1);
+        $twocolored = calcColoredMana(2);
+        $threecolored = calcColoredMana(3);
+        
+        $totalmissing = calcTotalMissing($deckid);
+   
 }
 //
 ?>
@@ -67,7 +89,7 @@ if (intval($deckid) > 0) {
 <!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 <link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
 <?php
-	include 'dashboard/include/script_include.php';
+include 'dashboard/include/script_include.php';
  ?>
 <script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
 <script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
@@ -77,32 +99,51 @@ if (intval($deckid) > 0) {
 <script type="text/javascript" src="/dashboard/js/charts/pie_deckdetail.js"></script>
 <script type="text/javascript" src="/dashboard/js/charts/bar_manacurve.js"></script>
 <script type="text/javascript">
-	$(function() {
+		$(function() {
 		$("select, .check, .check :checkbox, input:radio, input:file").uniform();
-	}); 
+	});
+	
+	function toggledeckfav() {
+$.post("/dashboard/services/toggle_deckfavorite.php", {
+deckid: '<?php echo $_SESSION['deckid']; ?>',
+	}, function(response){
+	setTimeout("finishAjax('"+escape(response)+"')", 400);
+	});
+	}
+
+	function finishAjax(response) {
+	if (response == "1")   {
+	   $.jGrowl("Deck marked as favorite.");
+	   $("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>')
+	} else {
+	   $.jGrowl("Deck UNmarked as favorite.");
+$("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe084;"></div>')
+	}
+	}
+
 </script>
 </head>
 
 <body>
 <?php
-	include 'dashboard/include/dashboard_header.php';
+include 'dashboard/include/dashboard_header.php';
  ?>
 <?php
-	include 'dashboard/include/dashboard_farleftsidebar.php';
+include 'dashboard/include/dashboard_farleftsidebar.php';
  ?>
 <?php
-	include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
  ?>
 
 <!-- Content begins -->
 <div id="content">
   <?php
-	include 'dashboard/include/dashboard_pageheader.php';
-	createPageHeader("Deck Detail", $mysqli);
+include 'dashboard/include/dashboard_pageheader.php';
+createPageHeader("Deck Detail", $mysqli);
 ?>
   <?php
-	include 'dashboard/include/dashboard_breadcrumb.php';
-	generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
+include 'dashboard/include/dashboard_breadcrumb.php';
+generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
 ?>
   <!-- Main content -->
   <div class="wrapper">
@@ -130,33 +171,34 @@ if (intval($deckid) > 0) {
     <div class="fluid">
       <div class="widget grid2">
         <div class="whead">
-          <h6>Deck Cover</h6>
+          <h6>Deck</h6>
           <div class="titleOpt"> <a href="#" data-toggle="dropdown"><span class="icos-cog3"></span><span class="clear"></span></a>
             <ul class="dropdown-menu pull-right">
               <li><a href="#" class="" id="uploadimagedialog_open"><span class="icos-pencil"></span>Change Cover</a></li>
-              <li><a href="#" class=""><span class="icos-star"></span>Mark/Unmark as favorite</a></li>
+              <li><a href="#" class="" onclick="toggledeckfav()"><span class="icos-star"></span>Mark/Unmark as favorite</a></li>
+              <li><a href="#" class="" id="colorsuseddialog_open"><span class="icos-view"></span>Colors Used</a></li>
             </ul>
           </div>
           <div class="clear"></div>
         </div>
-        <div class="body" style="text-align:center;"> <img src="<?php echo $imgurl; ?>" alt="" /><br />
-          <?php echo $isFavorite; ?><?php echo $dropbox; ?> </div>
+        <div class="body" style="text-align:center;"> <img src="<?php echo $imgurl; ?>" alt="" /><br /><div id="fav">
+          <?php echo $isFavorite; ?></div><?php echo $dropbox; ?><?php echo showDeckColors($db_color); ?></div>
       </div>
       <div class="widget grid2">
         <div class="whead">
           <h6>Quickstats</h6>
           <div class="clear"></div>
         </div>
-        <div class="body"> Amount Normal: <?php echo $db_totalnormal; ?> cards<br />
-          Amount Foil: <?php echo $db_totalfoil; ?> cards<br />
+        <div class="body"> Amount Normal: <?php if ($db_totalnormal == "") echo "0"; else echo $db_totalnormal; ?> cards<br />
+          Amount Foil: <?php if ($db_totalfoil == "") echo "0"; else echo $db_totalfoil; ?> cards<br />
           <div class="divider"></div>
-          Average mana cost: 4.76<br />
-          0 Colored Mana: 5 cards<br />
-          1 Colored Mana: 18 cards<br />
-          2 Colored Mana: 99 cards<br />
-          3+ Colored Mana: 100 cards<br />
+          Average mana cost: <?php echo $averagemanacost; ?><br />
+          0 Colored Mana: <?php echo $zerocolored; ?> cards<br />
+          1 Colored Mana: <?php echo $onecolored; ?> cards<br />
+          2 Colored Mana: <?php echo $twocolored; ?> cards<br />
+          3+ Colored Mana: <?php echo $threecolored; ?> cards<br />
           <div class="divider"></div>
-          Total missing: 10 cards </div>
+          Total missing: <?php echo $totalmissing ?> cards </div>
       </div>
       <div class="widget grid4 chartWrapper">
         <div class="whead">
@@ -274,5 +316,28 @@ if (intval($deckid) > 0) {
     <input type="submit" class="buttonS bGreyish" name="uploadimage" value="Upload Image" />
   </div>
 </form>
+</div>
+<div id="colorsuseddialog" class="dialog" title="Colors used in deck" style="text-align:center;">
+  <form id="colorsusedform" action="" method="post">
+    <div class="grid9 check">
+      <input type="checkbox" id="check1" name="Red" value="{R}" />
+      <label for="check1"  class="mr20">Red</label>
+      <input type="checkbox" id="check2" name="Green" value="{G}" />
+      <label for="check2"  class="mr20">Green</label>
+      <input type="checkbox" id="check3" name="White" value="{W}" />
+      <label for="check3"  class="mr20">White</label>
+      <input type="checkbox" id="check4" name="Black" value="{B}" />
+      <label for="check4"  class="mr20">Black</label>
+      <input type="checkbox" id="check5" name="Blue" value="{U}" />
+      <label for="check5"  class="mr20">Blue</label>
+      <input type="checkbox" id="check6" name="Artifact" value="{A}" />
+      <label for="check6"  class="mr20">Artifact</label>
+    </div>
+    <div style="clear:both;">
+      <input type="submit" name="colorsused" value="Update Colors Used" class="buttonM bBlue" />
+    </div>
+  </form>
+</div>
+
 </body>
 </html>

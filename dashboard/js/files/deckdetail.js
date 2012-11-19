@@ -10,4 +10,14 @@ $(function() {
       	return false;
   	});
 
+	$('#colorsuseddialog').dialog({
+        autoOpen: false,
+        width: 380
+    });
+	
+   
+	$('#colorsuseddialog_open').click(function () {
+    	$('#colorsuseddialog').dialog('open');
+      	return false;
+  	});
 });

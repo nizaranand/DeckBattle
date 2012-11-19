@@ -17,107 +17,107 @@ $email_post = "";
 
 //REMEMBER ME
 if ($_COOKIE["DeckBattleRememberMe"] != "") {
-	if ($email_get == "")
-		$email_get = $_COOKIE["DeckBattleRememberMe"];
-}
+    if ($email_get == "")
+        $email_get = $_COOKIE["DeckBattleRememberMe"];
+} 
 
 //LOGOUT
 if (isset($_GET['logout'])) {
-	$_SESSION = array();
-	// Unset all session values
-	$params = session_get_cookie_params();
-	setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-	// Delete the actual cookie.
-	session_destroy();
+    $_SESSION = array();
+    // Unset all session values
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+    // Delete the actual cookie.
+    session_destroy();
 
-	$success = "You are logged out from the DeckBattle Dashboard. See you next time!";
+    $success = "You are logged out from the DeckBattle Dashboard. See you next time!";
 
 }
 
 //POSTS HANDLERS
 if (isset($_POST['p'])) {
-	if ($_POST['p'] == "") {
-		$error = "Oh no, you forgot to fill in a password. We really need one otherwise everyone can access your account. And you don't want that!";
-	} else {
-		$password_post = $_POST['p'];
-	}
+    if ($_POST['p'] == "") {
+        $error = "Oh no, you forgot to fill in a password. We really need one otherwise everyone can access your account. And you don't want that!";
+    } else {
+        $password_post = $_POST['p'];
+    }
 }
 
 if (isset($_POST['email'])) {
-	if ($_POST['email'] == "") {
-		$error = "Oh no, you forgot to fill in an email address. Without one, we cannot create an DeckBattle account.";
-	} else {
+    if ($_POST['email'] == "") {
+        $error = "Oh no, you forgot to fill in an email address. Without one, we cannot create an DeckBattle account.";
+    } else {
 
-		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			$error = "This email address: " . $_POST['email'] . " is not valid. Please fill in a correct email address.";
-		} else {
-			$email_post = $_POST['email'];
-		}
-	}
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $error = "This email address: " . $_POST['email'] . " is not valid. Please fill in a correct email address.";
+        } else {
+            $email_post = $_POST['email'];
+        }
+    }
 }
 
 //ACTIVATE ACCOUNT
 if (isset($_GET['activation']) && $_GET['activation'] != "") {
-	$isactivated = activateUser($_GET['activation'], $mysqli);
+    $isactivated = activateUser($_GET['activation'], $mysqli);
 
-	if ($isactivated)
-		$success = "Account activated, you can login now!";
-	else
-		$error = "Something went wrong. Not a valid activation link.";
+    if ($isactivated)
+        $success = "Account activated, you can login now!";
+    else
+        $error = "Something went wrong. Not a valid activation link.";
 }
 
 //ACTIVATE NEW EMAIL
 if (isset($_GET['emailactivation']) && $_GET['emailactivation'] != "") {
-	$isemailactivated = activateEmail($_GET['emailactivation'], $mysqli);
+    $isemailactivated = activateEmail($_GET['emailactivation'], $mysqli);
 
-	if ($isemailactivated)
-		$success = "New email activated, you can login now with your new email address!";
-	else
-		$error = "Something went wrong. Not a valid activation link.";
+    if ($isemailactivated)
+        $success = "New email activated, you can login now with your new email address!";
+    else
+        $error = "Something went wrong. Not a valid activation link.";
 }
 
 //REQUEST NEW ACTIVATION EMAIL
 if (isset($_GET['request']) && $_GET['request'] != "") {
-	$isactivatedmailsent = activationmail($_GET['request'], $mysqli);
+    $isactivatedmailsent = activationmail($_GET['request'], $mysqli);
 
-	if ($isactivatedmailsent)
-		$success = "Activation email send to: " . $_GET['request'] . ", please check your SPAM email box if you don't recieve the mail. Still having problems, contact us.";
-	else
-		$error = "Something went wrong. Not a valid activation request.";
+    if ($isactivatedmailsent)
+        $success = "Activation email send to: " . $_GET['request'] . ", please check your SPAM email box if you don't recieve the mail. Still having problems, contact us.";
+    else
+        $error = "Something went wrong. Not a valid activation request.";
 }
 
 //SIGNUP
 if ($password_post != "" && $email_post != "" && isset($_GET['action'])) {
 
-	$isSignedUp = signup($email_post, $password_post, $mysqli);
+    $isSignedUp = signup($email_post, $password_post, $mysqli);
 
-	if ($isSignedUp) {
-		$success = "Your account is created using " . $email_post . ". Check your email box quickly to find the activation link!";
-	} else {
-		$error = "This email already exists, try to <a href=\"/dashboard/login.php?email=" . $email_post . "\">login</a> or use a different email to sign up. ";
-	}
+    if ($isSignedUp) {
+        $success = "Your account is created using " . $email_post . ". Check your email box quickly to find the activation link!";
+    } else {
+        $error = "This email already exists, try to <a href=\"/dashboard/login.php?email=" . $email_post . "\">login</a> or use a different email to sign up. ";
+    }
 }
 
 //PASSWORD RECOVERY
 if (isset($_POST['passwordrecovery'])) {
 
-	$isPassrecovered = passwordrecovery($_POST['passwordrecovery'], $password_post, $passwordgenerated, $mysqli);
+    $isPassrecovered = passwordrecovery($_POST['passwordrecovery'], $password_post, $passwordgenerated, $mysqli);
 
-	if ($isPassrecovered) {
-		$success = "Your new password has been mailed to: " . $_POST['passwordrecovery'] . ". Check your email box quickly to get your new password.";
-	} else {
-		$error = "We can't find your email, are you sure you filled in the right one? Or your account isn't activated yet, <a href=\"login.php?request=" . $_POST['passwordrecovery'] . "\" > Click here and we will send you a new activation email to: " . $_POST['passwordrecovery'] . ".</a>.";
-	}
+    if ($isPassrecovered) {
+        $success = "Your new password has been mailed to: " . $_POST['passwordrecovery'] . ". Check your email box quickly to get your new password.";
+    } else {
+        $error = "We can't find your email, are you sure you filled in the right one? Or your account isn't activated yet, <a href=\"login.php?request=" . $_POST['passwordrecovery'] . "\" > Click here and we will send you a new activation email to: " . $_POST['passwordrecovery'] . ".</a>.";
+    }
 }
 
 //ERRORS THROUGH GET
 if (isset($_GET['error'])) {
-	$temp = $_GET['error'];
+    $temp = $_GET['error'];
 
-	if ($temp == 'notloggedin')
-		$error = 'You have to login to access the DeckBattle Dashboard. Please fill in your email and password, or <a href="?action=signup">sign up</a> for a free account.';
-	if ($temp == 'notcorrect')
-		$error = 'Email and/or password are not correct, please try again. If you just created your account please check your activation mail, or <a href="login.php?request=' . $email_get . '" >request a new one</a>.';
+    if ($temp == 'notloggedin')
+        $error = 'You have to login to access the DeckBattle Dashboard. Please fill in your email and password, or <a href="?action=signup">sign up</a> for a free account.';
+    if ($temp == 'notcorrect')
+        $error = 'Email and/or password are not correct, please try again. If you just created your account please check your activation mail, or <a href="login.php?request=' . $email_get . '" >request a new one</a>.';
 
 }
 ?>
@@ -163,10 +163,10 @@ if ($success != "")
 ?>
 <div class="nNote nSuccess">
 <p><?php echo $success;
-	$success = "";
-	$error = "";
-?><
-/p>
+    $success = "";
+    $error = "";
+?>
+</p>
 </div>
 <?php
 }
@@ -175,10 +175,10 @@ if ($error != "")
 ?>
 <div class="nNote nFailure">
 <p><?php echo $error;
-	$success = "";
-	$error = "";
-?><
-/p>
+    $success = "";
+    $error = "";
+?>
+</p>
 </div>
 <?php
 }

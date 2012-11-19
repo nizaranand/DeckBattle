@@ -11,9 +11,48 @@ if (login_check($mysqli) != true) {
 
 }
 
+
 //DECK FUNCTIONS AND VARS
 $dir_usercovers = $_SERVER['DOCUMENT_ROOT'] . "/dashboard/images/decks/usercovers/" . $_SESSION['user_id'] . "/";
+$dir_imagedeckcover = "/dashboard/images/decks/usercovers/" . $_SESSION['user_id'] . "/";
 $noColorDeckImage = "/dashboard/images/decks/standardcovers/deckcover_nocards.png";
+
+function showDeckColors($color){
+   
+  $result = str_replace("{R}",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/R.gif" />',$color);
+  $result = str_replace("{W}",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/W.gif" />',$result);
+  $result = str_replace("{G}",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/G.gif" />',$result);
+  $result = str_replace("{U}",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/U.gif" />',$result);
+  $result = str_replace("{B}",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/B.gif" />',$result);
+  $result = str_replace("{A}",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/A.gif" />',$result);
+   
+  return $result;
+    
+}
+
+function calcAverageManaCost($deckid) {
+    $result = 0;
+
+
+    
+    
+    return $result;
+}
+
+function calcColoredMana($number) {
+    
+    $result = 0;
+    
+    
+    return $result;
+    
+}
+
+function calcTotalMissing($deckid){
+    
+  return "-";  
+    
+}
 
 function determineImageAndClass($db_color) {
 
