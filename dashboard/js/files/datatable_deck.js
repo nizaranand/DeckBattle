@@ -50,7 +50,7 @@ $(function() {
 			/* Options */    { "bSearchable": false}
 		] 
 	});
-
+/*
 
 	$('.sideboard').dataTable({
 		"bJQueryUI": false,
@@ -87,19 +87,19 @@ $(function() {
         },
 		"sDom": '<"H"fl>rt<"F"ip>',
 		"aoColumns": [ 
-			/* Ncardid */   { "bSearchable": false,
+			/* Ncardid    { "bSearchable": false,
 			                 "bVisible":    false },
-			/* Ncardname */  null,
-			/* ntype */ null,
-			/* nmanacost */ { "bSearchable": false},
-			/* ncolor */    { "bSearchable": false},
-			/* Nset */    { "bSearchable": false,
+			/* Ncardname   null,
+			/* ntype  null,
+			/* nmanacost  { "bSearchable": false},
+			/* ncolor     { "bSearchable": false},
+			/* Nset     { "bSearchable": false,
 			                 "bVisible":    false },
-			/* Nname */    null,
-			/* nrarity */    { "bSearchable": false},
-			/* nnumber */    null,
-			/* nnumberF */    null,
-			/* Options */    { "bSearchable": false}
+			/* Nname     null,
+			/* nrarity     { "bSearchable": false},
+			/* nnumber     null,
+			/* nnumberF     null,
+			/* Options     { "bSearchable": false}
 		] 
-	});
+	});*/
 });

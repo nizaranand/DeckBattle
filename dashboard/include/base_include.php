@@ -1,7 +1,7 @@
 <?php
 
-include 'dashboard/include/db_connect.php';
-include 'dashboard/include/login_functions.php';
+require_once 'dashboard/include/db_connect.php';
+require_once 'dashboard/include/login_functions.php';
 
 sec_session_start();
 
@@ -32,8 +32,6 @@ function showDeckColors($color){
 
 function calcAverageManaCost($deckid) {
     $result = 0;
-
-
     
     
     return $result;

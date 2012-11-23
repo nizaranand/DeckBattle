@@ -1,6 +1,6 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/base_include.php';
+require_once 'dashboard/include/base_include.php';
 
 //
 $class = "all";
@@ -13,7 +13,7 @@ $dropbox = '';
 $deckid = $_GET['deckid'];
 
 if (intval($deckid) > 0) {
-    include 'dashboard/services/uploaddeckcover.php';
+    require_once 'dashboard/services/uploaddeckcover.php';
 
     $_SESSION['deckid'] = $deckid;
 
@@ -27,6 +27,10 @@ if (isset($_POST['colorsused'])) {
         $insert -> execute();
     }
 }
+
+//BUILD CHART DATA
+
+
 
 
 //GET DECK DETAILS
@@ -76,6 +80,9 @@ if (isset($_POST['colorsused'])) {
         
         $totalmissing = calcTotalMissing($deckid);
    
+   $value = array(array(label => "Creature",data => "3"),array(label => "Enchantment", data => "1"));
+   $deckdata = json_encode($value);
+   echo $deckdata; 
 }
 //
 ?>
@@ -89,7 +96,7 @@ if (isset($_POST['colorsused'])) {
 <!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 <link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
 <?php
-include 'dashboard/include/script_include.php';
+require_once 'dashboard/include/script_include.php';
  ?>
 <script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
 <script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
@@ -101,6 +108,7 @@ include 'dashboard/include/script_include.php';
 <script type="text/javascript">
 		$(function() {
 		$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+		pieCardtype(<?php echo $deckdata; ?>);
 	});
 	
 	function toggledeckfav() {
@@ -126,23 +134,23 @@ $("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" d
 
 <body>
 <?php
-include 'dashboard/include/dashboard_header.php';
+require_once 'dashboard/include/dashboard_header.php';
  ?>
 <?php
-include 'dashboard/include/dashboard_farleftsidebar.php';
+require_once 'dashboard/include/dashboard_farleftsidebar.php';
  ?>
 <?php
-include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+require_once 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
  ?>
 
 <!-- Content begins -->
 <div id="content">
   <?php
-include 'dashboard/include/dashboard_pageheader.php';
+require_once 'dashboard/include/dashboard_pageheader.php';
 createPageHeader("Deck Detail", $mysqli);
 ?>
   <?php
-include 'dashboard/include/dashboard_breadcrumb.php';
+require_once 'dashboard/include/dashboard_breadcrumb.php';
 generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
 ?>
   <!-- Main content -->

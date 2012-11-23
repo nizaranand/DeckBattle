@@ -95,12 +95,18 @@ function addFilesToDropbox($db, $mysqli) {
 				$stringData = "//Deckbattle Deck Data//deckimage;" . $deckimage . " isFavorite;" . $fav . " color;" . $color . "\n";
 				fwrite($ourFileHandle, $stringData);
 
-				if ($stmt1 = $mysqli -> prepare("SELECT cardid, amount_normal, amount_foil, location,Ncardname FROM user_decks_cards join Ncards on cardid=Ncardid WHERE deckid = ? ")) {
+				if ($stmt1 = $mysqli -> prepare("SELECT cardid, amount_normal, amount_foil, location FROM user_decks_cards WHERE deckid = ? ")) {
 					$stmt1 -> bind_param('s', $deckid);
 					$stmt1 -> execute();
 					$stmt1 -> store_result();
-					$stmt1 -> bind_result($cardid, $an, $af, $location, $cardname);
-					// get variables from result.
+					$stmt1 -> bind_result($cardid, $an, $af, $location);
+					
+					$tempcardid = $cardid;
+                    $stmt1 = $mysqli -> prepare("SELECT Ncardname FROM Ncards WHERE Ncardid = ? ");
+                    $stmt1 -> bind_param('s', $tempcardid);
+                    $stmt1 -> execute();
+                    $stmt1 -> store_result();
+                    $stmt1 -> bind_result($cardname);
 
 					while ($stmt1 -> fetch()) {
 

@@ -3,7 +3,7 @@
 	<div class="secWrapper">
 		<div class="secTop">
 			<?php set_include_path($_SERVER['DOCUMENT_ROOT']);
-			include 'dashboard/include/battlesplayed_sidebarheader.php';
+			require_once 'dashboard/include/battlesplayed_sidebarheader.php';
  ?>
 			<!-- Tabs container -->
 			<div id="tab-container" class="tab-container">

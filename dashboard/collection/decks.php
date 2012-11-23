@@ -1,8 +1,8 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/base_include.php';
+require_once 'dashboard/include/base_include.php';
 
-include 'dashboard/services/uploaddeck.php';
+require_once 'dashboard/services/uploaddeck.php';
 //TODO:move to a service!!!
 if (isset($_POST['deckname']) && $_POST['deckname'] != "") {
 
@@ -67,7 +67,7 @@ if (isset($_POST['deckname']) && $_POST['deckname'] != "") {
 	}
 </style>
 <?php
-include 'dashboard/include/script_include.php';
+require_once 'dashboard/include/script_include.php';
  ?>
 <script type="text/javascript">
  
@@ -210,29 +210,29 @@ $(function() {
 
 <body>
 <?php
-include 'dashboard/include/dashboard_header.php';
+require_once 'dashboard/include/dashboard_header.php';
  ?>
 <?php
-include 'dashboard/include/dashboard_farleftsidebar.php';
+require_once 'dashboard/include/dashboard_farleftsidebar.php';
  ?>
 <?php
-include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+require_once 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
  ?>
 
 <!-- Content begins -->
 <div id="content">
   <?php
-include 'dashboard/include/dashboard_pageheader.php';
+require_once 'dashboard/include/dashboard_pageheader.php';
 createPageHeader("Deck Collection", $mysqli);
 ?>
   <?php
-include 'dashboard/include/dashboard_breadcrumb.php';
+require_once 'dashboard/include/dashboard_breadcrumb.php';
 generateBreadcrumb("Dashboard", "Cards & Decks", "Decks");
 ?>
   <!-- Main content -->
   <div class="wrapper">
     <?php
-	include 'dashboard/include/messages.php';
+	require_once 'dashboard/include/messages.php';
  ?>
     <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" id="adddeckdialog_open">Add Deck</a> </div>
     <div>

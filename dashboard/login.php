@@ -1,8 +1,8 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 
-include 'dashboard/include/db_connect.php';
-include 'dashboard/include/login_functions.php';
+require_once 'dashboard/include/db_connect.php';
+require_once 'dashboard/include/login_functions.php';
 
 sec_session_start();
 
@@ -132,7 +132,7 @@ if (isset($_GET['error'])) {
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
 <?php
-include 'dashboard/include/script_include.php';
+require_once 'dashboard/include/script_include.php';
 ?>
 
 <script type="text/javascript" src="js/files/login.js"></script>

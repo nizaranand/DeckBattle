@@ -1,6 +1,6 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/base_include.php';
+require_once 'dashboard/include/base_include.php';
 
 $password_post = "";
 $password_check = "";
@@ -79,7 +79,7 @@ if (isset($_POST['changeinfo']))
 	}
 }
 
-include 'dashboard/services/uploadavatar.php';
+require_once 'dashboard/services/uploadavatar.php';
 
 
 ?>
@@ -92,7 +92,7 @@ include 'dashboard/services/uploadavatar.php';
 		<link href="/dashboard/css/styles.css" rel="stylesheet" type="text/css" />
 		<!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 <?php
-	include 'dashboard/include/script_include.php';
+	require_once 'dashboard/include/script_include.php';
  ?>
 
 <script type="text/javascript" src="js/files/login.js"></script>
@@ -133,17 +133,17 @@ include 'dashboard/services/uploadavatar.php';
 
 <body>
 <?php
-	include 'dashboard/include/dashboard_header.php';
-	include 'dashboard/include/dashboard_farleftsidebar.php';
-	include 'dashboard/include/dashboard_leftsidebar.php';
+	require_once 'dashboard/include/dashboard_header.php';
+	require_once 'dashboard/include/dashboard_farleftsidebar.php';
+	require_once 'dashboard/include/dashboard_leftsidebar.php';
  ?>
     
 <!-- Content begins -->
 <div id="content">
 <?php
-	include 'dashboard/include/dashboard_pageheader.php';
+	require_once 'dashboard/include/dashboard_pageheader.php';
 	createPageHeader("Profile", $mysqli);
-	include 'dashboard/include/dashboard_breadcrumb.php';
+	require_once 'dashboard/include/dashboard_breadcrumb.php';
 	generateBreadcrumb("Dashboard", "Profile");
  ?>  
  

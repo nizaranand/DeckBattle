@@ -12,18 +12,17 @@ require_once 'dashboard/include/base_include.php';
 		<!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 		<link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
 		<?php
-			require_once 'dashboard/include/script_include.php';
- ?>
+        require_once 'dashboard/include/script_include.php';
+		?>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_toolbars.js"></script>
-		<script type="text/javascript" src="/dashboard/js/files/datatable_collection.js"></script>
+		<script type="text/javascript" src="/dashboard/js/files/datatable_addtocollection.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$("select, .check, .check :checkbox, input:radio, input:file").uniform();
-			});
-			
-			function addcardstocollection(_cardid, _cardname, amount_normal, amount_foil,wn,wf,f) {
+$("select, .check, .check :checkbox, input:radio, input:file").uniform();
+});
+function addcardstocollection(_cardid, _cardname, amount_normal, amount_foil,wn,wf,f) {
 $.post("/dashboard/services/addcards_collection.php", {
 cardid: _cardid,
 userid: '<?php echo $_SESSION['user_id']; ?>',
@@ -65,48 +64,61 @@ userid: '<?php echo $_SESSION['user_id']; ?>',
 
 	<body>
 		<?php
-		require_once 'dashboard/include/dashboard_header.php';
- ?>
+        require_once 'dashboard/include/dashboard_header.php';
+		?>
 		<?php
-			require_once 'dashboard/include/dashboard_farleftsidebar.php';
- ?>
+        require_once 'dashboard/include/dashboard_farleftsidebar.php';
+		?>
 		<?php
-			require_once 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
- ?>
+        require_once 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+		?>
 
 		<!-- Content begins -->
 		<div id="content">
 			<?php
-			require_once 'dashboard/include/dashboard_pageheader.php';
-			createPageHeader("Collection", $mysqli);
-		?>
-			<?php
-				require_once 'dashboard/include/dashboard_breadcrumb.php';
-				generateBreadcrumb("Dashboard", "Cards & Decks", "Card Collection");
+            require_once 'dashboard/include/dashboard_pageheader.php';
+            createPageHeader("Add Cards", $mysqli);
 			?>
+			<?php
+            require_once 'dashboard/include/dashboard_breadcrumb.php';
+            generateBreadcrumb("Dashboard", "Cards & Decks", "Add Cards");
+			?>
+
 			<!-- Main content -->
 			<div class="wrapper">
 				<div class="wButton grid6">
-					<a class="buttonL bGreen" style="margin-top: 10px;" title="" href="/dashboard/collection/add_cards_collection-favorites.php?from=col">Add cards to Collection</a>
+					<?php
+                    switch ($_GET['from']) {
+
+                        case "col" :
+                            echo '<a class="buttonL bBlue" style="margin-top: 10px;" title="" href="collection.php">Back to Collection</a>';
+                            break;
+
+                        case "fav" :
+                            echo '<a class="buttonL bBlue" style="margin-top: 10px;" title="" href="favorites.php">Back to Favorites</a>';
+                            break;
+                    }
+					?>
 				</div>
 				<div class="widget">
 					<div class="whead">
-						<h6>Card Collection</h6>
+						<h6>Card Database</h6>
 						<div class="clear"></div>
 					</div>
 					<div class="shownpars" >
-						<table cellpadding="0" cellspacing="0" border="0" class="collection">
+						<table cellpadding="0" cellspacing="0" border="0" class="addtocollection">
 							<thead>
 								<tr>
-						              <th>Qty. Normal</th>
-                                     <th>Qty.  Foil</th>
-                                    <th>Name</th>
-                                    <th style="width:180px;">Type</th>
-                                    <th style="width:120px;">Cost</th>
-                                    <th style="width:90px;">Color</th>
-                                    <th style="width:30px;">Edition</th>
-                                    <th style="width:30px;">Rarity</th>
-                             </tr>
+									<th>Add Normal</th>
+									<th>Add Foil</th>
+									<th>Name</th>
+									<th style="width:180px;">Type</th>
+									<th style="width:120px;">Cost</th>
+									<th style="width:90px;">Color</th>
+									<th style="width:30px;">Edition</th>
+									<th style="width:30px;">Rarity</th>
+									<th style="width:30px;">Fav.</th>
+								</tr>
 							</thead>
 							<tbody>
 								<tr>

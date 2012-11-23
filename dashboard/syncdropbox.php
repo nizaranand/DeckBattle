@@ -1,6 +1,6 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/base_include.php';
+require_once 'dashboard/include/base_include.php';
 
 include  'dashboard/include/dropbox_functions.php';
 include  'dashboard/services/dropboxsync_functions.php';
@@ -137,7 +137,7 @@ else
 <!--[if IE]> <link href="css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
 <?php
-	include 'dashboard/include/script_include.php';
+	require_once 'dashboard/include/script_include.php';
  ?>
 <script>
 	$(function() {
@@ -149,23 +149,23 @@ else
 
 <body>
 <?php
-	include 'dashboard/include/dashboard_header.php';
+	require_once 'dashboard/include/dashboard_header.php';
  ?>
 <?php
-	include 'dashboard/include/dashboard_farleftsidebar.php';
+	require_once 'dashboard/include/dashboard_farleftsidebar.php';
  ?>
 <?php
-	include 'dashboard/include/dashboard_leftsidebar.php';
+	require_once 'dashboard/include/dashboard_leftsidebar.php';
  ?>
 
 <!-- Content begins -->
 <div id="content">
   <?php
-	include 'dashboard/include/dashboard_pageheader.php';
+	require_once 'dashboard/include/dashboard_pageheader.php';
 	createPageHeader("Sync Dropbox", $mysqli);
 ?>
   <?php
-	include 'dashboard/include/dashboard_breadcrumb.php';
+	require_once 'dashboard/include/dashboard_breadcrumb.php';
 	generateBreadcrumb("Dashboard", "Sync Dropbox");
  ?>
   <!-- Main content -->

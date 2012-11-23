@@ -1,7 +1,7 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/db_connect.php';
-include 'dashboard/include/resize_images.php';
+require_once 'dashboard/include/db_connect.php';
+require_once 'dashboard/include/resize_images.php';
 
 if (isset($_FILES['imagefile'])) {
     // check $_FILES['ImageFile'] array is not empty

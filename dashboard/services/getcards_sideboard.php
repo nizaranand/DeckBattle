@@ -120,7 +120,8 @@ $iFilteredTotal = $aResultFilterTotal[0];
 $sQuery = "
 		SELECT COUNT(`" . $sIndexColumn . "`)
 		FROM   $sTable
-	";
+		  $sWhere
+ 	";
 $rResultTotal = mysql_query($sQuery, $gaSql['link']) or fatal_error('MySQL Error: ' . mysql_errno());
 $aResultTotal = mysql_fetch_array($rResultTotal);
 $iTotal = $aResultTotal[0];

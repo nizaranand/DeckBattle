@@ -1,6 +1,6 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/db_connect.php';
+require_once 'dashboard/include/db_connect.php';
 
 // This function will proportionally resize image
 function resizeImage($CurWidth, $CurHeight, $MaxSize, $DestFolder, $SrcImage, $Quality, $ImageType) {

@@ -1,8 +1,8 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/db_connect.php';
-include 'dashboard/services/reader_deckedbuilder.php';
-include 'dashboard/services/reader_deckbattle.php';
+require_once 'dashboard/include/db_connect.php';
+require_once 'dashboard/services/reader_deckedbuilder.php';
+require_once 'dashboard/services/reader_deckbattle.php';
 
 if (isset($_FILES['deckimport'])) {
 	// check $_FILES['ImageFile'] array is not empty

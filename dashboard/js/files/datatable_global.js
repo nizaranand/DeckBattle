@@ -23,3 +23,4 @@
 	$('.tOptions').click(function () {
 		$(this).toggleClass("act");
 	});
+	

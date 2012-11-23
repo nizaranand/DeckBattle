@@ -1,6 +1,6 @@
 <?php //TODO:json result
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/db_connect.php';
+require_once 'dashboard/include/db_connect.php';
 
 $username = $_POST['username'];
 $session_username = $_POST['session_username'];

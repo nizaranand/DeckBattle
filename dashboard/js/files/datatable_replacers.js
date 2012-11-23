@@ -1,4 +1,5 @@
 function replaceCostIcons(input){
+	if (input != null) {
 		var result = input.replace("{R}",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		result = result.replace("{R}",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		result = result.replace("{R}",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
@@ -214,9 +215,11 @@ function replaceCostIcons(input){
 		result = result.replace("{16}",'<img src="http://www.deckbattle.com/mtgicons/16.gif" />');
 
 	return result;
+	}
 }
 
 function replaceColorIcons(input) {
+	if  (input != null) {
 		var result=input.replace("R",'<img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		result = result.replace("// R",'><img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		result = result.replace("U",'<img src="http://www.deckbattle.com/mtgicons/U.gif" />');
@@ -247,4 +250,5 @@ function replaceColorIcons(input) {
 		result = result.replace("R<",'<img src="http://www.deckbattle.com/mtgicons/R.gif" /><');
 
  return result;
+ }
 }

@@ -1,6 +1,6 @@
 <?php
 set_include_path($_SERVER['DOCUMENT_ROOT']);
-include 'dashboard/include/base_include.php';
+require_once 'dashboard/include/base_include.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,7 +12,7 @@ include 'dashboard/include/base_include.php';
 		<!--[if IE]> <link href="/dashboard/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 		<link href="/dashboard/css/datatable_styles_override.css" rel="stylesheet" type="text/css" />
 		<?php
-		include 'dashboard/include/script_include.php';
+		require_once 'dashboard/include/script_include.php';
 		?>
 
 		<script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
@@ -31,23 +31,23 @@ include 'dashboard/include/base_include.php';
 	<body>
 
 		<?php
-	include 'dashboard/include/dashboard_header.php';
+	require_once 'dashboard/include/dashboard_header.php';
  ?>
 		<?php
-			include 'dashboard/include/dashboard_farleftsidebar.php';
+			require_once 'dashboard/include/dashboard_farleftsidebar.php';
  ?>
 		<?php
-			include 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
+			require_once 'dashboard/include/dashboard_leftsidebar_cardsdecks.php';
  ?>
 
 		<!-- Content begins -->
 		<div id="content">
 			<?php
-			include 'dashboard/include/dashboard_pageheader.php';
+			require_once 'dashboard/include/dashboard_pageheader.php';
 			createPageHeader("Trading List", $mysqli);
 			?>
 			<?php
-				include 'dashboard/include/dashboard_breadcrumb.php';
+				require_once 'dashboard/include/dashboard_breadcrumb.php';
 				generateBreadcrumb("Dashboard", "Cards & Decks", "Trading List");
 			?>
 			<!-- Main content -->
