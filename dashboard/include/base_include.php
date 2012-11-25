@@ -30,25 +30,80 @@ function showDeckColors($color){
     
 }
 
-function calcAverageManaCost($deckid) {
+function calcAverageManaCost($deckid,$mysqli) {
     $result = 0;
+    $q = "SELECT AVG(Nconverted_manacost) FROM `user_decks_cards` JOIN Ncards on Ncardid = cardid WHERE Nconverted_manacost is not null AND Nconverted_manacost <> '' AND Nconverted_manacost > 0 AND deckid = ? AND location = 'Deck'";
     
-    
+    if ($stmt = $mysqli->prepare($q)) { 
+        $stmt->bind_param('s', $deckid); 
+        $stmt->execute(); 
+        $stmt->store_result();
+        $stmt->bind_result($average); // get variables from result.
+        $stmt->fetch();
+}
+       $result = round($average,2); 
     return $result;
 }
 
-function calcColoredMana($number) {
+function calcColoredMana($number,$deckid,$mysqli) {
     
     $result = 0;
     
+if ($stmt = $mysqli -> prepare("SELECT Nmanacost FROM user_decks_cards JOIN Ncards on Ncardid = cardid WHERE deckid = ? AND location = 'Deck'")) {
+        $stmt -> bind_param('s', $deckid);
+        $stmt -> execute();
+        $stmt -> store_result();
+        $stmt -> bind_result($color);
+        
+        while ($stmt -> fetch()) {
+             
+    $t = $color;
     
+    for ($i = 0;$i <= 16; $i++)
+    {
+        $t = str_replace("{".$i."}","",$t);
+    }
+    
+    $t = str_replace("{X}","", $t);
+    
+    $t = str_replace("{","", $t);
+    $t = str_replace("}"," ", $t);
+    $t = trim($t);
+    $pieces = explode(" ", $t);
+       
+       $nrColoredMana = count($pieces);
+    
+    if ($nrColoredMana == $number) {
+    $result++;
+    }
+    else if ($number >= 3){
+      if ($nrColoredMana >= $number){
+      $result++;
+      }
+    }
+    
+}
+}
     return $result;
     
 }
 
-function calcTotalMissing($deckid){
+function calcTotalMissing($deckid,$mysqli){
+  
+  $result = "-";  
     
-  return "-";  
+    $q = "SELECT COUNT(A.cardid) FROM user_decks_cards A  LEFT JOIN user_cardcollection B ON (A.cardid = B.cardid) WHERE B.cardid IS NULL AND deckid=?";
+    if ($stmt = $mysqli -> prepare($q)) {
+        $stmt -> bind_param('s', $deckid);
+        $stmt -> execute();
+        $stmt -> store_result();
+        $stmt -> bind_result($nrmissing);
+        $stmt -> fetch();
+           
+        $result = $nrmissing;
+    }
+    
+  return $result;  
     
 }
 

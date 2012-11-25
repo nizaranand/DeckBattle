@@ -2,7 +2,7 @@
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 require_once 'dashboard/include/db_connect.php';
 
-header('Content-Type: text/html; charset=utf-8');
+//header('Content-Type: text/html; charset=utf-8');
 
 $userid = $_GET['userid'];
 
@@ -78,8 +78,8 @@ $sQuery = "
         $sOrder
         $sLimit
         ";
-    //       echo $sQuery;
-$rResult = $mysqli->query($sQuery); //or fatal_error('MySQL Error: ' . mysql_errno());
+     $omething =  $mysqli->query('SET CHARACTER SET utf8');
+    $rResult = $mysqli->query($sQuery); //or fatal_error('MySQL Error: ' . mysql_errno());
 
 /* Data set length after filtering */
 $sQuery = "
@@ -111,9 +111,8 @@ while ($aRow = $rResult->fetch_array(MYSQL_BOTH)) {
         }
     
 
-    $row[3] = utf8_encode($row[3]);
-    //      $row[2]= str_replace("\u0097","-",$row[2]);
-    //echo $row[2];
+ $row[2] = str_replace('"','', $row[2]);
+     
     $output['aaData'][] = $row;
 
 }

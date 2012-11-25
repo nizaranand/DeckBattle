@@ -34,7 +34,7 @@ if (isset($_FILES['imagefile'])) {
             $manipulator = new ImageManipulator($_FILES['imagefile']['tmp_name']);
             
              // resizing to 200x200
-            $newImage = $manipulator->resample(178, 178);
+            $newImage = $manipulator->resample($manipulator -> getWidth(), 178);
             
             $width = $manipulator -> getWidth();
             $height = $manipulator -> getHeight();

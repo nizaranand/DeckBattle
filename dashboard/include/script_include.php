@@ -1,5 +1,8 @@
-<script>var userid =   "<?php echo $_SESSION['user_id']; ?>";
-	var deckid ="<?php echo $_SESSION['deckid']; ?>";</script>
+<script>
+var userid =   "<?php echo $_SESSION['user_id']; ?>";
+var deckid ="<?php echo $_SESSION['deckid']; ?>";
+var loc ="<?php echo $_GET['loc']; ?>";	
+	</script>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 

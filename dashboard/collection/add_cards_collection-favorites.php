@@ -35,6 +35,7 @@ userid: '<?php echo $_SESSION['user_id']; ?>',
     }, function(response){
     setTimeout("finishAjax("+_cardid+",'"+_cardname+"','Collection','"+escape(response)+"')", 400);
     });
+    return false;
     }
 
     function finishAjax(id ,name,list,response) { //TODO: make json callback
@@ -42,10 +43,10 @@ userid: '<?php echo $_SESSION['user_id']; ?>',
         if (response != "") {
     
             if (response == "addedfav") {
-                $('#fav_'+id).html('<a href="#"  id="fav_' + id + '" class="iconb tipS" title="Mark/Unmark Favorite" data-icon="&#xe086;" onclick="addcardstocollection(' + id + ',\'' + name + '\',0,0,0,0,1)"></a>');
+                $('#fav_'+id).html('<a href="#"  id="fav_' + id + '" class="iconb tipS" title="Mark/Unmark Favorite" data-icon="&#xe086;" onclick="return addcardstocollection(' + id + ',\'' + name + '\',0,0,0,0,1)"></a>');
             }
             else if (response == "removedfav") {
-                $('#fav_'+id).html('<a href="#"  id="fav_' + id + '" class="iconb tipS" title="Mark/Unmark Favorite" data-icon="&#xe084;" onclick="addcardstocollection(' + id + ',\'' + name + '\',0,0,0,0,1)"></a>');
+                $('#fav_'+id).html('<a href="#"  id="fav_' + id + '" class="iconb tipS" title="Mark/Unmark Favorite" data-icon="&#xe084;" onclick="return addcardstocollection(' + id + ',\'' + name + '\',0,0,0,0,1)"></a>');
             }
             else {
                 
@@ -109,8 +110,8 @@ userid: '<?php echo $_SESSION['user_id']; ?>',
 						<table cellpadding="0" cellspacing="0" border="0" class="addtocollection">
 							<thead>
 								<tr>
-									<th>Add Normal</th>
-									<th>Add Foil</th>
+									<th style="width:70px;">Add Normal</th>
+									<th style="width:70px;">Add Foil</th>
 									<th>Name</th>
 									<th style="width:180px;">Type</th>
 									<th style="width:120px;">Cost</th>

@@ -15,18 +15,18 @@ $deckid = $_GET['deckid'];
 if (intval($deckid) > 0) {
     require_once 'dashboard/services/uploaddeckcover.php';
 
-    $_SESSION['deckid'] = $deckid;
-
-//TODO:move to a service!!!
-if (isset($_POST['colorsused'])) {
-    $userid = $_SESSION['user_id'];
-    $decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black'] . $_POST['Blue'] . $_POST['Artifact'];
-
-    if ($insert = $mysqli -> prepare("UPDATE user_decks SET color=? WHERE id=? and userid = ?")) {
-        $insert -> bind_param('sss', $decktype, $_SESSION['deckid'],$userid );
-        $insert -> execute();
-    }
-}
+            $_SESSION['deckid'] = $deckid;
+        
+        //TODO:move to a service!!!
+        if (isset($_POST['colorsused'])) {
+            $userid = $_SESSION['user_id'];
+            $decktype = $_POST['Red'] . $_POST['Green'] . $_POST['White'] . $_POST['Black'] . $_POST['Blue'] . $_POST['Artifact'];
+        
+            if ($insert = $mysqli -> prepare("UPDATE user_decks SET color=? WHERE id=? and userid = ?")) {
+                $insert -> bind_param('sss', $decktype, $_SESSION['deckid'],$userid );
+                $insert -> execute();
+            }
+        }
 
 //BUILD CHART DATA
 
@@ -72,20 +72,16 @@ if (isset($_POST['colorsused'])) {
         }    
     }
 
-     $averagemanacost = calcAverageManaCost($deckid);
-        $zerocolored = calcColoredMana(0);
-        $onecolored = calcColoredMana(1);
-        $twocolored = calcColoredMana(2);
-        $threecolored = calcColoredMana(3);
+        $averagemanacost = calcAverageManaCost($deckid,$mysqli);
+        $zerocolored = calcColoredMana(0,$deckid,$mysqli);
+        $onecolored = calcColoredMana(1,$deckid,$mysqli);
+        $twocolored = calcColoredMana(2,$deckid,$mysqli);
+        $threecolored = calcColoredMana(3,$deckid,$mysqli);
         
-        $totalmissing = calcTotalMissing($deckid);
-   
-   $value = array(array(label => "Creature",data => "3"),array(label => "Enchantment", data => "1"));
-   $deckdata = json_encode($value);
-   echo $deckdata; 
-}
-//
-?>
+        $totalmissing = calcTotalMissing($deckid,$mysqli);
+        
+        }
+ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -102,24 +98,33 @@ require_once 'dashboard/include/script_include.php';
 <script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
 <script type="text/javascript" src="/dashboard/js/files/datatable_toolbars.js"></script>
 <script type="text/javascript" src="/dashboard/js/files/datatable_deck.js"></script>
+
 <script type="text/javascript" src="/dashboard/js/files/deckdetail.js"></script>
 <script type="text/javascript" src="/dashboard/js/charts/pie_deckdetail.js"></script>
 <script type="text/javascript" src="/dashboard/js/charts/bar_manacurve.js"></script>
 <script type="text/javascript">
-		$(function() {
+         var currentviewPie = "";
+         var currentviewBar = "";
+         
+         $(function() {
 		$("select, .check, .check :checkbox, input:radio, input:file").uniform();
-		pieCardtype(<?php echo $deckdata; ?>);
+		 
+		 updatePie('Type');
+         updateBar('Totals');
+         	 
 	});
 	
 	function toggledeckfav() {
 $.post("/dashboard/services/toggle_deckfavorite.php", {
 deckid: '<?php echo $_SESSION['deckid']; ?>',
 	}, function(response){
-	setTimeout("finishAjax('"+escape(response)+"')", 400);
+	setTimeout("finishAjaxdeckfav('"+escape(response)+"')", 400);
 	});
+	
+	return false;
 	}
 
-	function finishAjax(response) {
+	function finishAjaxdeckfav(response) {
 	if (response == "1")   {
 	   $.jGrowl("Deck marked as favorite.");
 	   $("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>')
@@ -128,6 +133,116 @@ deckid: '<?php echo $_SESSION['deckid']; ?>',
 $("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe084;"></div>')
 	}
 	}
+
+function addcardstodeck(_cardid, _cardname, amount_normal, amount_foil,f) {
+$.post("/dashboard/services/addcards_deck.php", {
+cardid: _cardid,
+userid: '<?php echo $_SESSION['user_id']; ?>',
+deckid: '<?php echo $deckid; ?>',
+    amountn: amount_normal,
+    amountf: amount_foil,
+    addtofav: f,
+    loc: "Deck",
+    cardname:_cardname
+    }, function(response){
+    setTimeout("finishAjaxdeck("+_cardid+",'"+_cardname+"','Collection','"+escape(response)+"')", 400);
+    });
+    return false;
+    }
+
+    function finishAjaxdeck(id ,name,list,response) { //TODO: make json callback
+
+        if (response != "") {
+                var n=response.split("/");
+                $('#normal_'+id).html(n[1]);
+                $('#foil_'+id).html(n[2]);
+                
+                //update stats
+                updatePie('Refresh');        
+                updateBar('Refresh');        
+            }
+        }
+    
+
+
+function addcardstoside(_cardid, _cardname, amount_normal, amount_foil,f) {
+$.post("/dashboard/services/addcards_deck.php", {
+cardid: _cardid,
+userid: '<?php echo $_SESSION['user_id']; ?>',
+deckid: '<?php echo $deckid; ?>',
+    amountn: amount_normal,
+    amountf: amount_foil,
+    addtofav: f,
+    loc: "SB",
+    cardname:_cardname
+    }, function(response){
+    setTimeout("finishAjaxside("+_cardid+",'"+_cardname+"','Collection','"+escape(response)+"')", 400);
+    });
+    return false;
+    }
+
+    function finishAjaxside(id ,name,list,response) { //TODO: make json callback
+
+        if (response != "") {
+                var n=response.split("/");
+                $('#sidenormal_'+id).html(n[1]);
+                $('#sidefoil_'+id).html(n[2]);
+            
+            }
+            
+                //update stats
+                updatePie('Refresh');
+            updateBar('Refresh');
+            
+        }
+   
+   function updatePie(what)
+   {
+     if (what == 'Refresh')
+     {
+         if (currentviewPie == "Type"){                
+                    pieCardtype(deckid);
+                }
+                else {
+                    pieColors(deckid);
+                }
+         }  
+         
+         if (what == 'Type'){
+             currentviewPie = "Type";
+             pieCardtype(deckid);
+         }
+         if (what == 'Color'){
+             currentviewPie = "Color"
+             pieColors(deckid);
+                }
+         
+       return false;
+   }
+
+function updateBar(what)
+   {
+     if (what == 'Refresh')
+     {
+         if (currentviewBar == "Totals"){                
+                    barTotals(deckid);
+                }
+                else {
+                    barColors(deckid);
+                }
+         }  
+         
+         if (what == 'Totals'){
+             currentviewBar = "Totals";
+             barTotals(deckid);
+         }
+         if (what == 'Colors'){
+             currentviewPie = "Colors"
+              barColors(deckid);
+                }
+         
+       return false;
+   }
 
 </script>
 </head>
@@ -155,7 +270,8 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
 ?>
   <!-- Main content -->
   <div class="wrapper">
-    <div class="wButton grid6"> <a class="buttonL bGreen" style="margin-top: 10px;" title="" href="add_cards_deck.php">Add cards to Deck</a> <a class="buttonL bBlue" style="margin-top: 5px;" title="" href="decks.php">Back to Deck Collection</a> </div>
+    <div class="wButton grid6"> <a class="buttonL bGreen" style="margin-top: 10px;" title="" href="add_cards_deck.php?loc=Deck&deckid=<?php echo $deckid;?>">Add cards to Deck</a> </div>
+    <div class="wButton grid6"> <a class="buttonL bGreen" style="margin-top: 5px;" title="" href="add_cards_deck.php?loc=SB&deckid=<?php echo $deckid;?>">Add cards to Sideboard</a> <a class="buttonL bBlue" style="margin-top: 10px;" title="" href="decks.php">Back to Deck Overview</a> </div>
     <div class="fluid" style="margin-top:10px;">
       <div class="grid12">
         <h3 style="display: inline-block;margin-top:10px;font-size:32px"><?php echo $name; ?></h3>
@@ -183,7 +299,7 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
           <div class="titleOpt"> <a href="#" data-toggle="dropdown"><span class="icos-cog3"></span><span class="clear"></span></a>
             <ul class="dropdown-menu pull-right">
               <li><a href="#" class="" id="uploadimagedialog_open"><span class="icos-pencil"></span>Change Cover</a></li>
-              <li><a href="#" class="" onclick="toggledeckfav()"><span class="icos-star"></span>Mark/Unmark as favorite</a></li>
+              <li><a href="#" class="" onclick="return toggledeckfav()"><span class="icos-star"></span>Mark/Unmark as favorite</a></li>
               <li><a href="#" class="" id="colorsuseddialog_open"><span class="icos-view"></span>Colors Used</a></li>
             </ul>
           </div>
@@ -206,15 +322,15 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
           2 Colored Mana: <?php echo $twocolored; ?> cards<br />
           3+ Colored Mana: <?php echo $threecolored; ?> cards<br />
           <div class="divider"></div>
-          Total missing: <?php echo $totalmissing ?> cards </div>
+          Not in Collection: <?php echo $totalmissing ?> cards </div>
       </div>
       <div class="widget grid4 chartWrapper">
         <div class="whead">
           <h6>Card Types</h6>
           <div class="titleOpt"> <a href="#" data-toggle="dropdown"><span class="icos-cog3"></span><span class="clear"></span></a>
             <ul class="dropdown-menu pull-right">
-              <li><a onclick="pieCardtype()" href="#" class=""><span class="icos-coverflow"></span>Card Types</a></li>
-              <li><a onclick="pieColors()" href="#" class=""><span class="icos-view"></span>Card Color</a></li>
+              <li><a onclick="return updatePie('Type')" href="#" class=""><span class="icos-coverflow"></span>Card Types</a></li>
+              <li><a onclick="return updatePie('Color')" href="#" class=""><span class="icos-view"></span>Card Color</a></li>
             </ul>
           </div>
           <div class="clear"></div>
@@ -228,8 +344,8 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
           <h6>Mana Curve</h6>
           <div class="titleOpt"> <a href="#" data-toggle="dropdown"><span class="icos-cog3"></span><span class="clear"></span></a>
             <ul class="dropdown-menu pull-right">
-              <li><a onclick="barTotals()" href="#" class=""><span class="icos-fullscreen"></span>Totals</a></li>
-              <li><a onclick="barColors()" href="#" class=""><span class="icos-view"></span>Card Color</a></li>
+              <li><a onclick="return updateBar('Totals')" href="#" class=""><span class="icos-fullscreen"></span>Totals</a></li>
+              <li><a onclick="return updateBar('Colors')" href="#" class=""><span class="icos-view"></span>Card Color</a></li>
             </ul>
           </div>
           <div class="clear"></div>
@@ -245,28 +361,25 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
         <div class="clear"></div>
       </div>
       <div class="shownpars" >
-        <table cellpadding="0" cellspacing="0" border="0" class="deck">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th style="width:180px;">Type</th>
-              <th style="width:120px;">Cost</th>
-              <th style="width:90px;">Color</th>
-              <th>EditionAbbreviation</th>
-              <th style="width:30px;">Edition</th>
-              <th style="width:30px;">Rarity</th>
-              <th style="width:30px;">Normal</th>
-              <th style="width:30px;">Foil</th>
-              <th style="width:30px;"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+            <table cellpadding="0" cellspacing="0" border="0" class="deck">
+                            <thead>
+                                <tr>
+                                    <th style="width:70px;">Add Normal</th>
+                                    <th style="width:70px;">Add Foil</th>
+                                    <th>Name</th>
+                                    <th style="width:180px;">Type</th>
+                                    <th style="width:120px;">Cost</th>
+                                    <th style="width:90px;">Color</th>
+                                    <th style="width:30px;">Edition</th>
+                                    <th style="width:30px;">Rarity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
       </div>
     </div>
     <div class="widget">
@@ -275,28 +388,26 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
         <div class="clear"></div>
       </div>
       <div class="shownpars" >
-        <table cellpadding="0" cellspacing="0" border="0" class="sideboard">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th style="width:180px;">Type</th>
-              <th style="width:120px;">Cost</th>
-              <th style="width:90px;">Color</th>
-              <th>EditionAbbreviation</th>
-              <th style="width:30px;">Edition</th>
-              <th style="width:30px;">Rarity</th>
-              <th style="width:30px;">Normal</th>
-              <th style="width:30px;">Foil</th>
-              <th style="width:30px;"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+            <table cellpadding="0" cellspacing="0" border="0" class="sideboard">
+                            <thead>
+                                <tr>
+                                    <th style="width:70px;">Add Normal</th>
+                                    <th style="width:70px;">Add Foil</th>
+                                    <th>Name</th>
+                                    <th style="width:180px;">Type</th>
+                                    <th style="width:120px;">Cost</th>
+                                    <th style="width:90px;">Color</th>
+                                    <th style="width:30px;">Edition</th>
+                                    <th style="width:30px;">Rarity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
       </div>
     </div>
     <!-- 
@@ -328,17 +439,17 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
 <div id="colorsuseddialog" class="dialog" title="Colors used in deck" style="text-align:center;">
   <form id="colorsusedform" action="" method="post">
     <div class="grid9 check">
-      <input type="checkbox" id="check1" name="Red" value="{R}" />
+      <input type="checkbox" id="check1" name="Red" value="{R}" <?php if (strpos($db_color, "R") > 0) echo "checked"; ?> />
       <label for="check1"  class="mr20">Red</label>
-      <input type="checkbox" id="check2" name="Green" value="{G}" />
+      <input type="checkbox" id="check2" name="Green" value="{G}" <?php if (strpos($db_color, "G") > 0) echo "checked"; ?> />
       <label for="check2"  class="mr20">Green</label>
-      <input type="checkbox" id="check3" name="White" value="{W}" />
+      <input type="checkbox" id="check3" name="White" value="{W}" <?php if (strpos($db_color, "W") > 0) echo "checked"; ?> />
       <label for="check3"  class="mr20">White</label>
-      <input type="checkbox" id="check4" name="Black" value="{B}" />
+      <input type="checkbox" id="check4" name="Black" value="{B}" <?php if (strpos($db_color, "B") > 0) echo "checked"; ?> />
       <label for="check4"  class="mr20">Black</label>
-      <input type="checkbox" id="check5" name="Blue" value="{U}" />
+      <input type="checkbox" id="check5" name="Blue" value="{U}" <?php if (strpos($db_color, "U") > 0) echo "checked"; ?> />
       <label for="check5"  class="mr20">Blue</label>
-      <input type="checkbox" id="check6" name="Artifact" value="{A}" />
+      <input type="checkbox" id="check6" name="Artifact" value="{A}" <?php if (strpos($db_color, "A") > 0) echo "checked"; ?> />
       <label for="check6"  class="mr20">Artifact</label>
     </div>
     <div style="clear:both;">

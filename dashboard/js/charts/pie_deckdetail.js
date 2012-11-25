@@ -15,32 +15,20 @@
 	{
 		if (!obj)
 					return;
-		percent = parseFloat(obj.series.percent).toFixed(2);
-		alert(''+obj.series.label+': '+percent+'%');
+		//percent = parseFloat(obj.series.percent).toFixed(2);
+		
+		alert(''+obj.series.label+': '+ obj.series.data[0][1]+' Cards');
 	}
 
 });
 
 	
-	function pieCardtype(deckdata)
+	function pieCardtype(deckid)
 	{
-		
-			var data = jQuery.parseJSON(deckdata);
-alert(data);				
-				/*
-		var series = Math.floor(Math.random()*10)+1;
-		
-		data[0] = { label: "Land", data: Math.floor(Math.random()*100)+1 }
-		data[1] = { label: "Creature", data: Math.floor(Math.random()*100)+1 }
-		data[2] = { label: "Sorcery", data: Math.floor(Math.random()*100)+1 }
-		data[3] = { label: "Instant", data: Math.floor(Math.random()*100)+1 }
-		data[4] = { label: "Aura", data: Math.floor(Math.random()*100)+1 }
-		data[5] = { label: "Curse", data: Math.floor(Math.random()*100)+1 }
-		data[6] = { label: "Artifacts", data: Math.floor(Math.random()*100)+1 }
-		data[7] = { label: "Planeswalker", data: Math.floor(Math.random()*100)+1 }
-		*/
-	
-	$.plot($("#donut"), data, 
+				
+		 function onDataReceived(data) {
+            // and plot all we got
+    $.plot($("#donut"), data, 
 	{
 			series: {
 				pie: { 
@@ -51,7 +39,8 @@ alert(data);
 						show: true,
 						radius: 2/3,
 						formatter: function(label, series){
-							return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">'+'<br/>'+Math.round(series.percent)+'%</div>';
+							return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">'+Math.round(series.percent) + ' %</div>';
+							//return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">'+series.data[0][1] + '</div>';
 						},
 						threshold: 0.0
 					}
@@ -73,23 +62,22 @@ alert(data);
 				clickable: true
 			},
 		});
+	     }
+        
+        $.ajax({
+            url: '/dashboard/services/getdeckpiebytype.php?deckid=' + deckid,
+            method: 'GET',
+            dataType: 'json',
+            success: onDataReceived
+        });
+		
 	
 	}
 	
-	function pieColors() {
-				var data = [];
-		var series = Math.floor(Math.random()*10)+1;
-		
-		data[0] = { label: "Red", data: Math.floor(Math.random()*100)+1 }
-		data[1] = { label: "Green", data: Math.floor(Math.random()*100)+1 }
-		data[2] = { label: "Blue", data: Math.floor(Math.random()*100)+1 }
-		data[3] = { label: "Black", data: Math.floor(Math.random()*100)+1 }
-		data[4] = { label: "White", data: Math.floor(Math.random()*100)+1 }
-		data[5] = { label: "Artifact", data: Math.floor(Math.random()*100)+1 }
-		data[6] = { label: "Multi", data: Math.floor(Math.random()*100)+1 }
+	function pieColors(deckid) {
 	
-	
-	$.plot($("#donut"), data, 
+		 function onDataReceived(data) {
+    $.plot($("#donut"), data, 
 	{
 			series: {
 				pie: { 
@@ -122,6 +110,14 @@ alert(data);
 				clickable: true
 			},
 		});
+	     }
+        
+        $.ajax({
+            url: '/dashboard/services/getdeckpiebycolor.php?deckid=' + deckid,
+            method: 'GET',
+            dataType: 'json',
+            success: onDataReceived
+        });
 	
 	}
 	

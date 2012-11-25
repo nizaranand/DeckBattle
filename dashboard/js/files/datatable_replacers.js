@@ -214,6 +214,8 @@ function replaceCostIcons(input){
 		result = result.replace("{16}",'<img src="http://www.deckbattle.com/mtgicons/16.gif" />');
 		result = result.replace("{16}",'<img src="http://www.deckbattle.com/mtgicons/16.gif" />');
 
+		result = result.replace("(H)", "");
+
 	return result;
 	}
 }
@@ -248,6 +250,8 @@ function replaceColorIcons(input) {
 		result = result.replace("L<",'<img src="http://www.deckbattle.com/mtgicons/L.gif" /><');
 		result = result.replace(">R",'><img src="http://www.deckbattle.com/mtgicons/R.gif" />');
 		result = result.replace("R<",'<img src="http://www.deckbattle.com/mtgicons/R.gif" /><');
+		
+		result = result.replace("(H)", "");
 
  return result;
  }

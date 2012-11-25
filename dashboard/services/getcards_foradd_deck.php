@@ -5,6 +5,9 @@ require_once 'dashboard/include/db_connect.php';
 header('Content-Type: text/html; charset=utf-8');
 
 $userid = $_GET['userid'];
+$deckid = $_GET['deckid'];
+$loc = $_GET['loc'];
+if ($loc == "") $loc="Deck";
 
 $aColumns = array('Ncardid','Ncardid', 'Ncardname', 'Ntype', 'Nmanacost', 'Ncolor', 'Nname', 'Nrarity', 'Ncardid','Nset');
 $sIndexColumn = "Ncardid";
@@ -65,14 +68,14 @@ for ($i = 0; $i < count($aColumns); $i++) {
  * Get data to display
  */
 $sQuery = "
-		SELECT SQL_CALC_FOUND_ROWS `" . str_replace(" , ", " ", implode("`, `", $aColumns)) . "`, (SELECT amount_normal FROM user_cardcollection col WHERE col.cardid = c.Ncardid AND userid=". $userid ." LIMIT 1) as n, (SELECT amount_foil FROM user_cardcollection col WHERE  col.cardid = c.Ncardid AND userid=". $userid ." LIMIT 1) as f, (SELECT COUNT(id) FROM user_favoritecards fav WHERE  fav.cardid = c.Ncardid AND userid=". $userid ." LIMIT 1) as fav 
+		SELECT SQL_CALC_FOUND_ROWS `" . str_replace(" , ", " ", implode("`, `", $aColumns)) . "`, (SELECT amount_normal FROM user_decks_cards col WHERE col.cardid = c.Ncardid AND deckid=". $deckid ." AND location ='". $loc ."' LIMIT 1) as n, (SELECT amount_foil FROM user_decks_cards col WHERE  col.cardid = c.Ncardid  AND deckid=". $deckid ." AND location='". $loc ."' LIMIT 1) as f, (SELECT COUNT(id) FROM user_favoritecards fav WHERE  fav.cardid = c.Ncardid AND userid=". $userid ." LIMIT 1) as fav 
 		FROM   $sTable
 		$sWhere
 		$sOrder
 		$sLimit
 		";
          $omething =  $mysqli->query('SET CHARACTER SET utf8');
-         
+      //   echo $sQuery;
 $rResult = $mysqli->query($sQuery); //or fatal_error('MySQL Error: ' . mysql_errno());
 
 /* Data set length after filtering */
