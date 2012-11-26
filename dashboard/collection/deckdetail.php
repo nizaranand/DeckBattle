@@ -47,11 +47,13 @@ if (intval($deckid) > 0) {
             $totalamount = $db_total;
         }
 
-        if ($db_isFavorite == "1") {
-            $isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
-        } else {
-            $isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
-        }
+            if ($db_isFavorite == "1") {
+                $isFavorite = '<div id="'. $deckid .'"><a href="#" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;" onclick="return toggledeckfav()"></a></div>';
+            }
+            else {
+                $isFavorite = '<div id="'. $deckid .'"><a href="#" class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;" onclick="return toggledeckfav()"></a></div>';
+            }
+        
 
         if ($db_isDropbox == "1") {
             $dropbox = '<img src="/dashboard/images/icons/dropbox.png" style="display:inline-block;margin-top:2px;margin-left:5px;" />';
@@ -74,7 +76,7 @@ if (intval($deckid) > 0) {
 
         $averagemanacost = calcAverageManaCost($deckid,$mysqli);
         $zerocolored = calcColoredMana(0,$deckid,$mysqli);
-        $onecolored = calcColoredMana(1,$deckid,$mysqli);
+       $onecolored = calcColoredMana(1,$deckid,$mysqli);
         $twocolored = calcColoredMana(2,$deckid,$mysqli);
         $threecolored = calcColoredMana(3,$deckid,$mysqli);
         
@@ -118,19 +120,19 @@ require_once 'dashboard/include/script_include.php';
 $.post("/dashboard/services/toggle_deckfavorite.php", {
 deckid: '<?php echo $_SESSION['deckid']; ?>',
 	}, function(response){
-	setTimeout("finishAjaxdeckfav('"+escape(response)+"')", 400);
+	setTimeout("finishAjaxdeckfav('"+escape(response)+"','"+<?php echo $_SESSION['deckid']; ?>+"')", 400);
 	});
 	
 	return false;
 	}
 
-	function finishAjaxdeckfav(response) {
+	function finishAjaxdeckfav(response,deckid) {
 	if (response == "1")   {
 	   $.jGrowl("Deck marked as favorite.");
-	   $("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>')
+	   $("#fav").html('<a href="#" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;" onclick="return toggledeckfav()"></a>')
 	} else {
 	   $.jGrowl("Deck UNmarked as favorite.");
-$("#fav").html('<div id="fav" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe084;"></div>')
+$("#fav").html('<a href="#" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe084;" onclick="return toggledeckfav()"></a>')
 	}
 	}
 
@@ -237,7 +239,7 @@ function updateBar(what)
              barTotals(deckid);
          }
          if (what == 'Colors'){
-             currentviewPie = "Colors"
+             currentviewBar = "Colors"
               barColors(deckid);
                 }
          

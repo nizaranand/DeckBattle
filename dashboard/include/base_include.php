@@ -49,7 +49,7 @@ function calcColoredMana($number,$deckid,$mysqli) {
     
     $result = 0;
     
-if ($stmt = $mysqli -> prepare("SELECT Nmanacost FROM user_decks_cards JOIN Ncards on Ncardid = cardid WHERE deckid = ? AND location = 'Deck'")) {
+if ($stmt = $mysqli -> prepare("SELECT Nmanacost FROM user_decks_cards JOIN Ncards on Ncardid = cardid WHERE Ntype not like '%Land%' AND deckid = ? AND location = 'Deck'")) {
         $stmt -> bind_param('s', $deckid);
         $stmt -> execute();
         $stmt -> store_result();
@@ -65,23 +65,29 @@ if ($stmt = $mysqli -> prepare("SELECT Nmanacost FROM user_decks_cards JOIN Ncar
     }
     
     $t = str_replace("{X}","", $t);
-    
     $t = str_replace("{","", $t);
     $t = str_replace("}"," ", $t);
     $t = trim($t);
-    $pieces = explode(" ", $t);
-       
-       $nrColoredMana = count($pieces);
     
+    if ($number == 0)
+    {
+        if ($t == "")
+        $result++;
+    }
+    else {
+        if ($t != "") {
+    $pieces = explode(" ", $t);
+        $nrColoredMana = count($pieces);
     if ($nrColoredMana == $number) {
-    $result++;
+        $result++;
     }
     else if ($number >= 3){
       if ($nrColoredMana >= $number){
       $result++;
       }
     }
-    
+    }
+    }
 }
 }
     return $result;
@@ -92,7 +98,8 @@ function calcTotalMissing($deckid,$mysqli){
   
   $result = "-";  
     
-    $q = "SELECT COUNT(A.cardid) FROM user_decks_cards A  LEFT JOIN user_cardcollection B ON (A.cardid = B.cardid) WHERE B.cardid IS NULL AND deckid=?";
+  //  $q = "SELECT SUM(A.cardid) FROM user_decks_cards A  LEFT JOIN user_cardcollection B ON (A.cardid = B.cardid) WHERE B.cardid IS NULL AND deckid=?";
+    $q = "SELECT ABS(SUM(B.amount_normal)-SUM(A.amount_normal))+ABS(SUM(B.amount_foil)-SUM(A.amount_foil)) FROM user_decks_cards A  LEFT JOIN user_cardcollection B ON (A.cardid = B.cardid) WHERE location='Deck' AND deckid=?";
     if ($stmt = $mysqli -> prepare($q)) {
         $stmt -> bind_param('s', $deckid);
         $stmt -> execute();

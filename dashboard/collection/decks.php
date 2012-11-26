@@ -71,8 +71,31 @@ require_once 'dashboard/include/script_include.php';
  ?>
 <script type="text/javascript">
  
+ function toggledeckfav(did) {
+$.post("/dashboard/services/toggle_deckfavorite.php", {
+deckid:did,
+    }, function(response){
+    setTimeout("finishAjaxdeckfav('"+escape(response)+"','"+did+"')", 400);
+    });
+    
+    return false;
+    }
+
+    function finishAjaxdeckfav(response,deckid) {
+    if (response == "1")   {
+       $.jGrowl("Deck marked as favorite.");
+       $("#"+deckid).html('<a href="#" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;" onclick="return toggledeckfav('+ deckid+')"></a>')
+    } else {
+       $.jGrowl("Deck UNmarked as favorite.");
+$("#"+deckid).html('<a href="#" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe084;" onclick="return toggledeckfav('+deckid+')"></a>')
+    }
+    }
+
 $(function() {
  $("select, .check, .check :checkbox, input:radio, input:file").uniform();
+
+
+    
 
   $('#adddeckdialog').dialog({
         autoOpen: false,
@@ -278,7 +301,7 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Decks");
 		$totalamount = "0";
 		$isFavorite = '<div class="fs1 iconb" data-icon="&#xe084;"></div>';
 		
-		if ($stmt = $mysqli->prepare("SELECT ud.id, deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal)+SUM(amount_foil) from user_decks_cards udc WHERE udc.deckid = ud.id) as totalcards, markfordropbox FROM user_decks ud WHERE userid = ?")) { 
+		if ($stmt = $mysqli->prepare("SELECT ud.id, deckname, deckimage, isFavorite,color, (SELECT SUM(amount_normal)+SUM(amount_foil) from user_decks_cards udc WHERE location ='Deck' AND udc.deckid = ud.id) as totalcards, markfordropbox FROM user_decks ud WHERE userid = ?")) { 
 		$stmt->bind_param('s', $_SESSION['user_id']); 
 		$stmt->execute(); 
 		$stmt->store_result();
@@ -297,10 +320,10 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Decks");
 			}
 			
 			if ($db_isFavorite == "1") {
-				$isFavorite = '<div class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;"></div>';
+				$isFavorite = '<div id="'. $deckid .'"><a href="#" class="fs1 iconb"  style="display:inline-block;" data-icon="&#xe086;" onclick="toggledeckfav('. $deckid.')"></a></div>';
 			}
 			else {
-				$isFavorite = '<div class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;"></div>';
+				$isFavorite = '<div id="'. $deckid .'"><a href="#" class="fs1 iconb" style="display:inline-block;"  data-icon="&#xe084;" onclick="toggledeckfav('.$deckid.')"></a></div>';
 			}
 			
 			if ($db_isDropbox == "1")
@@ -322,7 +345,7 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Decks");
 				}
 			}
 		?>
-        <li data-id="id-<?php echo $id; ?>" class="<?php echo $class; ?>"><a href="deckdetail.php?deckid=<?php echo $deckid; ?>" ><img src="<?php echo $imgurl; ?>" alt="" height="178" width="128" /></a><strong><?php echo $name; ?></strong><span><?php echo $totalamount; ?> cards</span><div><?php echo $isFavorite; ?><?php echo $dropbox; ?><br /><?php echo showDeckColors($db_color); ?></div>
+        <li data-id="id-<?php echo $id; ?>" class="<?php echo $class; ?>"><a href="deckdetail.php?deckid=<?php echo $deckid; ?>" ><img src="<?php echo $imgurl; ?>" alt="" height="178" width="128" /></a><strong><?php echo $name; ?></strong><span><?php echo $totalamount; ?> cards</span><div><?php echo $isFavorite; ?><?php echo $dropbox; ?><?php echo showDeckColors($db_color); ?></div>
         </li>
         <?php
 		$id++;

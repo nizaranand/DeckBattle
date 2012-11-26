@@ -126,8 +126,9 @@ else if ($i == 12) {
         }
 	}
      $row[2] = str_replace('"','', $row[2]);
-     
-	$output['aaData'][] = $row;
+    //  $row[2] = str_replace("'", "&rsquo;", $row[2]);
+             $row[2] = htmlentities($row[2],ENT_QUOTES);
+             	$output['aaData'][] = $row;
 
 }
 echo json_encode($output);
