@@ -23,9 +23,9 @@ class ImageManipulator {
 	 */
 	public function __construct($file = null) {
 		if (null !== $file) {
-			if (is_file($file)) {
+		    if (is_file($file)) {
 				$this -> setImageFile($file);
-			} else {
+			} else {                
 				$this -> setImageString($file);
 			}
 		}

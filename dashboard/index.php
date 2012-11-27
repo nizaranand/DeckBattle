@@ -49,18 +49,19 @@ require_once 'dashboard/include/base_include.php';
 					<li>
 						<a href="collection/collection.php" title="Edit Collection" class="tipN"><img src="images/icons/middlenav/create.png" alt="" /></a>
 					</li>
-					<li>
+<!--					<li>
 						<a href="syncdropbox.php" title="Sync Dropbox" class="tipN"><img src="images/icons/middlenav/upload.png" alt="" /></a>
-					</li>
+</li>-->
 					<li>
 						<a href="collection/decks.php" title="Edit Decks" class="tipN"><img src="images/icons/middlenav/add.png" alt="" /></a>
 					</li>
 					<li>
-						<a href="messages.php" title="Messages" class="tipN"><img src="images/icons/middlenav/dialogs.png" alt="" /></a><!--<strong>8</strong>-->
-					</li>
-					<li>
 						<a href="statistics.php" title="Check Statistics" class="tipN"><img src="images/icons/middlenav/stats.png" alt="" /></a>
 					</li>
+				<!--	   <li>
+                        <a href="messages.php" title="Messages" class="tipN"><img src="images/icons/middlenav/dialogs.png" alt="" /></a><!--<strong>8</strong>-->
+                    <!--</li>-->
+                
 				</ul>
 				<!-- content -->
 

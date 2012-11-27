@@ -312,7 +312,7 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Decks");
 			$name = $db_deckname;
 			
             if (strlen($name) > 22){
-                $name = substr($name, 19) . "...";
+                $name = substr($name,0, 19) . "...";
             }
             
 			if ($db_total != "") {

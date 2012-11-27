@@ -278,7 +278,13 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
       <div class="grid12">
         <h3 style="display: inline-block;margin-top:10px;font-size:32px"><?php echo $name; ?></h3>
         <ul class="titleToolbar" style="display: inline-block;">
-          <li><a class="" href="#">Dropbox Settings</a></li>
+                        <li class="drd"><a data-toggle="dropdown" href="#">Deck Options</a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a class="" href="#"><span class="icos-pencil"></span>Edit name</a></li>
+                                <li><a class="" href="#"><span class="icos-pencil"></span>Dropbox Settings</a></li>
+                                <li><a href="#"><span class="icos-trash"></span>Delete Deck</a></li>
+                            </ul>
+          
           <!--                       
                        <li><a class="" href="#">Check Legality</a></li>
                         <li><a class="" href="#">Compare Deck</a></li>
@@ -458,6 +464,12 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Deck Detail");
       <input type="submit" name="colorsused" value="Update Colors Used" class="buttonM bBlue" />
     </div>
   </form>
+</div>
+
+<div id="dbdialog" class="dialog" title="Add Deck" style="text-align:center;">
+  <form id="dbform" action="" method="post">
+
+</form>
 </div>
 
 </body>

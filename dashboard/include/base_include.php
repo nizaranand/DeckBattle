@@ -30,6 +30,20 @@ function showDeckColors($color){
     
 }
 
+function showCardColors($color){
+   
+  $result = str_replace("R",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/R.gif" />',$color);
+  $result = str_replace("W",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/W.gif" />',$result);
+  $result = str_replace("G",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/G.gif" />',$result);
+  $result = str_replace("U",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/U.gif" />',$result);
+  $result = str_replace("B",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/B.gif" />',$result);
+  $result = str_replace("A",'<img style="display:inline;" src="http://www.deckbattle.com/mtgicons/A.gif" />',$result);
+   
+  return $result;
+    
+}
+
+
 function calcAverageManaCost($deckid,$mysqli) {
     $result = 0;
     $q = "SELECT AVG(Nconverted_manacost) FROM `user_decks_cards` JOIN Ncards on Ncardid = cardid WHERE Nconverted_manacost is not null AND Nconverted_manacost <> '' AND Nconverted_manacost > 0 AND deckid = ? AND location = 'Deck'";
@@ -169,13 +183,65 @@ function determineImageAndClass($db_color) {
 		$class = "fourcolors";
 	}
 
-	if ($size == 6) {
+	if ($size >= 6) {
 		$imgurl = "/dashboard/images/decks/standardcovers/deckcover_multicolor.png";
 		$class = "fivecolors";
 	}
 
 	return array("url" => $imgurl, "class" => $class);
 }
+
+function determineClass($db_color) {
+
+    if ($db_color == "") {
+        $class = "none";
+    }
+
+    if ($db_color == "R") {
+        $class = "red";
+    }
+
+    if ($db_color == "G") {
+        $class = "green";
+    }
+
+    if ($db_color == "B") {
+        $class = "black";
+    }
+
+    if ($db_color == "U") {
+        $class = "blue";
+    }
+
+    if ($db_color == "W") {
+        $class = "white";
+    }
+
+    if ($db_color == "A") {
+        $class = "artifact";
+    }
+    
+    $size = strlen($db_color);
+
+    if ($size == 2) {
+        $class = "twocolors";
+    }
+
+    if ($size == 3) {
+        $class = "threecolors";
+    }
+
+    if ($size == 4) {
+        $class = "fourcolors";
+    }
+
+    if ($size >= 5) {
+        $class = "fivecolors";
+    }
+
+    return array("class" => $class);
+}
+
 
 //END DECK FUNCTIONS AND VARS
 ?>
