@@ -7,7 +7,7 @@ header('Content-Type: text/html; charset=utf-8');
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)
  */
-$aColumns = array('Ncardid', 'Ncardname', 'ntype', 'nmanacost', 'ncolor', 'Nset', 'Nname', 'nrarity', 'amount_normal', 'amount_foil', 'Ncardid');
+$aColumns = array('amount_normal','amount_foil', 'Ncardname', 'Ntype', 'Nmanacost', 'Ncolor', 'Nname', 'Nrarity', 'Ncardid','Nset');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Ncardid";
@@ -143,10 +143,11 @@ while ($aRow = mysql_fetch_array($rResult)) {
 
 	}
 
-	$row[2] = utf8_encode($row[2]);
-	//		$row[2]= str_replace("\u0097","-",$row[2]);
-	//echo $row[2];
-	$output['aaData'][] = $row;
+     $row[2] = str_replace('"','', $row[2]);
+    //  $row[2] = str_replace("'", "&rsquo;", $row[2]);
+             $row[2] = htmlentities($row[2],ENT_QUOTES);
+                $output['aaData'][] = $row;
+
 
 }
 

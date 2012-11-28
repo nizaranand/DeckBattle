@@ -58,6 +58,9 @@ if ($wishamountN != 0 || $wishamountF != 0) {
             if ($tf < 0)
                 $tf = 0;
 
+$outputamountF = $tf;
+$outputamountN = $tn;
+
             $id = $rowid;
             if ($update_stmt = $mysqli -> prepare("UPDATE user_wishlist SET amount_normal = ?, amount_foil = ? WHERE id = ?;")) {
                 $update_stmt -> bind_param('sss', $tn, $tf, $id);
@@ -93,6 +96,11 @@ if ($wishamountN != 0 || $wishamountF != 0) {
             }
         }
     }
+    //return amount
+    if ($outputamountF < 0) $outputamountF = 0;
+    if ($outputamountN < 0) $outputamountN =0;
+    
+    echo $message . "/". $outputamountN . "/" . $outputamountF . "/" . $n . "/" . $f . "/" . ($n + $f);
 }
 
 //add to collection

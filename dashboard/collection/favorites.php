@@ -228,7 +228,7 @@ generateBreadcrumb("Dashboard", "Cards & Decks", "Favorite Card Collection");
     <?php
     require_once 'dashboard/include/messages.php';
  ?>
-    <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="#" >Add Cards</a> </div>
+    <div class="wButton grid6 mb5"> <a class="buttonL bGreen" style="margin-top:10px;" title="" href="add_cards_favorites.php" >Add Cards to Favorites</a> </div>
     <div>
       <ul class="splitter">
         <li>

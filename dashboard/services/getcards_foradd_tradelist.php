@@ -69,7 +69,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
         } else {
             $sWhere .= " AND ";
         }
-        $sWhere .= "userid=". $userid . " AND (tradeamount_normal > 0 OR tradeamount_foil > 0)";
+        $sWhere .= "userid=". $userid;
  //echo $sWhere;
 $sQuery = "
         SELECT SQL_CALC_FOUND_ROWS `" . str_replace(" , ", " ", implode("`, `", $aColumns)) . "` 

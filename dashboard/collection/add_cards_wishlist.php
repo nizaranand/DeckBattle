@@ -17,19 +17,23 @@ require_once 'dashboard/include/base_include.php';
 		<script type="text/javascript" src="/dashboard/js/files/datatable_global.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_replacers.js"></script>
 		<script type="text/javascript" src="/dashboard/js/files/datatable_toolbars.js"></script>
-		<script type="text/javascript" src="/dashboard/js/files/datatable_addtotradelist.js"></script>
+		<script type="text/javascript" src="/dashboard/js/files/datatable_addtowishlist.js"></script>
 		<script type="text/javascript">
 			$(function() {
 $("select, .check, .check :checkbox, input:radio, input:file").uniform();
 });
 function addcardstocollection(_cardid, _cardname, amount_normal, amount_foil,wn,wf,f) {
-$.post("/dashboard/services/addcards_tradelist.php", {
+$.post("/dashboard/services/addcards_collection.php", {
 cardid: _cardid,
 userid: '<?php echo $_SESSION['user_id']; ?>',
     amountn: amount_normal,
     amountf: amount_foil,
+    wishamountn: wn,
+    wishamountf: wf,
+    addtofav: f,
+    cardname:_cardname
     }, function(response){
-    setTimeout("finishAjax("+_cardid+",'"+_cardname+"','Tradelist','"+escape(response)+"')", 400);
+    setTimeout("finishAjax("+_cardid+",'"+_cardname+"','Collection','"+escape(response)+"')", 400);
     });
     return false;
     }
@@ -37,16 +41,23 @@ userid: '<?php echo $_SESSION['user_id']; ?>',
     function finishAjax(id ,name,list,response) { //TODO: make json callback
 
         if (response != "") {
-                var n=response.split("/");
-                
-                if (n[0] != ""){
-                    $.jGrowl(decodeURI(n[0]));  
-                  }
-                  else {              
-                    $('#normal_'+id).html(n[1]);
-                    $('#foil_'+id).html(n[2]);
-                }
+    
+            if (response == "addedfav") {
+                $('#fav_'+id).html('<a href="#"  id="fav_' + id + '" class="iconb tipS" title="Mark/Unmark Favorite" data-icon="&#xe086;" onclick="return addcardstocollection(' + id + ',\'' + name + '\',0,0,0,0,1)"></a>');
             }
+            else if (response == "removedfav") {
+                $('#fav_'+id).html('<a href="#"  id="fav_' + id + '" class="iconb tipS" title="Mark/Unmark Favorite" data-icon="&#xe084;" onclick="return addcardstocollection(' + id + ',\'' + name + '\',0,0,0,0,1)"></a>');
+            }
+            else {
+                
+                var n=response.split("/");
+                $('#normal_'+id).html(n[1]);
+                $('#foil_'+id).html(n[2]);
+            
+                $('#usercardstotal').html(parseInt(n[5]));
+                $('#usercardstotalTip').attr("original-title", parseInt(n[3]) + " Normal &amp; " + parseInt(n[4]) + " Foil");
+            }
+        }
     }
 
 		</script>
@@ -77,15 +88,15 @@ userid: '<?php echo $_SESSION['user_id']; ?>',
 			<!-- Main content -->
 			<div class="wrapper">
 				<div class="wButton grid6">
-				            <a class="buttonL bBlue" style="margin-top: 10px;" title="" href="tradelist.php">Back to Tradelist</a>';
-                     </div>
+				           <a class="buttonL bBlue" style="margin-top: 10px;" title="" href="wishlist.php">Back to Wishlist</a>
+                </div>
 				<div class="widget">
 					<div class="whead">
 						<h6>Card Database</h6>
 						<div class="clear"></div>
 					</div>
 					<div class="shownpars" >
-						<table cellpadding="0" cellspacing="0" border="0" class="addtotradelist">
+						<table cellpadding="0" cellspacing="0" border="0" class="addtocollection">
 							<thead>
 								<tr>
 									<th style="width:70px;">Add Normal</th>
